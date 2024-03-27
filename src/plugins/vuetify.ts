@@ -40,6 +40,7 @@ const lightTheme: ThemeDefinition = {
 
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
+    ssr: true,
     theme: {
         defaultTheme: 'light',
         themes: {
@@ -104,3 +105,12 @@ export default defineNuxtPlugin((app) => {
   })
   app.vueApp.use(vuetify)
 })
+
+export type FontSizesTypes = keyof typeof themeInUse.fontSizes
+export type FontWeightTypes = keyof typeof themeInUse.fontWeights
+export type FontFamilyTypes = keyof typeof themeInUse.fontFamily
+
+type DefaultColorTypes = typeof themeInUse.colors.light
+type CustomColorTypes = typeof themeInUse.colors.light
+
+export type ColorTypes = keyof (DefaultColorTypes & CustomColorTypes)
