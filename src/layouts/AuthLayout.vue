@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { PhArrowCircleLeft } from "@phosphor-icons/vue";
+import { PhArrowCircleLeft } from '@phosphor-icons/vue';
 import LogoDemoday from '@/assets/logo_demoday.png';
 </script>
 
