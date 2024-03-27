@@ -40,6 +40,15 @@ export default defineNuxtConfig({
     },
     //...
   ],
+  hooks: {
+    'pages:extend'(pages) {
+      pages.push({
+        name: 'home',
+        path: '/',
+        file: '~/pages/auth/login',
+      })
+    },
+  },
   vite: {
     vue: {
       template: {
