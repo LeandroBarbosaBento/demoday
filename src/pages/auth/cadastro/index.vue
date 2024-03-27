@@ -80,7 +80,7 @@
       </v-text-field>
 
       <label for="password" class="app-font-size-sm text-gray-600 app-font-weight-medium">
-        Confirmação a sua senha
+        Confirme a sua senha
       </label>
 
       <v-text-field
@@ -143,7 +143,7 @@
 <script setup lang="ts">
 import { 
   PhEye, PhEyeSlash, PhEnvelopeSimple
- } from "@phosphor-icons/vue";
+} from "@phosphor-icons/vue";
 
 definePageMeta({
   layout: 'auth-layout',
