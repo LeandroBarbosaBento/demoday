@@ -1,0 +1,261 @@
+@use '@/styles/_mixins.scss' as mixins;
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.p-relative {
+  position: relative;
+}
+
+.p-absolute {
+  position: absolute;
+}
+.p-sticky {
+  position: sticky;
+  top: 0;
+}
+
+.border-detail {
+  border: 5px solid rgb(var(--v-theme-background)) !important;
+}
+
+.br-inherit {
+  border-radius: inherit;
+}
+
+.br-rounded {
+  border-radius: 50% !important;
+}
+
+.br-inherit-top-left {
+  border-top-left-radius: inherit;
+}
+
+.br-inherit-top-right {
+  border-top-right-radius: inherit;
+}
+
+.br-inherit-bottom-left {
+  border-bottom-left-radius: inherit;
+}
+
+.br-inherit-bottom-right {
+  border-bottom-right-radius: inherit;
+}
+
+.br-inherit-top {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+.br-inherit-bottom {
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+
+.br-inherit-left {
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
+}
+
+.br-inherit-right {
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+
+.gap-5 {
+  gap: 5px;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+.gap-15 {
+  gap: 15px;
+}
+
+.gap-20 {
+  gap: 20px;
+}
+
+.gap-30 {
+  gap: 30px;
+}
+
+.separator {
+  display: block;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+
+    height: 1px;
+    background-color: rgb(var(--v-theme-gray-200));
+
+    max-width: 300px;
+    min-width: 200px;
+    width: 100%;
+
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &::before {
+    left: -220px;
+  }
+
+  &::after {
+    right: -220px;
+  }
+}
+
+.separator-bottom {
+  border-bottom: 1px solid rgb(var(--v-theme-gray-200));
+}
+.separator-left {
+  width: 1px;
+  background: rgb(var(--v-theme-gray-200));
+}
+
+.opacity-30 {
+  opacity: 0.3;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.opacity-70 {
+  opacity: 0.7;
+}
+
+.scrollable {
+  overflow: auto;
+
+  padding-right: 40px;
+
+  @include mixins.scrollStyles();
+}
+
+.text-wrap {
+  word-break: break-all;
+}
+
+.data-table-edit {
+  background: white;
+  box-shadow: 3px 20px 20px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 16px !important;
+  padding: 24px;
+  gap: 32px;
+  color: rgb(var(--v-theme-text-600));
+}
+
+.button  {
+  font-weight: 600;
+  text-transform: none;
+
+  transition: all 0.3s linear;
+
+  border-radius: 6px;
+  border-color: rgb(var(--v-border-color));
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: max-content;
+
+  &:active {
+    scale: 0.98;
+  }
+
+  &--outlined {
+    border-width: 1px;
+    border-style: solid;
+
+    background: none !important;
+  }
+
+  &--disabled {
+    pointer-events: none;
+    background-color: rgb(var(--v-theme-gray-100)) !important;
+
+    color: rgb(var(--v-theme-text-500)) !important;
+
+    > * {
+      color: rgb(var(--v-theme-text-500)) !important;
+    }
+  }
+
+  &.button--outlined.button--disabled {
+    border-color: rgb(var(--v-theme-gray-100));
+    background-color: transparent !important;
+    color: rgb(var(--v-theme-text-500)) !important;
+  }
+
+  &--full {
+    width: 100%;
+  }
+
+  &--size-4xl {
+    padding: 3rem;
+  }
+
+  &--size-3xl {
+    padding: 3rem;
+  }
+  &--size-2xl {
+    padding: 2.5rem;
+  }
+  &--size-1xl {
+    padding: 2rem;
+  }
+  &--size-xl {
+    padding: 1.25rem;
+  }
+  &--size-lg {
+    padding: 1rem;
+  }
+  &--size-md {
+    padding: 0.75rem;
+  }
+  &--size-sm {
+    padding: 0.625rem;
+  }
+
+  &--fab {
+    border-radius: 10px;
+    aspect-ratio: 1/1;
+  }
+
+  &--border {
+    border-width: 1px;
+    border-style: solid;
+  }
+
+  &--transparent {
+    background: transparent !important;
+  }
+
+  &--rounded {
+    border-radius: 50% !important;
+  }
+
+  &--width {
+    width: v-bind(computedWidthUnit);
+    min-width: v-bind(computedWidthUnit);
+  }
+  &--height {
+    height: v-bind(computedHeightUnit);
+    min-height: v-bind(computedHeightUnit);
+  }
+
+  &--translucid {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+}

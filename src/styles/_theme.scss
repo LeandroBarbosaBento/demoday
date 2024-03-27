@@ -1,0 +1,14 @@
+$sizes: xs, sm, md, lg, xl, 1xl, 2xl, 3xl, 4xl;
+$weights: regular, medium, semibold, bold;
+
+@each $size in $sizes {
+  .app-font-size-#{$size} {
+    font-size: var(--v-theme-font-size-#{$size});
+  }
+}
+
+@each $weight in $weights {
+  .app-font-weight-#{$weight} {
+    font-weight: var(--v-theme-font-weight-#{$weight});
+  }
+}

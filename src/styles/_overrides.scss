@@ -1,0 +1,91 @@
+//Input
+.v-input--is-focused .v-input__slot {
+    border: 2px solid #073161 !important;
+    border-bottom-color: rgba(0, 0, 0, 0.38) !important;
+  }
+  
+  //Tabs
+  .v-tab .v-btn__overlay {
+    background: none !important;
+  }
+  
+  .v-tab {
+    border-bottom: 1px solid rgb(var(--v-theme-gray-300)) !important;
+    border-radius: 1px !important;
+  }
+  .v-tab .v-btn__content {
+    color: rgb(var(--v-theme-text-600));
+    font-weight: 500;
+  }
+  
+  .v-tab.v-tab--selected {
+    border-color: rgb(var(--v-theme-primary-green)) !important;
+  }
+  .v-tab.v-tab--selected .v-btn__content {
+    color: rgb(var(--v-theme-primary-green));
+    font-weight: 600;
+  }
+  
+  //slide group
+  
+  #custom-slide-group .v-slide-group__next {
+    justify-content: flex-end;
+  }
+  #custom-slide-group .v-slide-group__prev {
+    justify-content: flex-start;
+  }
+  
+  // TEXTFIELDS
+  
+  //text field outlined
+  .v-field--variant-outlined .v-field__outline {
+    //color: rgb(var(--v-theme-text-300)) !important;
+    border-radius: 8px !important;
+  }
+  
+  // outlined focused
+  /* .v-field--variant-outlined.v-field--focused .v-field__outline {
+    color: rgb(var(--v-theme-primary)) !important;
+  } */
+  
+  //solo
+  .v-field.v-field--variant-solo {
+    box-shadow: none !important;
+    color: rgb(var(--v-theme-text-800)) !important;
+  
+    border: 1px solid rgb(var(--v-theme-gray-100));
+    border-radius: 8px !important;
+  }
+  
+  .v-field__field.v-field.v-field--variant-solo input,
+  .v-field__field.v-field--variant-outlined input,
+  .v-text-field .v-field--no-label input {
+    color: rgb(var(--v-theme-text-800)) !important;
+  
+    border-radius: 8px !important;
+  }
+  
+  //solo background theme
+  .v-field__field.v-field.v-field--variant-solo input,
+  .v-field--variant-solo input {
+    background: rgb(var(--v-theme-card)) !important;
+  }
+  
+  //input details
+  .v-input__details {
+    padding-left: 0px !important;
+  }
+  .v-messages {
+    opacity: 1 !important;
+  }
+  .hint--orange .v-input__details {
+    color: rgb(var(--v-theme-orange-500)) !important;
+  }
+  
+  //switch
+  
+  .v-switch .v-switch__track {
+    background-color: rgb(var(--v-theme-gray-200));
+    opacity: 1 !important;
+  }
+  
