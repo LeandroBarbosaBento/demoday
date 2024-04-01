@@ -51,7 +51,12 @@
         :error-messages="inputs.email.error_messages"
       >
         <template #append-inner>
-          <ph-envelope-simple class="me-3" color="gray-500" size="20" />
+          <v-icon 
+            class="me-3"
+            color="gray-500" 
+            icon="mdi-email-outline"
+            size="25"
+          />
         </template>
       </v-text-field>
 
@@ -69,11 +74,11 @@
         :error-messages="inputs.password.error_messages"
       >
         <template #append-inner>
-          <component
-            :is="inputs.password.show ? PhEye : PhEyeSlash"
+          <v-icon 
             class="me-3 cursor-pointer"
-            color="gray-500"
-            size="20"
+            color="gray-500" 
+            :icon="inputs.password.show ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
+            size="25"
             @click="inputs.password.show = !inputs.password.show"
           />
         </template>
@@ -93,11 +98,11 @@
         :error-messages="inputs.password_confirmation.error_messages"
       >
         <template #append-inner>
-          <component
-            :is="inputs.password_confirmation.show ? PhEye : PhEyeSlash"
+          <v-icon 
             class="me-3 cursor-pointer"
-            color="gray-500"
-            size="20"
+            color="gray-500" 
+            :icon="inputs.password_confirmation.show ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
+            size="25"
             @click="inputs.password_confirmation.show = !inputs.password_confirmation.show"
           />
         </template>
@@ -141,9 +146,6 @@
 </template>
 
 <script setup lang="ts">
-import { 
-  PhEye, PhEyeSlash, PhEnvelopeSimple
-} from "@phosphor-icons/vue";
 
 definePageMeta({
   layout: 'auth-layout',

@@ -12,14 +12,13 @@
                                 class="button py-1 px-1 mt-10"
                                 @click="$router.go(-1)"
                             >
-                                <ph-arrow-circle-left 
-                                    :size="40" 
-                                    color="red" 
-                                    weight="light" 
+                                <v-icon 
+                                    color="red-ufba" 
+                                    icon="mdi-arrow-left-thin-circle-outline"
+                                    size="40"
                                 />
                             </button> <br/>
                             <div class="container">
-                                
                                 <slot></slot>
                             </div>
                         </div>
@@ -31,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import { PhArrowCircleLeft } from '@phosphor-icons/vue';
 import LogoDemoday from '@/assets/logo_demoday.png';
 </script>
 
