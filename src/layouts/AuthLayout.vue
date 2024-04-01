@@ -2,9 +2,9 @@
     <div class="background">
         <v-container fluid class="py-0 height-100">
             <div class="background d-flex">
-                <v-row class="h-100">
-                    <v-col cols="12" md="6" class="pa-10 py-16 d-flex justify-center align-start">
-                        <img :src="LogoDemoday" width="80%" style="margin: auto" />
+                <v-row class="h-100 p-5">
+                    <v-col cols="12" md="6" class="left-col">
+                        <img :src="LogoDemoday" width="100%" />
                     </v-col>
                     <v-col cols="12" md="6" class="h-100 py-16">
                         <div class="form-container px-2 px-md-15 d-flex flex-column">
@@ -61,5 +61,10 @@ import LogoDemoday from '@/assets/logo_demoday.png';
     * {
         width: 100%;
     }
+}
+.left-col {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 </style>
