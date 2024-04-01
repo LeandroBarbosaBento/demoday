@@ -15,7 +15,7 @@ Felipe Angelo           | Indaiara Bonfim
 
 
 ## Artefatos
-* [Deploy do frontend no Vercel](https://demoday-6x9vqkslw-leandro-barbosa-s-projects.vercel.app/)
+* [Deploy do frontend no Vercel](https://demoday-omega.vercel.app/)
 * [FIGMA](https://www.figma.com/file/tgBiMAOeOy1C1cPPbGdntX/DEMODAY?type=design&node-id=0-1&mode=design&t=k7Q0p52UdAdfpMsC-0) com design de telas
 * [Documento de requisitos](https://docs.google.com/document/d/1WxX1Q8yOPc812UFwMu00FkKZp7S3j5BIyUZi6pdiwp0/edit?tab=t.0#heading=h.op8j48fy8tth)
 * [Quadro do Trello](https://trello.com/b/cQF1ZpIU/ic0045)
