@@ -11,6 +11,8 @@ Felipe Angelo           | Indaiara Bonfim
 .                       | João Daniel 
 .                       | Júlia Passos
 .                       | Reynan da Silva
+.                       | Thales Macêdo
+
 
 ## Artefatos
 * [Deploy do frontend no Vercel](https://demoday-omega.vercel.app/)
