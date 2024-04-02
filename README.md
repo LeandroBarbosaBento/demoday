@@ -12,8 +12,6 @@ Felipe Angelo           | Indaiara Bonfim
 .                       | Júlia Passos
 .                       | Reynan da Silva
 
-
-
 ## Artefatos
 * [Deploy do frontend no Vercel](https://demoday-omega.vercel.app/)
 * [FIGMA](https://www.figma.com/file/tgBiMAOeOy1C1cPPbGdntX/DEMODAY?type=design&node-id=0-1&mode=design&t=k7Q0p52UdAdfpMsC-0) com design de telas
@@ -27,17 +25,3 @@ Frontend      | Backend
 VueJS 3       | Java Spring Boot
 Nuxt 3        | Banco de dados MySQL
 Node v18.16.0 | .
-
-### Para rodar este projeto
-
-Instale as dependências com o comando abaixo:
-```bash
-yarn install
-
-```
-
-Rode o comando abaixo para iniciar o servidor local
-```bash
-yarn dev
-
-```
