@@ -6,8 +6,8 @@ Frontend                | Backend
 ---------               |---------
 Leandro Barbosa         | Samuel Rios
 Norma Oliveira          | Paulo Trigo
-Vilomar Gomes Cerqueira | Danilo Macedo 
-Felipe Angelo           | Indaiara Bonfim
+Felipe Angelo           | Danilo Macedo 
+.                       | Indaiara Bonfim
 .                       | João Daniel 
 .                       | Júlia Passos
 .                       | Reynan da Silva
