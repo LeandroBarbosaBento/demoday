@@ -27,3 +27,6 @@ Frontend      | Backend
 VueJS 3       | Java Spring Boot
 Nuxt 3        | Banco de dados MySQL
 Node v18.16.0 | .
+
+### Arquitetura do Sistema
+![Arquitetura do sistema](public/artifacts/arquitetura_sistema.jpg)
