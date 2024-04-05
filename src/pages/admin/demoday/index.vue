@@ -5,6 +5,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'default-layout',
-  pageTitle: 'Criar novo demoday'
+  pageTitle: 'Criar novo demoday',
+  activeNavLink: 'demoday'
 })
 </script>
