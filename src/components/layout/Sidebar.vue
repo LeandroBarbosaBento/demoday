@@ -67,32 +67,32 @@ const items: RouterItem[] = [
     {
         text: 'Cadastro de projeto',
         icon: 'mdi-projector-screen',
-        url: '',
-        slug: ''
+        url: '/student/apply',
+        slug: 'apply'
     },
     {
         text: 'Avaliar projetos',
         icon: 'mdi-format-list-bulleted',
-        url: '',
-        slug: '',
+        url: '/teacher/evaluate',
+        slug: 'evaluate',
     },
     {
         text: 'Lista de usuários',
         icon: 'mdi-account',
-        url: '',
-        slug: '',
+        url: '/admin/users',
+        slug: 'users',
     },
     {
         text: 'Lista de projetos',
         icon: 'mdi-book-education',
-        url: '',
-        slug: '',
+        url: '/admin/projects',
+        slug: 'projects',
     },
     {
         text: 'Lista de demodays',
         icon: 'mdi-database-eye',
-        url: '',
-        slug: '',
+        url: '/historic',
+        slug: 'historic',
     },
     {
         text: 'Sair',
