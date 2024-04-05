@@ -36,8 +36,6 @@
 </template>
 <script setup lang="ts">
 import LogoImage from '@/assets/logo_demoday.png'
-import { useTheme } from 'vuetify'
-
 
 interface Props {
   isExpanded: boolean
@@ -58,13 +56,43 @@ const items: RouterItem[] = [
         text: 'Inicio',
         icon: 'mdi-home',
         url: '/inicio',
-        slug: 'inicio'
+        slug: '/inicio'
     },
     {
         text: 'Criar novo demoday',
         icon: 'mdi-invoice-plus',
         url: '/admin/demoday',
         slug: 'demoday'
+    },
+    {
+        text: 'Cadastro de projeto',
+        icon: 'mdi-projector-screen',
+        url: '/student/apply',
+        slug: 'apply'
+    },
+    {
+        text: 'Avaliar projetos',
+        icon: 'mdi-format-list-bulleted',
+        url: '/teacher/evaluate',
+        slug: 'evaluate',
+    },
+    {
+        text: 'Lista de usuários',
+        icon: 'mdi-account',
+        url: '/admin/users',
+        slug: 'users',
+    },
+    {
+        text: 'Lista de projetos',
+        icon: 'mdi-book-education',
+        url: '/admin/projects',
+        slug: 'projects',
+    },
+    {
+        text: 'Lista de demodays',
+        icon: 'mdi-database-eye',
+        url: '/historic',
+        slug: 'historic',
     },
     {
         text: 'Sair',
@@ -108,7 +136,7 @@ ul {
   &__item--active {
     color: rgb(var(--v-theme-red-ufba));
     border-radius: 0.5rem !important;
-    background: rgba(22, 122, 131, .3);
+    background: rgba(255, 92, 92, 0.1);
 
   }
 }

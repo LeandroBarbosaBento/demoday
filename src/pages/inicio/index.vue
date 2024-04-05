@@ -5,6 +5,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'default-layout',
-  pageTitle: 'Início'
+  pageTitle: 'Início',
+  activeNavLink: '/inicio'
 })
 </script>

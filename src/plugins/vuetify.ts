@@ -49,7 +49,7 @@ export default defineNuxtPlugin((app) => {
     },
     defaults: {
         VTextField: {
-            color: 'primary',
+            color: 'blue-ufba',
             rounded: 8,
             outlined: true,
             variant: 'outlined',
