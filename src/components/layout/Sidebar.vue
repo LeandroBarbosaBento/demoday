@@ -104,7 +104,6 @@ const items: RouterItem[] = [
 
 async function navigateToLink(item: RouterItem) {
     await navigateTo(item.url)
-    console.log(route.meta.activeNavLink);
 }
 </script>
 <style lang="scss" scoped>
