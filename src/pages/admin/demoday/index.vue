@@ -226,30 +226,30 @@
               Critérios de inscrição
             </p>
             <label 
-              for="name" 
+              for="applyName" 
               class="app-font-size-sm text-gray-600"
             >
               Nome do critério
             </label>
 
             <v-text-field
-              id="name"
-              v-model="name"
+              id="applyName"
+              v-model="applyCriteria.name"
               class="mt-3"
               color="blue-ufba"
               placeholder="Nome do critério de inscrição"
             />  
 
             <label 
-              for="name" 
+              for="applyDescription" 
               class="app-font-size-sm text-gray-600"
             >
               Descrição do critério
             </label>
 
             <v-textarea
-              id="name"
-              v-model="name"
+              id="applyDescription"
+              v-model="applyCriteria.description"
               rows="3"
               class="mt-3"
               color="blue-ufba"
@@ -258,6 +258,7 @@
             <button
               class="button button--full text-white bg-red-ufba button--size-md d-flex justify-center py-2"
               type="button"
+              @click="addApplyCriteria"
             >
               Adicionar critério
             </button> 
@@ -266,7 +267,8 @@
             <p class="app-font-size-lg app-font-weight-bold text-gray-600 mb-3 mt-3">
               Critérios de inscrição adicionados
             </p>
-            <v-table class="elevation-2">
+            <p v-if="!applyCriteriaAdded.length" class="text-center">Sem critérios adicionados</p>
+            <v-table v-else class="elevation-2">
               <thead>
                 <tr>
                   <th>Critério</th>
@@ -275,14 +277,24 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in 5" :key="item">
-                  <td>Nome do critério</td>
+                <tr v-for="(criteria, index) in applyCriteriaAdded" :key="index">
+                  <td> {{ criteria.name }}</td>
                   <td class="py-2">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, delectus vel necessitatibus voluptas fugiat voluptatibus ea.
+                    {{ criteria.description }}
                   </td>
                   <td>
-                    <v-icon icon="mdi-pen" color="red-ufba" class="cursor-pointer" />
-                    <v-icon icon="mdi-delete" color="red-ufba" class="cursor-pointer" />
+                    <v-icon 
+                      icon="mdi-pen" 
+                      color="red-ufba" 
+                      class="cursor-pointer"
+                      @click="editApplyCriteria(index)"
+                    />
+                    <v-icon 
+                      icon="mdi-delete" 
+                      color="red-ufba" 
+                      class="cursor-pointer" 
+                      @click="removeApplyCriteria(index)"
+                    />
                   </td>
                 </tr>
               </tbody>
@@ -342,4 +354,29 @@ const stepperPhases = ref([
     description: 'Na quarta fase há a votação do público para escolha dos vencedores. '
   }
 ]);
+
+interface ApplyCriteria {
+  name: string
+  description: string
+}
+const applyCriteria = ref<ApplyCriteria>({
+  name:'',
+  description: '',
+});
+
+const applyCriteriaAdded = ref<ApplyCriteria []>([]);
+
+function addApplyCriteria() {
+  applyCriteriaAdded.value.push(applyCriteria.value);
+  applyCriteria.value = {name:'', description:''};
+}
+
+function editApplyCriteria(index: number) {
+  applyCriteria.value = applyCriteriaAdded.value[index];
+  applyCriteriaAdded.value.splice(index, 1);
+}
+
+function removeApplyCriteria(index: number) {
+  applyCriteriaAdded.value.splice(index, 1);
+}
 </script>
