@@ -220,9 +220,77 @@
 
         </v-stepper>
 
-        <p class="app-font-size-lg app-font-weight-bold text-gray-600 mb-3 mt-3">
-          Critérios de inscrição
-        </p>
+        <div class="d-flex gap-20 width-100">
+          <div class="width-100">
+            <p class="app-font-size-lg app-font-weight-bold text-gray-600 mb-3 mt-3">
+              Critérios de inscrição
+            </p>
+            <label 
+              for="name" 
+              class="app-font-size-sm text-gray-600"
+            >
+              Nome do critério
+            </label>
+
+            <v-text-field
+              id="name"
+              v-model="name"
+              class="mt-3"
+              color="blue-ufba"
+              placeholder="Nome do critério de inscrição"
+            />  
+
+            <label 
+              for="name" 
+              class="app-font-size-sm text-gray-600"
+            >
+              Descrição do critério
+            </label>
+
+            <v-textarea
+              id="name"
+              v-model="name"
+              rows="3"
+              class="mt-3"
+              color="blue-ufba"
+              placeholder="Descrição do critério de inscrição"
+            /> 
+            <button
+              class="button button--full text-white bg-red-ufba button--size-md d-flex justify-center py-2"
+              type="button"
+            >
+              Adicionar critério
+            </button> 
+          </div>
+          <div class="width-100">
+            <p class="app-font-size-lg app-font-weight-bold text-gray-600 mb-3 mt-3">
+              Critérios de inscrição adicionados
+            </p>
+            <v-table class="elevation-2">
+              <thead>
+                <tr>
+                  <th>Critério</th>
+                  <th>Descrição</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="item in 5" :key="item">
+                  <td>Nome do critério</td>
+                  <td class="py-2">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, delectus vel necessitatibus voluptas fugiat voluptatibus ea.
+                  </td>
+                  <td>
+                    <v-icon icon="mdi-pen" color="red-ufba" class="cursor-pointer" />
+                    <v-icon icon="mdi-delete" color="red-ufba" class="cursor-pointer" />
+                  </td>
+                </tr>
+              </tbody>
+            </v-table>
+          </div>
+        </div>
+
+        
 
       </v-form>
      
