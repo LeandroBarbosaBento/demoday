@@ -385,13 +385,13 @@
         </div>
 
         <button
-          class="button button--full text-white bg-red-ufba button--size-md d-flex justify-center py-4 mt-8 mb-8"
+          class="button button--full text-white bg-red-ufba button--size-md d-flex justify-center py-4 mt-15 mb-15"
           type="button"
           @click="handleCreateDemoday"
         >
           Cadastrar demoday
         </button> 
-        
+
       </v-form>
      
     </div>
