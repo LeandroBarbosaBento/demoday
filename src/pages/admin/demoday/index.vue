@@ -220,7 +220,7 @@
 
         </v-stepper>
 
-        <div class="d-flex gap-20 width-100">
+        <div class="d-flex gap-20 width-100 bg-white rounded-lg elevation-1 mt-5 px-5 py-5">
           <div class="width-100">
             <p class="app-font-size-lg app-font-weight-bold text-gray-600 mb-3 mt-3">
               Critérios de inscrição
@@ -268,7 +268,7 @@
               Critérios de inscrição adicionados
             </p>
             <p v-if="!applyCriteriaAdded.length" class="text-center">Sem critérios adicionados</p>
-            <v-table v-else class="elevation-2">
+            <v-table v-else class="elevation-1 rounded-lg">
               <thead>
                 <tr>
                   <th>Critério</th>
@@ -302,8 +302,96 @@
           </div>
         </div>
 
-        
+        <div class="d-flex gap-20 width-100 bg-white rounded-lg elevation-1 mt-5 px-5 py-5">
+          <div class="width-100">
+            <p class="app-font-size-lg app-font-weight-bold text-gray-600 mb-3 mt-3">
+              Critérios de avaliação
+            </p>
+            <label 
+              for="evalName" 
+              class="app-font-size-sm text-gray-600"
+            >
+              Nome do critério
+            </label>
 
+            <v-text-field
+              id="evalName"
+              v-model="evalCriteria.name"
+              class="mt-3"
+              color="blue-ufba"
+              placeholder="Nome do critério de inscrição"
+            />  
+
+            <label 
+              for="evalDescription" 
+              class="app-font-size-sm text-gray-600"
+            >
+              Descrição do critério
+            </label>
+
+            <v-textarea
+              id="evalDescription"
+              v-model="evalCriteria.description"
+              rows="3"
+              class="mt-3"
+              color="blue-ufba"
+              placeholder="Descrição do critério de avaliação"
+            /> 
+            <button
+              class="button button--full text-white bg-red-ufba button--size-md d-flex justify-center py-2"
+              type="button"
+              @click="addEvalCriteria"
+            >
+              Adicionar critério
+            </button> 
+          </div>
+          <div class="width-100">
+            <p class="app-font-size-lg app-font-weight-bold text-gray-600 mb-3 mt-3">
+              Critérios de avaliação adicionados
+            </p>
+            <p v-if="!evalCriteriaAdded.length" class="text-center">Sem critérios adicionados</p>
+            <v-table v-else class="elevation-1 rounded-lg">
+              <thead>
+                <tr>
+                  <th>Critério</th>
+                  <th>Descrição</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(criteria, index) in evalCriteriaAdded" :key="index">
+                  <td> {{ criteria.name }}</td>
+                  <td class="py-2">
+                    {{ criteria.description }}
+                  </td>
+                  <td>
+                    <v-icon 
+                      icon="mdi-pen" 
+                      color="red-ufba" 
+                      class="cursor-pointer"
+                      @click="editEvalCriteria(index)"
+                    />
+                    <v-icon 
+                      icon="mdi-delete" 
+                      color="red-ufba" 
+                      class="cursor-pointer" 
+                      @click="removeEvalCriteria(index)"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </v-table>
+          </div>
+        </div>
+
+        <button
+          class="button button--full text-white bg-red-ufba button--size-md d-flex justify-center py-4 mt-8 mb-8"
+          type="button"
+          @click="handleCreateDemoday"
+        >
+          Cadastrar demoday
+        </button> 
+        
       </v-form>
      
     </div>
@@ -355,18 +443,29 @@ const stepperPhases = ref([
   }
 ]);
 
-interface ApplyCriteria {
+interface Criteria {
   name: string
   description: string
 }
-const applyCriteria = ref<ApplyCriteria>({
+const applyCriteria = ref<Criteria>({
   name:'',
   description: '',
 });
 
-const applyCriteriaAdded = ref<ApplyCriteria []>([]);
+const applyCriteriaAdded = ref<Criteria []>([]);
+
+const evalCriteria = ref<Criteria>({
+  name:'',
+  description: '',
+});
+
+const evalCriteriaAdded = ref<Criteria []>([]);
 
 function addApplyCriteria() {
+  if(!applyCriteria.value.name || !applyCriteria.value.description) {
+    console.log('Não é possível adicionar um critério sem nome e descrição');
+    return;
+  }
   applyCriteriaAdded.value.push(applyCriteria.value);
   applyCriteria.value = {name:'', description:''};
 }
@@ -378,5 +477,27 @@ function editApplyCriteria(index: number) {
 
 function removeApplyCriteria(index: number) {
   applyCriteriaAdded.value.splice(index, 1);
+}
+
+function addEvalCriteria() {
+  if(!evalCriteria.value.name || !evalCriteria.value.description) {
+    console.log('Não é possível adicionar um critério sem nome e descrição');
+    return;
+  }
+  evalCriteriaAdded.value.push(evalCriteria.value);
+  evalCriteria.value = {name:'', description:''};
+}
+
+function editEvalCriteria(index: number) {
+  evalCriteria.value = evalCriteriaAdded.value[index];
+  evalCriteriaAdded.value.splice(index, 1);
+}
+
+function removeEvalCriteria(index: number) {
+  evalCriteriaAdded.value.splice(index, 1);
+}
+
+function handleCreateDemoday() {
+  console.log('handleCreateDemoday');
 }
 </script>
