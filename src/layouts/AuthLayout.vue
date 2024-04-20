@@ -9,6 +9,7 @@
                     <v-col cols="12" md="6" class="h-100 py-16">
                         <div class="form-container px-2 px-md-15 d-flex flex-column">
                             <button
+                                v-if="!$route.meta.hideGoBackButton" 
                                 class="button py-1 px-1 mt-10"
                                 @click="$router.go(-1)"
                             >
