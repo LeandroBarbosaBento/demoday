@@ -83,6 +83,12 @@ const items: RouterItem[] = [
         slug: 'users',
     },
     {
+        text: 'Usuários Pendentes',
+        icon: 'mdi-account-clock',
+        url: '/admin/users/pending',
+        slug: 'pending'
+    },
+    {
         text: 'Lista de projetos',
         icon: 'mdi-book-education',
         url: '/admin/projects',

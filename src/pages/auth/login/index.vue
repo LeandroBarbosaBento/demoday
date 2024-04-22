@@ -83,7 +83,8 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'auth-layout',
-  pageTitle: 'Login'
+  pageTitle: 'Login',
+  hideGoBackButton: true
 })
 
 const inputs = ref({
