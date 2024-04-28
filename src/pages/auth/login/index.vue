@@ -81,6 +81,9 @@
 </template>
 
 <script setup lang="ts">
+import app from '@/utils/firebaseConfig';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 definePageMeta({
   layout: 'auth-layout',
   pageTitle: 'Login',
@@ -94,13 +97,21 @@ const inputs = ref({
 
 const isFormValid = ref<boolean>(false)
 
-async function handleLoginRequest() {
-  console.log('handleLoginRequest');
+async function handleLoginRequest() {  
+  try {
+    const auth = getAuth(app);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      inputs.value.email.value, 
+      inputs.value.password.value
+    );
+    console.log('userCredential')
+    console.log(userCredential);
+
+  } catch (error) {
+    console.error(error);
+  }  
+  
   navigateTo({ path: '/inicio' })
-  /* try {
-    await navigateTo({ path: '/inicio' })
-  } catch (err) {
-    console.log(err)
-  } */
 }
 </script>
