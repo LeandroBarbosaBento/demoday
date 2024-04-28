@@ -62,13 +62,17 @@
         Esqueci minha senha
       </nuxt-link>
 
-      <button
-        class="button button--full text-white bg-red-ufba button--size-md d-flex justify-center py-4 mt-10"
+      <v-btn
+        class="text-white py-4 mt-10"
+        color="red-ufba"
+        block
+        size="lg"
         type="button"
         @click="handleLoginRequest"
+        :loading="isLoading"
       >
         Entrar
-      </button>  
+      </v-btn>  
       <p class="d-flex justify-end forgot-password-text mt-3 mb-5 text-gray-600">
         Ainda não tem uma conta? 
         <nuxt-link to="/auth/cadastro" class="text-primary ml-1">
@@ -81,6 +85,9 @@
 </template>
 
 <script setup lang="ts">
+import app from '@/utils/firebaseConfig';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 definePageMeta({
   layout: 'auth-layout',
   pageTitle: 'Login',
@@ -88,19 +95,34 @@ definePageMeta({
 })
 
 const inputs = ref({
-  password: { error_messages: [], show: false, value: '', },
-  email: { error_messages: [], value: '' },
+  password: { error_messages: [], show: false, value: '12345678', },
+  email: { error_messages: [], value: 'meumiler@gmail.com' },
 })
+
+const isLoading = ref(false);
 
 const isFormValid = ref<boolean>(false)
 
-async function handleLoginRequest() {
-  console.log('handleLoginRequest');
+async function handleLoginRequest() {  
+  try {
+    isLoading.value = true;
+    const auth = getAuth(app);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      inputs.value.email.value, 
+      inputs.value.password.value
+    );
+    isLoading.value = false;
+    console.log('userCredential')
+    console.log(userCredential._tokenResponse);
+    const idToken = userCredential._tokenResponse.idToken;
+    console.log(idToken);
+
+  } catch (error) {
+    console.error(error);
+    isLoading.value = false;
+  }  
+  
   navigateTo({ path: '/inicio' })
-  /* try {
-    await navigateTo({ path: '/inicio' })
-  } catch (err) {
-    console.log(err)
-  } */
 }
 </script>
