@@ -91,8 +91,8 @@ definePageMeta({
 })
 
 const inputs = ref({
-  password: { error_messages: [], show: false, value: '', },
-  email: { error_messages: [], value: '' },
+  password: { error_messages: [], show: false, value: '12345678', },
+  email: { error_messages: [], value: 'meumiler@gmail.com' },
 })
 
 const isFormValid = ref<boolean>(false)
@@ -106,7 +106,9 @@ async function handleLoginRequest() {
       inputs.value.password.value
     );
     console.log('userCredential')
-    console.log(userCredential);
+    console.log(userCredential._tokenResponse);
+    const idToken = userCredential._tokenResponse.idToken;
+    console.log(idToken);
 
   } catch (error) {
     console.error(error);
