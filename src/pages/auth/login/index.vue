@@ -62,13 +62,17 @@
         Esqueci minha senha
       </nuxt-link>
 
-      <button
-        class="button button--full text-white bg-red-ufba button--size-md d-flex justify-center py-4 mt-10"
+      <v-btn
+        class="text-white py-4 mt-10"
+        color="red-ufba"
+        block
+        size="lg"
         type="button"
         @click="handleLoginRequest"
+        :loading="isLoading"
       >
         Entrar
-      </button>  
+      </v-btn>  
       <p class="d-flex justify-end forgot-password-text mt-3 mb-5 text-gray-600">
         Ainda não tem uma conta? 
         <nuxt-link to="/auth/cadastro" class="text-primary ml-1">
@@ -95,16 +99,20 @@ const inputs = ref({
   email: { error_messages: [], value: 'meumiler@gmail.com' },
 })
 
+const isLoading = ref(false);
+
 const isFormValid = ref<boolean>(false)
 
 async function handleLoginRequest() {  
   try {
+    isLoading.value = true;
     const auth = getAuth(app);
     const userCredential = await signInWithEmailAndPassword(
       auth,
       inputs.value.email.value, 
       inputs.value.password.value
     );
+    isLoading.value = false;
     console.log('userCredential')
     console.log(userCredential._tokenResponse);
     const idToken = userCredential._tokenResponse.idToken;
@@ -112,6 +120,7 @@ async function handleLoginRequest() {
 
   } catch (error) {
     console.error(error);
+    isLoading.value = false;
   }  
   
   navigateTo({ path: '/inicio' })
