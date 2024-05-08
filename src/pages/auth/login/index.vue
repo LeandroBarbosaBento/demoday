@@ -87,6 +87,8 @@
 <script setup lang="ts">
 import app from '@/utils/firebaseConfig';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import axiosInstance from '@/lib/api/axiosInstance';
+
 
 definePageMeta({
   layout: 'auth-layout',
@@ -107,22 +109,19 @@ async function handleLoginRequest() {
   try {
     isLoading.value = true;
     const auth = getAuth(app);
-    const userCredential = await signInWithEmailAndPassword(
+    const userCredential : any = await signInWithEmailAndPassword(
       auth,
       inputs.value.email.value, 
       inputs.value.password.value
     );
     isLoading.value = false;
-    console.log('userCredential')
-    console.log(userCredential._tokenResponse);
     const idToken = userCredential._tokenResponse.idToken;
-    console.log(idToken);
-
+    await axiosInstance.post(`signin?userToken=${idToken}`)
   } catch (error) {
     console.error(error);
     isLoading.value = false;
   }  
   
-  navigateTo({ path: '/inicio' })
+  // navigateTo({ path: '/inicio' })
 }
 </script>
