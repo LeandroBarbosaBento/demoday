@@ -6,6 +6,7 @@ interface AdaptAxiosRequestConfig extends AxiosRequestConfig {
 
 const axiosInstance = axios.create({
   baseURL: 'https://demoday-api.onrender.com/',
+  withCredentials: true
 })
 
 const requestHandler = (requestConfig: AdaptAxiosRequestConfig) => {
