@@ -114,7 +114,6 @@ async function handleLoginRequest() {
       inputs.value.email.value, 
       inputs.value.password.value
     );
-    isLoading.value = false;
     const idToken = userCredential._tokenResponse.idToken;
     await axiosInstance.post(`signin?userToken=${idToken}`)
     navigateTo({ path: '/inicio' })
