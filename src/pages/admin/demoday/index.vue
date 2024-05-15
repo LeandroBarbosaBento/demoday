@@ -1,4 +1,5 @@
 <template>
+    <Loader v-if="isLoading" />
     <div class="px-8 py-8">
       <v-form>
         <label 
@@ -397,11 +398,15 @@
     </div>
 </template>
 <script setup lang="ts">
+import axiosInstance from '@/lib/api/axiosInstance';
+
 definePageMeta({
   layout: 'default-layout',
   pageTitle: 'Criar novo demoday',
   activeNavLink: 'demoday'
 })
+
+const isLoading = ref(false);
 
 const name = ref('');
 const phaseOne = ref({
@@ -497,7 +502,38 @@ function removeEvalCriteria(index: number) {
   evalCriteriaAdded.value.splice(index, 1);
 }
 
-function handleCreateDemoday() {
+async function handleCreateDemoday() {
   console.log('handleCreateDemoday');
+  const data = {
+    name: name.value,
+    phaseOneInit: phaseOne.value.init,
+    phaseOneEnd: phaseOne.value.end,
+    phaseTwoInit: phaseTwo.value.init,
+    phaseTwoEnd: phaseTwo.value.init,
+    phaseThreeInit: phaseThree.value.init,
+    phaseThreeEnd: phaseThree.value.init,
+    phaseFourInit: phaseFour.value.init,
+    phaseFourEnd: phaseFour.value.init,
+    accCriteriaDemoday: applyCriteriaAdded.value,
+    evalCriteriaDemoday: evalCriteriaAdded.value 
+  }
+    
+  console.log('data');
+  console.log(data);
+
+  try {
+    isLoading.value = true;
+
+    const response = await axiosInstance.post('/newDemoday', data);
+    console.log('response: ');
+    console.log(response);
+
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+  }
 }
 </script>
+<style scoped lang="scss">
+</style>
