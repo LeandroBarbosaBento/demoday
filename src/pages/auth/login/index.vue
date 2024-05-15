@@ -117,11 +117,11 @@ async function handleLoginRequest() {
     isLoading.value = false;
     const idToken = userCredential._tokenResponse.idToken;
     await axiosInstance.post(`signin?userToken=${idToken}`)
+    navigateTo({ path: '/inicio' })
   } catch (error) {
     console.error(error);
     isLoading.value = false;
   }  
   
-  // navigateTo({ path: '/inicio' })
 }
 </script>
