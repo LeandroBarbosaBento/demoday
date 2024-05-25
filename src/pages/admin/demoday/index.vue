@@ -63,6 +63,7 @@
                   <v-text-field
                     id="init"
                     v-model="phaseOne.init"
+                    v-maska:[dateMask]
                     class="mt-3"
                     color="blue-ufba"
                     placeholder="Data de início"
@@ -78,6 +79,7 @@
                   <v-text-field
                     id="end"
                     v-model="phaseOne.end"
+                    v-maska:[dateMask]
                     class="mt-3"
                     color="blue-ufba"
                     placeholder="Data de fim"
@@ -98,6 +100,7 @@
                   <v-text-field
                     id="init"
                     v-model="phaseTwo.init"
+                    v-maska:[dateMask]
                     class="mt-3"
                     color="blue-ufba"
                     placeholder="Data de início"
@@ -113,6 +116,7 @@
                   <v-text-field
                     id="end"
                     v-model="phaseTwo.end"
+                    v-maska:[dateMask]
                     class="mt-3"
                     color="blue-ufba"
                     placeholder="Data de fim"
@@ -133,6 +137,7 @@
                   <v-text-field
                     id="init"
                     v-model="phaseThree.init"
+                    v-maska:[dateMask]
                     class="mt-3"
                     color="blue-ufba"
                     placeholder="Data de início"
@@ -148,6 +153,7 @@
                   <v-text-field
                     id="end"
                     v-model="phaseThree.end"
+                    v-maska:[dateMask]
                     class="mt-3"
                     color="blue-ufba"
                     placeholder="Data de fim"
@@ -168,6 +174,7 @@
                   <v-text-field
                     id="init"
                     v-model="phaseFour.init"
+                    v-maska:[dateMask]
                     class="mt-3"
                     color="blue-ufba"
                     placeholder="Data de início"
@@ -183,6 +190,7 @@
                   <v-text-field
                     id="end"
                     v-model="phaseFour.end"
+                    v-maska:[dateMask]
                     class="mt-3"
                     color="blue-ufba"
                     placeholder="Data de fim"
@@ -405,6 +413,8 @@ definePageMeta({
   pageTitle: 'Criar novo demoday',
   activeNavLink: 'demoday'
 })
+
+const dateMask = {'mask':'##/##/####'}; 
 
 const isLoading = ref(false);
 
