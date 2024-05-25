@@ -121,38 +121,54 @@
         :error-messages="inputs.university.error_messages"
       />
 
-      <label for="profile" class="app-font-size-sm text-gray-600 app-font-weight-medium">
+      <label for="type" class="app-font-size-sm text-gray-600 app-font-weight-medium">
         Perfil
       </label>
 
       <v-select
-        id="profile"
-        :items="profileOptions"
-        v-model="inputs.profile.value"
+        id="type"
+        :items="typeOptions"
+        v-model="inputs.type.value"
         class="mt-3"
         color="primary"
-        :error-messages="inputs.profile.error_messages"
+        :error-messages="inputs.type.error_messages"
       />
 
-      <button
-        class="button button--full text-white bg-red-ufba button--size-md d-flex justify-center py-4 mt-10"
+      <v-alert 
+        v-model="showErrorMessage"
+        closable 
+        :text="errorMessage"
+        class="mb-5 bg-red-100"
+      />
+
+      <v-btn
+        class="py-4"
+        color="red-ufba"
+        block
+        size="lg"
+        rounded="lg"
         type="button"
+        :loading="isLoading"
         @click="handleRegisterRequest"
       >
         Finalizar cadastro
-      </button>  
+    </v-btn>  
     </v-form>
   </div>
 </template>
 
 <script setup lang="ts">
+import axiosInstance from '@/api/axiosInstance';
 
 definePageMeta({
   layout: 'auth-layout',
   pageTitle: 'Cadastro'
 })
 
-const profileOptions = ref(['Professor', 'Aluno']);
+const typeOptions = ref(['PROFESSOR', 'Aluno']);
+const isLoading = ref(false);
+const showErrorMessage = ref(false);
+const errorMessage = ref('');
 
 const inputs = ref({
   name: { error_messages: [], value: '' },
@@ -161,12 +177,45 @@ const inputs = ref({
   password: { error_messages: [], value: '', show: false },
   password_confirmation: { error_messages: [], value: '', show: false },
   university: { error_messages: [], value: '' },
-  profile: { error_messages: [], value: 'Aluno' },
+  type: { error_messages: [], value: 'PROFESSOR' },
 })
 
 const isFormValid = ref<boolean>(false)
 
 async function handleRegisterRequest() {
-  console.log('handleRegisterRequest');
+  try {
+    isLoading.value = true;
+
+    const params = {
+      name: inputs.value.name.value,
+      cpf: inputs.value.cpf.value,
+      email: inputs.value.email.value,
+      password: inputs.value.password.value,
+      password_confirmation: inputs.value.password_confirmation.value,
+      university: inputs.value.university.value,
+      type: inputs.value.type.value,
+    }
+
+    const { data } = await axiosInstance.post('/user/create', params);
+    console.log('data');
+    console.log(data);
+
+  } catch (e) {
+    console.log('error');
+    console.error(e);
+
+    showErrorMessage.value = true;
+    errorMessage.value = e.response.data.message;
+
+    if(e.response.data.errors){
+      const errors = e.response.data.errors;
+      Object.keys(errors).forEach(function(key) {
+          inputs.value[key].error_messages = errors[key]
+      });
+    }
+    
+  } finally {
+    isLoading.value = false;
+  }
 }
 </script>
