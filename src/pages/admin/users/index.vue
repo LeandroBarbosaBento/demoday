@@ -18,12 +18,14 @@
           
           <template v-slot:item.profile="{ item }">
               <v-btn
+                  class="py-4 cursor-default"
                   block
                   :color="item.profile === 'professor' ? 'green-ufba' : 'blue-ufba'" 
                   rounded="lg"
                   size="small"
+                  flat
               >
-                  <span class="text-white"> {{item.profile }} </span> 
+                  <span class="text-white font-weight-bold"> {{item.profile }} </span> 
               </v-btn>
           </template>
       </v-data-table>
@@ -77,11 +79,11 @@ const items = [
 ]
 
 const headers = ref<InternalDataTableHeader>([
-{title: 'id', key: 'id'},
-{title: 'Nome', key: 'name'},
-{title: 'Email', key:'email'},
-{title: 'Perfil', key: 'profile'},
-{title: 'Ação', key: 'action'}
+  {title: 'id', key: 'id'},
+  {title: 'Nome', key: 'name'},
+  {title: 'Email', key:'email'},
+  {title: 'Perfil', key: 'profile'},
+  {title: 'Ação', key: 'action'}
 ]);
 
 function editUser(user) {
