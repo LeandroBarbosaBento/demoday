@@ -27,6 +27,9 @@ export default defineNuxtConfig({
       ],
     },
   },
+  plugins: [
+    '~/plugins/maska.ts'
+  ],
   components: [
     {
       global: true,

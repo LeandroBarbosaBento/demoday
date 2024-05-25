@@ -35,6 +35,7 @@
         class="mt-3"
         color="primary"
         placeholder="Digite seu CPF"
+        v-maska:[{'mask':'###.###.###-##'}]
         :error-messages="inputs.cpf.error_messages"
       />
 
@@ -188,7 +189,7 @@ async function handleRegisterRequest() {
 
     const params = {
       name: inputs.value.name.value,
-      cpf: inputs.value.cpf.value,
+      cpf: inputs.value.cpf.value.split('.').join('').split('-').join(''),
       email: inputs.value.email.value,
       password: inputs.value.password.value,
       password_confirmation: inputs.value.password_confirmation.value,
