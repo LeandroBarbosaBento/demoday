@@ -398,7 +398,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import axiosInstance from '@/lib/api/axiosInstance';
+import axiosInstance from '@/api/axiosInstance';
 
 definePageMeta({
   layout: 'default-layout',

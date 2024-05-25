@@ -87,7 +87,7 @@
 <script setup lang="ts">
 import app from '@/utils/firebaseConfig';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import axiosInstance from '@/lib/api/axiosInstance';
+import axiosInstance from '@/api/axiosInstance';
 
 
 definePageMeta({
