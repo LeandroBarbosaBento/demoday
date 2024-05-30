@@ -112,7 +112,7 @@ const headers = ref<InternalDataTableHeader[]>([
 async function getProjectList(){
   try {
     isLoading.value = true;
-    const { data } = await axiosInstance.get('/getdemodayprojects');
+    const { data } = await axiosInstance.get('/getdemodayacceptedprojects');
     console.log('retorno do endpoint');
     console.log(data);
     projectsToEvaluateList.value = data;
