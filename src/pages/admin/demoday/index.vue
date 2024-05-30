@@ -534,7 +534,7 @@ async function handleCreateDemoday() {
   try {
     isLoading.value = true;
 
-    const response = await axiosInstance.post('/newDemoday', data);
+    const response = await axiosInstance.post('/newdemoday', data);
     console.log('response: ');
     console.log(response);
 
