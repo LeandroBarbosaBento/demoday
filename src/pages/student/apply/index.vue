@@ -270,9 +270,10 @@
               Categoria
             </label>
       
-            <v-text-field
+            <v-select
               id="category"
               v-model="project.category"
+              :items="projectType"
               type="text"
               class="mt-3"
               color="primary"
@@ -338,6 +339,8 @@ definePageMeta({
 const isLoading = ref(false);
 
 const isFormValid = ref<boolean>(false)
+
+const projectType = ref(['IC', 'TCC', 'DISC', 'MSC', 'PHD']);
 
 const itemsApply = ref([
   {
