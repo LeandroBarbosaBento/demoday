@@ -505,7 +505,7 @@ async function handleCreateProject(){
   try {
     isLoading.value = true;
 
-    const response = await axiosInstance.post('/submitProject', data);
+    const response = await axiosInstance.post('/submitproject', data);
     console.log('responde');
     console.log(response);
 
