@@ -101,7 +101,7 @@ const items: RouterItem[] = [
         slug: 'projects',
     },
     {
-        text: 'Lista de demodays',
+        text: 'Histórico de demodays',
         icon: 'mdi-database-eye',
         url: '/historic',
         slug: 'historic',
