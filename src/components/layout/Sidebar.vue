@@ -71,6 +71,12 @@ const items: RouterItem[] = [
         slug: 'apply'
     },
     {
+        text: 'Votar nos projetos',
+        icon: 'mdi-ballot-outline',
+        url: '/student/vote/list',
+        slug: '/vote/list'
+    },
+    {
         text: 'Avaliar projetos',
         icon: 'mdi-format-list-bulleted',
         url: '/teacher/evaluate',
