@@ -69,44 +69,7 @@ const typeColor = ref({
   PHD: 'pink',
 });
 
-const items = [
-    {
-      id: 1,
-      title: 'Nome do projeto',
-      projectType: 'IC',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui aspernatur, enim porro tempora totam ducimus minus architecto rerum pariatur, laborum minima possimus saepe, incidunt natus doloremque ab veniam consequuntur voluptatibus.',
-    },
-    {
-      id: 2,
-      title: 'Nome do projeto 1',
-      projectType: 'TCC',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui aspernatur, enim porro tempora totam ducimus minus architecto rerum pariatur, laborum minima possimus saepe, incidunt natus doloremque ab veniam consequuntur voluptatibus.',
-    },
-    {
-      id: 3,
-      title: 'Nome do projeto 1',
-      projectType: 'DISC',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui aspernatur, enim porro tempora totam ducimus minus architecto rerum pariatur, laborum minima possimus saepe, incidunt natus doloremque ab veniam consequuntur voluptatibus.',
-    },
-    {
-      id: 4,
-      title: 'Nome do projeto 1',
-      projectType: 'MSC',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui aspernatur, enim porro tempora totam ducimus minus architecto rerum pariatur, laborum minima possimus saepe, incidunt natus doloremque ab veniam consequuntur voluptatibus.',
-    },
-    {
-      id: 5,
-      title: 'Nome do projeto 1',
-      projectType: 'PHD',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui aspernatur, enim porro tempora totam ducimus minus architecto rerum pariatur, laborum minima possimus saepe, incidunt natus doloremque ab veniam consequuntur voluptatibus.',
-    },
-    {
-      id: 6,
-      title: 'Nome do projeto',
-      projectType: 'IC',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui aspernatur, enim porro tempora totam ducimus minus architecto rerum pariatur, laborum minima possimus saepe, incidunt natus doloremque ab veniam consequuntur voluptatibus.',
-    },
-]
+const items = ref([])
 
 const headers = ref<InternalDataTableHeader[]>([
   {title: 'Nome', key: 'title'},
@@ -130,6 +93,16 @@ async function getDemodayList(){
 async function getDemodayProjects(id) {
   console.log('getDemodayProjects');
   console.log(id);
+
+  try {
+    isLoading.value = true;
+    const { data } = await axiosInstance.get(`/getdemodayacceptedprojects/${id}`);
+    items.value = data;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+  }
 }
 
 watch(selectedDemoday, (newValue) => getDemodayProjects(newValue));
