@@ -100,6 +100,12 @@ const items = [
       projectType: 'PHD',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui aspernatur, enim porro tempora totam ducimus minus architecto rerum pariatur, laborum minima possimus saepe, incidunt natus doloremque ab veniam consequuntur voluptatibus.',
     },
+    {
+      id: 6,
+      title: 'Nome do projeto',
+      projectType: 'IC',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui aspernatur, enim porro tempora totam ducimus minus architecto rerum pariatur, laborum minima possimus saepe, incidunt natus doloremque ab veniam consequuntur voluptatibus.',
+    },
 ]
 
 const headers = ref([
@@ -120,6 +126,13 @@ async function getDemodayList(){
     isLoading.value = false;
   }
 };
+
+async function getDemodayProjects(id) {
+  console.log('getDemodayProjects');
+  console.log(id);
+}
+
+watch(selectedDemoday, (newValue) => getDemodayProjects(newValue));
 
 async function seeProjectDetails(id) {
   console.log('seeProjectDetails');
