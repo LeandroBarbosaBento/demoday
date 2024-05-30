@@ -108,7 +108,7 @@ const items = [
     },
 ]
 
-const headers = ref([
+const headers = ref<InternalDataTableHeader[]>([
   {title: 'Nome', key: 'title'},
   {title: 'Tipo', key:'projectType'},
   {title: 'Descrição', key: 'description'},
