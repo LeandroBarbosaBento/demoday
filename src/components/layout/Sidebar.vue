@@ -90,6 +90,13 @@ const menus : Menu = {
             url: '/admin/users/pending',
             slug: 'pending'
         },
+        // REMOVER
+        {
+            text: 'Avaliar projetos',
+            icon: 'mdi-format-list-bulleted',
+            url: '/teacher/evaluate',
+            slug: 'evaluate',
+        },
         
     ],
     [userType.PROFESSOR]: [
@@ -131,12 +138,6 @@ const menus : Menu = {
 const items = ref<RouterItem[]>([]);
 
 const menuGeneral: RouterItem[] = [
-    {
-        text: 'Lista de projetos',
-        icon: 'mdi-book-education',
-        url: '/admin/projects',
-        slug: 'projects',
-    },
     {
         text: 'Histórico de demodays',
         icon: 'mdi-database-eye',
