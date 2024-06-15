@@ -10,9 +10,9 @@
                   block
                   color="blue-ufba" 
                   rounded="lg"
-                  @click="aproveUser(item)"
+                  @click="aproveProject(item)"
               >
-                  Aprovar usuário
+                  Aprovar projeto
               </v-btn>
           </template>
           
@@ -73,6 +73,11 @@ async function listPendingProjects() {
   } finally {
     isLoading.value = false;
   }
+}
+
+async function aproveProject(item) {
+  console.log('aproveProject');
+  console.log(item);
 }
 
 onMounted(() => {
