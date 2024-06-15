@@ -129,6 +129,8 @@
       <v-select
         id="type"
         :items="typeOptions"
+        item-title="text"
+        item-value="type"
         v-model="inputs.type.value"
         class="mt-3"
         color="primary"
@@ -166,7 +168,16 @@ definePageMeta({
   pageTitle: 'Cadastro'
 })
 
-const typeOptions = ref(['PROFESSOR', 'Aluno']);
+const typeOptions = ref([
+  {
+    type: 'PROFESSOR',
+    text: 'Professor'
+  },
+  {
+    type: 'STUDENT',
+    text: 'Estudante'
+  }
+]);
 const isLoading = ref(false);
 const showErrorMessage = ref(false);
 const errorMessage = ref('');
