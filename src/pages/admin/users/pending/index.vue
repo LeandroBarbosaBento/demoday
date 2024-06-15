@@ -71,8 +71,21 @@ const headers = ref<InternalDataTableHeader>([
   {title: 'Ação', key: 'action'}
 ]);
 
-function aproveUser(user) {
-  console.log(user)
+async function aproveUser(user) {
+  try {
+    isLoading.value = true;
+    const { data } = await axiosInstance.post('/user/setuserstatus', null, {
+      params: {
+        userId:user.id, 
+        userStatus: 'APPROVED'
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+    listUsers();
+  }
 }
 
 async function listUsers(){
