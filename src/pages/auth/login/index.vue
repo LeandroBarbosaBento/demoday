@@ -115,7 +115,9 @@ async function handleLoginRequest() {
       inputs.value.password.value
     );
     const idToken = userCredential._tokenResponse.idToken;
-    await axiosInstance.post(`signin?userToken=${idToken}`)
+    const { data } = await axiosInstance.post(`signin?userToken=${idToken}`)
+
+    localStorage.setItem('userData', JSON.stringify(data));
     navigateTo({ path: '/inicio' })
   } catch (error) {
     console.error(error);

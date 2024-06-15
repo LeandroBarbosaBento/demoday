@@ -6,7 +6,10 @@
             </nuxt-link>
         </div>
 
-        <ul v-for="(item, i) in items" :key="i">
+        <ul 
+            v-for="(item, i) in items.concat(menuGeneral)" 
+            :key="i"
+        >
             <li
                 :class="{
                     'sidebar__item--active': route.meta.activeNavLink === item.slug,
@@ -51,49 +54,83 @@ interface RouterItem {
 
 const route = useRoute()
 
-const items: RouterItem[] = [
-    {
-        text: 'Inicio',
-        icon: 'mdi-home',
-        url: '/inicio',
-        slug: '/inicio'
-    },
-    {
-        text: 'Criar novo demoday',
-        icon: 'mdi-invoice-plus',
-        url: '/admin/demoday',
-        slug: 'demoday'
-    },
-    {
-        text: 'Cadastro de projeto',
-        icon: 'mdi-projector-screen',
-        url: '/student/apply',
-        slug: 'apply'
-    },
-    {
-        text: 'Votar nos projetos',
-        icon: 'mdi-ballot-outline',
-        url: '/student/vote/list',
-        slug: '/vote/list'
-    },
-    {
-        text: 'Avaliar projetos',
-        icon: 'mdi-format-list-bulleted',
-        url: '/teacher/evaluate',
-        slug: 'evaluate',
-    },
-    {
-        text: 'Lista de usuários',
-        icon: 'mdi-account',
-        url: '/admin/users',
-        slug: 'users',
-    },
-    {
-        text: 'Usuários Pendentes',
-        icon: 'mdi-account-clock',
-        url: '/admin/users/pending',
-        slug: 'pending'
-    },
+enum userType {
+    ADMIN="ADMIN",
+    PROFESSOR="PROFESSOR",
+    STUDENT="STUDENT"
+}
+
+interface Menu {
+    [index: userType]: RouterItem []
+}
+
+const menus : Menu = {
+    [userType.ADMIN]: [
+        {
+            text: 'Inicio',
+            icon: 'mdi-home',
+            url: '/inicio',
+            slug: '/inicio'
+        },
+        {
+            text: 'Criar novo demoday',
+            icon: 'mdi-invoice-plus',
+            url: '/admin/demoday',
+            slug: 'demoday'
+        },
+        {
+            text: 'Lista de usuários',
+            icon: 'mdi-account',
+            url: '/admin/users',
+            slug: 'users',
+        },
+        {
+            text: 'Usuários Pendentes',
+            icon: 'mdi-account-clock',
+            url: '/admin/users/pending',
+            slug: 'pending'
+        },
+        
+    ],
+    [userType.PROFESSOR]: [
+        {
+            text: 'Avaliar projetos',
+            icon: 'mdi-format-list-bulleted',
+            url: '/teacher/evaluate',
+            slug: 'evaluate',
+        },
+        {
+            text: 'Sair',
+            icon: 'mdi-exit-to-app',
+            url: '/auth/login',
+            slug: 'login'
+        },
+    ],
+    [userType.STUDENT]: [
+        {
+            text: 'Cadastro de projeto',
+            icon: 'mdi-projector-screen',
+            url: '/student/apply',
+            slug: 'apply'
+        },
+        {
+            text: 'Votar nos projetos',
+            icon: 'mdi-ballot-outline',
+            url: '/student/vote/list',
+            slug: '/vote/list'
+        },
+        {
+            text: 'Sair',
+            icon: 'mdi-exit-to-app',
+            url: '/auth/login',
+            slug: 'login'
+        },
+    ]
+}
+
+const items = ref<RouterItem[]>([]);
+
+const menuGeneral: RouterItem[] = [
     {
         text: 'Lista de projetos',
         icon: 'mdi-book-education',
@@ -114,9 +151,28 @@ const items: RouterItem[] = [
     },
 ];
 
+interface User {
+    cpf: string
+    email: string
+    id: string
+    name: string
+    password: string | null
+    status: string
+    type: string
+    university?: string
+}
+
+const userData = ref<User>();
 async function navigateToLink(item: RouterItem) {
     await navigateTo(item.url)
 }
+
+onMounted(() => {
+    let data = localStorage.getItem('userData');
+    if(data) userData.value = JSON.parse(data);
+
+    items.value = menus[userData.value.type];
+});
 </script>
 <style lang="scss" scoped>
 .decoration-none {
