@@ -54,7 +54,11 @@
         </tbody>
       </v-table>
 
-      <v-form v-model="isFormValid" class="pt-8 pb-5">
+      <v-form 
+        v-model="isFormValid" 
+        class="pt-8 pb-5"
+        @submit.prevent="handleCreateProject"
+      >
         <label for="title" class="app-font-size-lg app-font-weight-bold mt-5 text-gray-600">
           Nome do projeto
         </label>
@@ -317,8 +321,7 @@
 
         <button
           class="button button--full text-white bg-red-ufba button--size-md justify-center py-4 app-font-weight-bold app-font-size-xl"
-          type="button"
-          @click="handleCreateProject"
+          type="submit"
         >
           Submeter projeto
         </button> 
@@ -483,7 +486,7 @@ function deleteCollaborator(index: number){
 }
 
 async function handleCreateProject(){
-  console.log(handleCreateProject)
+  if(!isFormValid.value) return;
   const data = {
     period: project.value.period,
     title: project.value.title,
