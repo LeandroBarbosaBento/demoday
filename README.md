@@ -18,7 +18,7 @@ Felipe Angelo           | Indaiara Bonfim
 * [Documento de requisitos](https://docs.google.com/document/d/1WxX1Q8yOPc812UFwMu00FkKZp7S3j5BIyUZi6pdiwp0/edit?tab=t.0#heading=h.op8j48fy8tth)
 * [Quadro do Trello](https://trello.com/b/cQF1ZpIU/ic0045)
 * [Repositório do backend](https://github.com/samuelrios/demoday-api)
-* [Documentação da API]('https://demoday-api.onrender.com/swagger-ui/index.html#/')
+* [Documentação da API](https://demoday-api.onrender.com/swagger-ui/index.html#/)
 
 ## Tecnologias
 Frontend      | Backend
