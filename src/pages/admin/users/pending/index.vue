@@ -7,12 +7,20 @@
           <template v-slot:item.action="{ item }">
               <v-btn 
                   variant="outlined" 
-                  block
                   color="blue-ufba" 
                   rounded="lg"
                   @click="aproveUser(item)"
+                  class="mr-3"
               >
-                  Aprovar usuário
+                  Aprovar
+              </v-btn>
+              <v-btn 
+                  variant="outlined" 
+                  color="red-ufba" 
+                  rounded="lg"
+                  @click="rejectUser(item)"
+              >
+                  Rejeitar
               </v-btn>
           </template>
           
@@ -87,6 +95,24 @@ async function aproveUser(user) {
     listUsers();
   }
 }
+
+async function rejectUser(user) {
+  try {
+    isLoading.value = true;
+    const { data } = await axiosInstance.post('/user/setuserstatus', null, {
+      params: {
+        userId:user.id, 
+        userStatus: 'REJECTED'
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+    listUsers();
+  }
+}
+
 
 async function listUsers(){
   try {
