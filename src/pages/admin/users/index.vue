@@ -71,8 +71,9 @@ const headers = ref<InternalDataTableHeader>([
   {title: 'Ação', key: 'action'}
 ]);
 
-function editUser(user) {
+async function editUser(user: any) {
   console.log(user)
+  await navigateTo({ path: '/admin/users/edit', query: { user: JSON.stringify(user) } });
 }
 
 async function listUsers(){

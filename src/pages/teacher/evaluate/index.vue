@@ -10,9 +10,9 @@
                   block
                   color="blue-ufba" 
                   rounded="lg"
-                  @click="aproveProject(item)"
+                  @click="analyzeProject(item)"
               >
-                  Aprovar projeto
+                  Analisar projeto
               </v-btn>
           </template>
           
@@ -75,9 +75,10 @@ async function listPendingProjects() {
   }
 }
 
-async function aproveProject(item) {
-  console.log('aproveProject');
-  console.log(item);
+async function analyzeProject(project: any) {
+  console.log('analyzeProject');
+  console.log(project);
+  await navigateTo({ path: '/teacher/evaluate/approve', query: { project: JSON.stringify(project) } });
 }
 
 onMounted(() => {
