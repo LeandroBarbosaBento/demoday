@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-            <tr v-for="(item, index) in itemsApply" :key="index">
+            <tr v-for="(item, index) in itemsApply.accCriteriaDemoday" :key="index">
               <td>
                 {{ item.name }}
               </td>
@@ -43,7 +43,7 @@
           </tr>
         </thead>
         <tbody>
-            <tr v-for="(item, index) in itemsApply" :key="index">
+            <tr v-for="(item, index) in itemsApply.evalCriteriaDemoday" :key="index">
               <td>
                 {{ item.name }}
               </td>
@@ -332,6 +332,7 @@
 </template>
 <script setup lang="ts">
 import axiosInstance from '@/api/axiosInstance';
+import { User, Project, Demoday } from '@/src/types/index.ts';
 
 definePageMeta({
   layout: 'default-layout',
@@ -345,22 +346,31 @@ const isFormValid = ref<boolean>(false)
 
 const projectType = ref(['IC', 'TCC', 'DISC', 'MSC', 'PHD']);
 
-const itemsApply = ref([
-  {
-    name: 'Critério 1',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget arcu convallis, pretium velit vitae, egestas nisi. Duis quis rutrum urna. Vivamus urna arcu, ullamcorper et varius eget, venenatis ut est.'
-  },
-  {
-    name: 'Critério 2',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget arcu convallis, pretium velit vitae, egestas nisi. Duis quis rutrum urna. Vivamus urna arcu, ullamcorper et varius eget, venenatis ut est.'
-  },
-  {
-    name: 'Critério 3',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget arcu convallis, pretium velit vitae, egestas nisi. Duis quis rutrum urna. Vivamus urna arcu, ullamcorper et varius eget, venenatis ut est.'
-  }
-]);
+const itemsApply = ref<Demoday>({});
 
-interface Project {
+const user= ref<User>({});
+
+// const itemsApply = ref<AccCriteriaDemoday[]>([])
+
+// const itemsEvaluation = ref<EvalCriteriaDemoday[]>([])
+
+// const itemsApply = ref([
+//   {
+//     name: 'Critério 1',
+//     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget arcu convallis, pretium velit vitae, egestas nisi. Duis quis rutrum urna. Vivamus urna arcu, ullamcorper et varius eget, venenatis ut est.'
+//   },
+//   {
+//     name: 'Critério 2',
+//     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget arcu convallis, pretium velit vitae, egestas nisi. Duis quis rutrum urna. Vivamus urna arcu, ullamcorper et varius eget, venenatis ut est.'
+//   },
+//   {
+//     name: 'Critério 3',
+//     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget arcu convallis, pretium velit vitae, egestas nisi. Duis quis rutrum urna. Vivamus urna arcu, ullamcorper et varius eget, venenatis ut est.'
+//   }
+// ]);
+
+
+interface ProjectLocal {
   title: string
   collaborators: Collaborator[]
   linkVideo: string
@@ -375,35 +385,35 @@ interface Project {
   image: string
 }
 
-const project = ref<Project>({
-  title: '',
-  collaborators: [],
-  linkVideo: '',
-  discipline: '',
-  teacher: '',
-  year: '',
-  period: NaN,
-  description: '',
-  technologies: '',
-  category: '',
-  linkDocumentation: '',
-  image: ''
-})
-
-// const project = ref<Project>({
-//   title: 'Demoday',
-//   collaborators: [{name: "Leandro", email: "leandro@ufba.br"}, {name: "Felipe", email: "felipe@ufba.br"}, {name: "Norma", email: "norma@ufba.br"}],
-//   linkVideo: 'https://www.demoday.com',
-//   discipline: 'Tópicos em Sistemas Web',
-//   teacher: 'Fred',
-//   year: '2024',
-//   period: 0,
-//   description: 'Demoday na veia',
-//   technologies: 'Vue.js, Nuxt.js, SpringBoot, Java',
-//   category: 'Software',
-//   linkDocumentation: 'https://github.com/LeandroBarbosaBento/demoday',
-//   image: 'demoday.png'
+// const project = ref<ProjectLocal>({
+//   title: '',
+//   collaborators: [],
+//   linkVideo: '',
+//   discipline: '',
+//   teacher: '',
+//   year: '',
+//   period: NaN,
+//   description: '',
+//   technologies: '',
+//   category: '',
+//   linkDocumentation: '',
+//   image: ''
 // })
+
+const project = ref<ProjectLocal>({
+  title: 'Demoday',
+  collaborators: [{name: "Leandro", email: "leandro@ufba.br"}, {name: "Felipe", email: "felipe@ufba.br"}, {name: "Norma", email: "norma@ufba.br"}],
+  linkVideo: 'https://www.demoday.com',
+  discipline: 'Tópicos em Sistemas Web',
+  teacher: 'Fred',
+  year: '2024',
+  period: 1,
+  description: 'Demoday na veia',
+  technologies: 'Vue.js, Nuxt.js, SpringBoot, Java',
+  category: 'IC',
+  linkDocumentation: 'https://github.com/LeandroBarbosaBento/demoday',
+  image: 'demoday.png'
+})
 
 interface Collaborator {
   name: string
@@ -416,18 +426,18 @@ const collaborator = ref<Collaborator>({
 })
 
 // Expressão regular para validar apenas letras, espaços e acentos
-const namePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
+const namePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]*$/;
 
 // Regras de validação para o campo de nome
 const nameRules = [
-  (v: string) => !!v || 'O nome é obrigatório',
-  (v: string) => namePattern.test(v) || 'Apenas letras, espaços e acentos são permitidos'
+  // (v: string) => !!v || 'O nome é obrigatório',
+  (v: string) => v.length === 0 || namePattern.test(v) || 'Apenas letras, espaços e acentos são permitidos'
 ];
 
 // Regras de validação para o campo de email
 const emailRules = [
-  (v: string) => !!v || 'Email é obrigatório',
-  (v: string) => /.+@.+\..+/.test(v) || 'Email inválido'
+  // (v: string) => v.length === 0 || 'Email é obrigatório',
+  (v: string) => v.length === 0 || /.+@.+\..+/.test(v) || 'Email inválido'
 ];
 
 // Expressão regular para validar links
@@ -467,10 +477,22 @@ const linkRulesOptional = [
 //   email: "reynan@ufba.br",
 // })
 
+function validate(value: string, rules: any[]) {
+  for (let rule of rules) {
+    const validationResult = rule(value);
+    if (validationResult !== true) {
+      return validationResult; // Retorna a mensagem de erro se a validação falhar
+    }
+  }
+  return true; // Retorna true se todas as validações passarem
+}
+
 function addCollaborator(){
-  if (!collaborator.value.name || !collaborator.value.email) {
-    console.log("Error");
-    return ;
+  const validateName = validate(collaborator.value.name, nameRules);
+  const validateEmail = validate(collaborator.value.email, emailRules);
+  if (!collaborator.value.name || !collaborator.value.email || validateName !== true || validateEmail !== true) {
+  console.log("Error");
+  return ;
   }
   project.value.collaborators.push(collaborator.value)
   collaborator.value = {name: '', email: ''}
@@ -486,20 +508,29 @@ function deleteCollaborator(index: number){
 }
 
 async function handleCreateProject(){
-  if(!isFormValid.value) return;
+  if(!isFormValid.value){
+    console.error("Form Inválido");
+    return;
+  } 
+    
   const data = {
     period: project.value.period,
     title: project.value.title,
     linkvideo: project.value.linkVideo,
     discipline: project.value.discipline,
     professor: project.value.teacher,
-    year: project.value.year,
+    year: {value: Number(project.value.year), leap: true},
     description: project.value.description,
     category: project.value.category,
     tecnologies: project.value.technologies,
     linkdoc: project.value.linkDocumentation,
+    status: 'SUBMITTED',
+    type: project.value.category,
+    emails: [],
     image: project.value.image,
-    projectType: "IC"
+    // demoday: itemsApply.value,
+    // user: user,
+    projectType: project.value.category
   };
 
   console.log('data')
@@ -519,4 +550,34 @@ async function handleCreateProject(){
   }
 
 }
+
+async function receivingCriteria(){
+  try {
+    isLoading.value = true;
+    const { data } = await axiosInstance.get('/getactivedemoday');
+    itemsApply.value = data[0];
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+async function receivingUser(){
+  try{
+    isLoading.value = true;
+    const { data } = await axiosInstance.get('/user/loggeduser');
+    user.value = data;
+  }catch (error) {
+    console.error(error);
+  }finally {
+    isLoading.value = false;
+  }
+
+}
+
+onMounted(() => {
+  receivingCriteria();
+  receivingUser();
+});
 </script>
