@@ -38,7 +38,7 @@ interface Demoday{
     phaseFourEnd: string 
     accCriteriaDemoday: AccCriteriaDemoday
     evalCriteriaDemoday: EvalCriteriaDemoday
-    }
+}
 
 interface Project{
     id: number
@@ -54,7 +54,7 @@ interface Project{
     linkdoc: string
     status: 'SUBMITTED' | 'REFUSED' | 'ACCEPTED'
     type: 'IC' | 'TCC' | 'DISC' | 'MSC' | 'PHD'
-    emails: [string]
+    emails: string[]
     image: string
     demoday: Demoday
     rejectionReason: string
