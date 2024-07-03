@@ -519,7 +519,7 @@ async function handleCreateProject(){
     linkvideo: project.value.linkVideo,
     discipline: project.value.discipline,
     professor: project.value.teacher,
-    year: {value: Number(project.value.year), leap: true},
+    year: project.value.year,
     description: project.value.description,
     category: project.value.category,
     tecnologies: project.value.technologies,
@@ -528,8 +528,6 @@ async function handleCreateProject(){
     type: project.value.category,
     emails: [],
     image: project.value.image,
-    // demoday: itemsApply.value,
-    // user: user,
     projectType: project.value.category
   };
 

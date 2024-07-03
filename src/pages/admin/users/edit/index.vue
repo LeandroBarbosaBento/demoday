@@ -95,7 +95,7 @@
         rounded="lg"
         type="button"
         :loading="isLoading"
-        @click="handleRegisterRequest"
+        @click="handleUpdateUser"
       >
         Atualizar Dados do usuário
     </v-btn>  
@@ -155,5 +155,11 @@ const inputs = ref({
 })
 
 const isFormValid = ref<boolean>(false)
+
+function handleUpdateUser() {
+  if(!isFormValid.value) return;
+
+  
+}
 
 </script>
