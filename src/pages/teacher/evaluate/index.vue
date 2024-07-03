@@ -78,7 +78,7 @@ async function listPendingProjects() {
 async function analyzeProject(project: any) {
   console.log('analyzeProject');
   console.log(project);
-  await navigateTo({ path: '/teacher/evaluate/approve', query: { project: JSON.stringify(project) } });
+  await navigateTo({ path: `/teacher/evaluate/approve/${project.id}`});
 }
 
 onMounted(() => {
