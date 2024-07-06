@@ -106,12 +106,6 @@ const menus : Menu = {
             url: '/teacher/evaluate',
             slug: 'evaluate',
         },
-        {
-            text: 'Sair',
-            icon: 'mdi-exit-to-app',
-            url: '/auth/login',
-            slug: 'login'
-        },
     ],
     [userType.STUDENT]: [
         {
@@ -125,12 +119,6 @@ const menus : Menu = {
             icon: 'mdi-ballot-outline',
             url: '/student/vote/list',
             slug: '/vote/list'
-        },
-        {
-            text: 'Sair',
-            icon: 'mdi-exit-to-app',
-            url: '/auth/login',
-            slug: 'login'
         },
     ]
 }

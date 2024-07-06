@@ -2,7 +2,10 @@
   <div>
     <h3 class="app-font-size-lg">
       Seja Bem Vindo ao
-      <span class="app-font-size-lg text-blue-ufba app-font-weight-semibold">
+      <span 
+        class="app-font-size-lg text-blue-ufba app-font-weight-semibold"
+        @click="userHelper.show = !userHelper.show"
+      >
       Demoday
       </span>
       !
@@ -10,6 +13,16 @@
     <p class="mt-1 d-block app-font-weight-regular text-gray-500 app-font-size-sm">
       Faça o login e acesse a plataforma.
     </p>
+
+    <v-select 
+      v-if="userHelper.show"
+      v-model="userHelper.selected"
+      label="Selecione um tipo de usuário"
+      placeholder="Selecione um tipo de usuário"
+      :items="['student', 'professor', 'admin']"
+      class="mt-5"
+      @update:modelValue="onUserHelper"
+    />
   
     <v-form v-model="isFormValid" class="pt-2 pb-5">
       <label for="email" class="app-font-size-sm text-gray-600 app-font-weight-medium">
@@ -100,6 +113,32 @@ const inputs = ref({
   password: { error_messages: [], show: false, value: '12345678', },
   email: { error_messages: [], value: 'meumiler@gmail.com' },
 })
+
+const userHelper = ref({
+  show: false,
+  selected: null,
+  email: '',
+  password: '',
+});
+
+function onUserHelper() {
+  if(userHelper.value.selected === 'admin') {
+    inputs.value.password.value = '12345678';
+    inputs.value.email.value = 'meumiler@gmail.com';
+  }
+
+  if(userHelper.value.selected === 'student') {
+    inputs.value.password.value = '123456';
+    inputs.value.email.value = 'aluno3@email.com';
+  }
+
+  if(userHelper.value.selected === 'professor') {
+    inputs.value.password.value = '123456';
+    inputs.value.email.value = 'professor1@email.com';
+  }
+  
+}
+
 
 const isLoading = ref(false);
 
