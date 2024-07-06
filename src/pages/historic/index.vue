@@ -27,17 +27,17 @@
               </v-btn>
           </template>
           
-          <template v-slot:item.projectType="{ item }">
+          <template v-slot:item.type="{ item }">
               <v-btn
                   class="py-4 cursor-default"
                   block
-                  :color="typeColor[item.projectType]" 
+                  :color="typeColor[item.type]" 
                   rounded="lg"
                   size="small"
                   flat
               >
                   <span class="text-white font-weight-bold"> 
-                    {{ item.projectType }} 
+                    {{ item.type }} 
                   </span> 
               </v-btn>
           </template>
@@ -73,7 +73,7 @@ const items = ref([])
 
 const headers = ref<InternalDataTableHeader[]>([
   {title: 'Nome', key: 'title'},
-  {title: 'Tipo', key:'projectType'},
+  {title: 'Tipo', key:'type'},
   {title: 'Descrição', key: 'description'},
   {title: '', key: 'details'}
 ]);
