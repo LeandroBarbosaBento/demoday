@@ -541,9 +541,12 @@ async function handleCreateDemoday() {
 
   } catch (error) {
     console.error(error);
+    let message = '';
+    if(error?.response?.data?.message) message = error.response.data.message;
+    else message = error.message;
     Swal.fire({
       title: 'Erro!',
-      text: error.response.data.message,
+      text: message,
       icon: 'error',
       confirmButtonText: '<span class="text-white">Ok</span>'
 
