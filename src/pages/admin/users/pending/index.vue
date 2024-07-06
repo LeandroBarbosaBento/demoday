@@ -47,6 +47,7 @@
 <script setup lang="ts">
 import type { InternalDataTableHeader } from 'vuetify/lib/components/VDataTable/VDataTable'
 import axiosInstance from '@/api/axiosInstance';
+import Swal from 'sweetalert2'
 
 definePageMeta({
   layout: 'default-layout',
@@ -80,6 +81,20 @@ const headers = ref<InternalDataTableHeader>([
 ]);
 
 async function aproveUser(user) {
+  var canApprove = false;
+
+  Swal.fire({
+    title: `Deseja mesmo aprovar o usuário ${user.name}?`,
+    showDenyButton: true,
+    confirmButtonText: "<span class='text-white'>Aprovar</span>",
+    confirmButtonColor: "green",
+    denyButtonText: "<span class='text-white'>Cancelar</span>"
+  }).then((result) => {
+    if (result.isConfirmed) canApprove = true;
+  });
+
+  if(!canApprove) return;
+
   try {
     isLoading.value = true;
     const { data } = await axiosInstance.post('/user/setuserstatus', null, {
@@ -87,6 +102,14 @@ async function aproveUser(user) {
         userId:user.id, 
         userStatus: 'APPROVED'
       }
+    });
+
+    Swal.fire({
+      title: "Aprovado",
+      text: "Usuário aprovado",
+      icon: "success",
+      showConfirmButton: false,
+      timer: 1250
     });
   } catch (error) {
     console.error(error);
