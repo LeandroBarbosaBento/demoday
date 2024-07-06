@@ -9,7 +9,7 @@
                   variant="outlined" 
                   color="blue-ufba" 
                   rounded="lg"
-                  @click="aproveUser(item)"
+                  @click="handleAproveUser(item)"
                   class="mr-3"
               >
                   Aprovar
@@ -18,7 +18,7 @@
                   variant="outlined" 
                   color="red-ufba" 
                   rounded="lg"
-                  @click="rejectUser(item)"
+                  @click="handleRejectUser(item)"
               >
                   Rejeitar
               </v-btn>
@@ -80,9 +80,7 @@ const headers = ref<InternalDataTableHeader>([
   {title: 'Ação', key: 'action'}
 ]);
 
-async function aproveUser(user) {
-  var canApprove = false;
-
+function handleAproveUser(user) {
   Swal.fire({
     title: `Deseja mesmo aprovar o usuário ${user.name}?`,
     showDenyButton: true,
@@ -90,11 +88,13 @@ async function aproveUser(user) {
     confirmButtonColor: "green",
     denyButtonText: "<span class='text-white'>Cancelar</span>"
   }).then((result) => {
-    if (result.isConfirmed) canApprove = true;
-  });
+    if (result.isConfirmed) {
+      aproveUser(user);
+    }
+  }); 
+}
 
-  if(!canApprove) return;
-
+async function aproveUser(user) {
   try {
     isLoading.value = true;
     const { data } = await axiosInstance.post('/user/setuserstatus', null, {
@@ -106,7 +106,7 @@ async function aproveUser(user) {
 
     Swal.fire({
       title: "Aprovado",
-      text: "Usuário aprovado",
+      text: "Usuário aprovado com sucesso",
       icon: "success",
       showConfirmButton: false,
       timer: 1250
@@ -119,6 +119,21 @@ async function aproveUser(user) {
   }
 }
 
+function handleRejectUser(user) {
+  Swal.fire({
+    title: `Deseja mesmo rejeitar o usuário ${user.name}?`,
+    showDenyButton: true,
+    confirmButtonText: "<span class='text-white'>Rejeitar</span>",
+    confirmButtonColor: "red",
+    denyButtonText: "<span class='text-white'>Cancelar</span>",
+    denyButtonColor: "gray",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      rejectUser(user);
+    }
+  });
+}
+
 async function rejectUser(user) {
   try {
     isLoading.value = true;
@@ -127,6 +142,13 @@ async function rejectUser(user) {
         userId:user.id, 
         userStatus: 'REJECTED'
       }
+    });
+    Swal.fire({
+      title: "Rejeitado",
+      text: "Usuário rejeitado com sucesso!",
+      icon: "success",
+      showConfirmButton: false,
+      timer: 1250
     });
   } catch (error) {
     console.error(error);
