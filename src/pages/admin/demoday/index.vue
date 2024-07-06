@@ -407,6 +407,7 @@
 </template>
 <script setup lang="ts">
 import axiosInstance from '@/api/axiosInstance';
+import Swal from 'sweetalert2'
 
 definePageMeta({
   layout: 'default-layout',
@@ -516,14 +517,14 @@ async function handleCreateDemoday() {
   console.log('handleCreateDemoday');
   const data = {
     name: name.value,
-    phaseOneInit: phaseOne.value.init,
-    phaseOneEnd: phaseOne.value.end,
-    phaseTwoInit: phaseTwo.value.init,
-    phaseTwoEnd: phaseTwo.value.init,
-    phaseThreeInit: phaseThree.value.init,
-    phaseThreeEnd: phaseThree.value.init,
-    phaseFourInit: phaseFour.value.init,
-    phaseFourEnd: phaseFour.value.init,
+    phaseOneInit: formatSendDate(phaseOne.value.init),
+    phaseOneEnd: formatSendDate(phaseOne.value.end),
+    phaseTwoInit: formatSendDate(phaseTwo.value.init),
+    phaseTwoEnd: formatSendDate(phaseTwo.value.init),
+    phaseThreeInit: formatSendDate(phaseThree.value.init),
+    phaseThreeEnd: formatSendDate(phaseThree.value.init),
+    phaseFourInit: formatSendDate(phaseFour.value.init),
+    phaseFourEnd: formatSendDate(phaseFour.value.init),
     accCriteriaDemoday: applyCriteriaAdded.value,
     evalCriteriaDemoday: evalCriteriaAdded.value 
   }
@@ -540,9 +541,22 @@ async function handleCreateDemoday() {
 
   } catch (error) {
     console.error(error);
+    Swal.fire({
+      title: 'Erro!',
+      text: error.response.data.message,
+      icon: 'error',
+      confirmButtonText: '<span class="text-white">Ok</span>'
+
+    })
   } finally {
     isLoading.value = false;
   }
+}
+
+function formatSendDate(date) {
+  if(!date) return '';
+  let splited = date.split('/')
+  return `${splited[2]}-${splited[1]}-${splited[0]}`;
 }
 </script>
 <style scoped lang="scss">
