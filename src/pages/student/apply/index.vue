@@ -12,10 +12,10 @@
         Critérios de inscrição
       </h2>
 
-      <v-table class="rounded-lg elevation-2 mt-5">
+      <v-table class="rounded-lg elevation-2 mt-5 py-5 px-5">
         <thead>
           <tr>
-            <th style="width: 10%;">Critério</th>
+            <th style="width: 15%;">Critério</th>
             <th>Descrição</th>
           </tr>
         </thead>
@@ -35,10 +35,10 @@
         Critérios de avaliação
       </h2>
 
-      <v-table class="rounded-lg elevation-2 mt-5">
+      <v-table class="rounded-lg elevation-2 mt-5 py-5 px-5">
         <thead>
           <tr>
-            <th style="width: 10%;">Critério</th>
+            <th style="width: 15%;">Critério</th>
             <th>Descrição</th>
           </tr>
         </thead>
