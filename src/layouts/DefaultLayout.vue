@@ -3,15 +3,11 @@
         <v-navigation-drawer
             v-model="drawer"
             expand-on-hover
-            rail
-            :rail-width="108"
             :width="320"
             app
             class="nav"
-            @mouseenter="handleUpdateRail(true)"
-            @mouseleave="handleUpdateRail(false)"
         >
-            <sidebar :is-expanded="isNavigationExpanded" />
+            <sidebar is-expanded />
         </v-navigation-drawer>
 
         <v-app-bar class="elevation-0" :height="90">
@@ -35,9 +31,6 @@ const { lgAndUp } = useDisplay();
 const drawer = ref(lgAndUp.value);
 const isNavigationExpanded = ref(false);
 
-function handleUpdateRail(value: any) {
-  isNavigationExpanded.value = value;
-}
 </script>
 <style scoped lang="scss">
 .background,
