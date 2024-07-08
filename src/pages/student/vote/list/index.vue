@@ -70,11 +70,9 @@ async function getProjectList(){
     const response = await axiosInstance.get('/getactivedemoday');
 
     const { data } = await axiosInstance.get(`/getdemodayacceptedprojects/${response.data[0].id}`);
-    console.log('retorno do endpoint');
-    console.log(data);
+
     projectsToEvaluateList.value = data;
   } catch (error) {
-    console.log('Erro no retorno do endpoint');
     console.error(error);
   } finally {
     isLoading.value = false;
@@ -82,8 +80,6 @@ async function getProjectList(){
 };
 
 async function evaluateProject(id) {
-  console.log('evaluateProject');
-  console.log(id);
   navigateTo(`/student/vote/${id}`);
 }
 
