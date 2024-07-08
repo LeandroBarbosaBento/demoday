@@ -1,14 +1,8 @@
 <template>
   <div class="px-8 py-8">
-    <v-btn 
-      text="Teste de endpoint" 
-      class="mt-5 mb-10"
-      size="x-large"
-      @click="getProjectList" 
-    />
     <v-data-table class="px-4 py-4 elevation-1 rounded-lg"
         :headers="headers"
-        :items="items"
+        :items="projectsToEvaluateList"
     >
         <template v-slot:item.details="{ item }">
             <v-btn 
@@ -23,17 +17,17 @@
             </v-btn>
         </template>
         
-        <template v-slot:item.projectType="{ item }">
+        <template v-slot:item.type="{ item }">
             <v-btn
                 class="py-4 cursor-default"
                 block
-                :color="typeColor[item.projectType]" 
+                :color="typeColor[item.type]" 
                 rounded="lg"
                 size="small"
                 flat
             >
                 <span class="text-white font-weight-bold"> 
-                  {{ item.projectType }} 
+                  {{ item.type }} 
                 </span> 
             </v-btn>
         </template>
@@ -63,48 +57,9 @@ const typeColor = ref({
   PHD: 'pink',
 });
 
-const items = [
-    {
-      id: 1,
-      title: 'Nome do projeto',
-      projectType: 'IC',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui aspernatur, enim porro tempora totam ducimus minus architecto rerum pariatur, laborum minima possimus saepe, incidunt natus doloremque ab veniam consequuntur voluptatibus.',
-    },
-    {
-      id: 2,
-      title: 'Nome do projeto 1',
-      projectType: 'TCC',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui aspernatur, enim porro tempora totam ducimus minus architecto rerum pariatur, laborum minima possimus saepe, incidunt natus doloremque ab veniam consequuntur voluptatibus.',
-    },
-    {
-      id: 3,
-      title: 'Nome do projeto 1',
-      projectType: 'DISC',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui aspernatur, enim porro tempora totam ducimus minus architecto rerum pariatur, laborum minima possimus saepe, incidunt natus doloremque ab veniam consequuntur voluptatibus.',
-    },
-    {
-      id: 4,
-      title: 'Nome do projeto 1',
-      projectType: 'MSC',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui aspernatur, enim porro tempora totam ducimus minus architecto rerum pariatur, laborum minima possimus saepe, incidunt natus doloremque ab veniam consequuntur voluptatibus.',
-    },
-    {
-      id: 5,
-      title: 'Nome do projeto 1',
-      projectType: 'PHD',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui aspernatur, enim porro tempora totam ducimus minus architecto rerum pariatur, laborum minima possimus saepe, incidunt natus doloremque ab veniam consequuntur voluptatibus.',
-    },
-    {
-      id: 6,
-      title: 'Nome do projeto',
-      projectType: 'IC',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui aspernatur, enim porro tempora totam ducimus minus architecto rerum pariatur, laborum minima possimus saepe, incidunt natus doloremque ab veniam consequuntur voluptatibus.',
-    },
-]
-
 const headers = ref<InternalDataTableHeader[]>([
   {title: 'Nome', key: 'title'},
-  {title: 'Tipo', key:'projectType'},
+  {title: 'Tipo', key:'type'},
   {title: 'Descrição', key: 'description'},
   {title: '', key: 'details'}
 ]);
@@ -112,7 +67,9 @@ const headers = ref<InternalDataTableHeader[]>([
 async function getProjectList(){
   try {
     isLoading.value = true;
-    const { data } = await axiosInstance.get('/getdemodayacceptedprojects');
+    const response = await axiosInstance.get('/getactivedemoday');
+
+    const { data } = await axiosInstance.get(`/getdemodayacceptedprojects/${response.data[0].id}`);
     console.log('retorno do endpoint');
     console.log(data);
     projectsToEvaluateList.value = data;
@@ -127,6 +84,7 @@ async function getProjectList(){
 async function evaluateProject(id) {
   console.log('evaluateProject');
   console.log(id);
+  navigateTo(`/student/vote/${id}`);
 }
 
 onMounted(() => {
