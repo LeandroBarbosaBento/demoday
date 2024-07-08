@@ -191,19 +191,58 @@
           </div>
 
           <button
-            class="button button--full text-white bg-green-ufba button--size-md justify-center py-4 app-font-weight-bold app-font-size-xl"
+            class="button button--full text-white button--size-md justify-center py-4 app-font-weight-bold app-font-size-xl"
+            :class="{'bg-green-ufba': !isRejected, 'bg-gray-500': isRejected}"
             type="submit"
+            @click="approveProject"
           >
             Aprovar Projeto
           </button>
 
           <button
-            class="mt-5 button button--full text-white bg-yellow-ufba button--size-md justify-center py-4 app-font-weight-bold app-font-size-xl"
+            class="mt-5 button button--full text-white button--size-md justify-center py-4 app-font-weight-bold app-font-size-xl"
+            :class="{'bg-yellow-ufba': !isRejected, 'bg-gray-500': isRejected}"
             type="submit"
+            @click="toggleRejectProject"
           >
             Rejeitar Projeto
           </button> 
           
+          <!-- class="px-8 py-5 elevation-2 rounded-lg"  -->
+          <!-- style="background-color: white" -->
+          <div
+            v-if="isRejected"
+            class="mt-10"
+          >
+            <label class="app-font-size-lg app-font-weight-bold mt-5 text-gray-600">
+              Por que o projeto será rejeitado?
+            </label>
+            <v-textarea
+              rows="6"
+              id="rejectionReason"
+              v-model="rejectionReason"
+              class="mt-3"
+              color="primary"
+              placeholder="Digite o motivo da rejeição do projeto"
+            />
+
+            <button
+              class="bg-red-ufba button button--full text-white button--size-md justify-center py-4 app-font-weight-bold app-font-size-xl"
+              type="submit"
+              @click="submitRejection"
+            >
+              Confirmar rejeição do projeto
+            </button>
+
+            <button
+              class="bg-blue-ufba mt-5 button button--full text-white button--size-md justify-center py-4 app-font-weight-bold app-font-size-xl"
+              type="submit"
+              @click="toggleRejectProject"
+            >
+              Voltar para avalição do projeto
+            </button> 
+          </div>
+
       </div>
     </div>
 
@@ -213,6 +252,7 @@
 import { useRoute } from 'vue-router';
 import { useAsyncData } from '#app';
 import axiosInstance from '@/api/axiosInstance';
+import { compileScript } from 'vue/compiler-sfc';
 
 definePageMeta({
   layout: 'default-layout',
@@ -225,8 +265,10 @@ const route = useRoute();
 
 const project = ref(null);
 const isLoading = ref(false);
+const isRejected = ref(false);
+const rejectionReason = ref('');
 
-async function getProjectData(id) {
+async function getProjectData(id: any) {
   try {
     isLoading.value = true;
     const { data } = await axiosInstance.get(`/getproject?id=${id}`);
@@ -237,6 +279,42 @@ async function getProjectData(id) {
     console.log(error);
   } finally {
     isLoading.value = false;
+  }
+}
+
+function toggleRejectProject() {
+  isRejected.value = !isRejected.value;
+}
+
+async function submitRejection() {
+  try {
+    isLoading.value = true;
+    const response = await axiosInstance.post(`/rejectproject/${route.params.id}`, {
+      reason: rejectionReason.value
+    });
+    console.log('Rejection submitted:', response.data);
+    // Handle successful submission (e.g., show a message to the user)
+  } catch (error) {
+    console.error('Error submitting rejection:', error);
+    // Handle error (e.g., show an error message to the user)
+  } finally {
+    isLoading.value = false;
+    await navigateTo({ path: `/teacher/evaluate/`});
+  }
+}
+
+async function approveProject() {
+  try {
+    isLoading.value = true;
+    const response = await axiosInstance.post(`/approveproject/${route.params.id}`);
+    console.log('Approval submitted:', response.data);
+    // Handle successful submission (e.g., show a message to the user)
+  } catch (error) {
+    console.error('Error submitting approval:', error);
+    // Handle error (e.g., show an error message to the user)
+  } finally {
+    isLoading.value = false;
+    await navigateTo({ path: `/teacher/evaluate/`});
   }
 }
 

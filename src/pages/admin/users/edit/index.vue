@@ -111,7 +111,7 @@ import { useAsyncData } from '#app';
 definePageMeta({
   layout: 'default-layout',
   pageTitle: 'Informações do usuário',
-  activeNavLink: 'edit'
+  activeNavLink: 'users'
 });
 
 // Recebendo dados do usuário passados como String
