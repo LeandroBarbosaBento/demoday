@@ -507,11 +507,20 @@ function deleteCollaborator(index: number){
   project.value.collaborators.splice(index, 1)
 }
 
+function tempContacts(){
+  const emails: string[] = [];
+  project.value.collaborators.forEach(element => {
+    emails.push(element.email);
+  });
+  console.log(emails);
+  return emails;
+}
+
 async function handleCreateProject(){
   if(!isFormValid.value){
     console.error("Form Inválido");
     return;
-  } 
+  }
     
   const data = {
     period: project.value.period,
@@ -526,7 +535,7 @@ async function handleCreateProject(){
     linkdoc: project.value.linkDocumentation,
     status: 'SUBMITTED',
     type: project.value.category,
-    emails: [],
+    emails: tempContacts(),
     image: project.value.image,
     projectType: project.value.category
   };
