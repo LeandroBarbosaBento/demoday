@@ -121,7 +121,6 @@ async function receivingCriteria(){
     const { data } = await axiosInstance.get('/getactivedemoday');
     accCriteria.value = data[0].accCriteriaDemoday;
     evalCriteria.value = data[0].evalCriteriaDemoday;
-    console.log(evalCriteria.value);
   } catch (error) {
     console.error(error);
   } finally {
@@ -142,9 +141,6 @@ async function getProjectData() {
 }
 
 async function sendEvaluation() {
-
-  console.log(project.value);
-
 
   if(Object.keys(votes.value).length !== evalCriteria.value.length) {
 
