@@ -17,217 +17,195 @@
           placeholder="Digite o nome da nova edição do demoday"
         />
 
-        <p class="app-font-size-lg app-font-weight-bold text-gray-600 mb-3 mt-3">
+        <p class="app-font-size-xl app-font-weight-bold text-gray-600 mb-8 mt-3">
           Prazos
         </p>
 
-        <v-stepper 
-          class="mb-8 text-gray-600 rounded-lg"
-          :elevation="1"
-        >
-          <template v-slot:default="{ prev, next }">
-            <v-stepper-header 
-              style="box-shadow: none; border-bottom: 1px solid rgba(100, 100, 100, 0.521)"
-            >
-              <v-stepper-item
-                v-for="step in stepperPhases"
-                :key="step.value"
-                :value="step.value"
-              >
-                <div class="d-flex gap-5 align-center justify-center">
-                  {{ step.title }}
-                  <v-icon 
-                    :id="`menu-activator-phase-${step.value}`" 
-                    icon="mdi-information-outline"
-                    color="gray-500"
-                    class="cursor-pointer"
-                    size="sm"
-                  />
-                </div>
-                <v-menu :activator="`#menu-activator-phase-${step.value}`">
-                  <v-card :width="300" class="px-5 py-5">
-                    {{ step.description }}
-                  </v-card>
-                </v-menu>
-              </v-stepper-item>
-
-            </v-stepper-header>
-
-            <v-stepper-window>
-              <v-stepper-window-item :value="1">
+        <v-row class="px-4">
+          <v-col>
+            <v-row>
+              <div>
+                <p class="app-font-weight-semibold">Fase 1</p>
                 <p>A primeira fase é a de submissão de projetos.</p>
-                <div class="d-flex align-center gap-20">
-                  <label for="init" class="app-font-size-sm text-gray-600">
-                    Início: 
-                  </label>
-                  <v-text-field
-                    id="init"
-                    v-model="phaseOne.init"
-                    v-maska:[dateMask]
-                    class="mt-3"
-                    color="blue-ufba"
-                    placeholder="Data de início"
-                  >
-                    <template v-slot:prepend-inner>
-                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                    </template>
-                  </v-text-field>
+              </div>
+              
+            </v-row>
+            <v-row>
+              <v-col cols="5">
+                <label for="init" class="app-font-size-sm text-gray-600">
+                  Início: 
+                </label>
+                <v-text-field
+                  id="init"
+                  v-model="phaseOne.init"
+                  v-maska:[dateMask]
+                  class="mt-3"
+                  color="blue-ufba"
+                  placeholder="Data de início"
+                >
+                  <template v-slot:prepend-inner>
+                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                  </template>
+                </v-text-field>
+              </v-col>
+              <v-col cols="5">
+                <label for="end" class="app-font-size-sm text-gray-600">
+                  Fim: 
+                </label>
+                <v-text-field
+                  id="end"
+                  v-model="phaseOne.end"
+                  v-maska:[dateMask]
+                  class="mt-3"
+                  color="blue-ufba"
+                  placeholder="Data de fim"
+                >
+                  <template v-slot:prepend-inner>
+                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                  </template>
+                </v-text-field>
+              </v-col>
+            </v-row>
+          </v-col>
+          <v-col>
+            <v-row>
+              <div>
+                <p class="app-font-weight-semibold">Fase 2</p>
+                <p>Na segunda fase a comissão avalia os projetos e pode aprová-los.</p>
+              </div>
+              
+            </v-row>
+            <v-row>
+              <v-col cols="5">
+                <label for="init" class="app-font-size-sm text-gray-600">
+                  Início: 
+                </label>
+                <v-text-field
+                  id="init"
+                  v-model="phaseTwo.init"
+                  v-maska:[dateMask]
+                  class="mt-3"
+                  color="blue-ufba"
+                  placeholder="Data de início"
+                >
+                  <template v-slot:prepend-inner>
+                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                  </template>
+                </v-text-field>
+              </v-col>
+              <v-col cols="5">
+                <label for="end" class="app-font-size-sm text-gray-600">
+                  Fim: 
+                </label>
+                <v-text-field
+                  id="end"
+                  v-model="phaseTwo.end"
+                  v-maska:[dateMask]
+                  class="mt-3"
+                  color="blue-ufba"
+                  placeholder="Data de fim"
+                >
+                  <template v-slot:prepend-inner>
+                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                  </template>
+                </v-text-field>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
 
-                  <label for="end" class="app-font-size-sm text-gray-600">
-                    Fim: 
-                  </label>
-                  <v-text-field
-                    id="end"
-                    v-model="phaseOne.end"
-                    v-maska:[dateMask]
-                    class="mt-3"
-                    color="blue-ufba"
-                    placeholder="Data de fim"
-                  >
-                    <template v-slot:prepend-inner>
-                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                    </template>
-                  </v-text-field>
-                </div>
-              </v-stepper-window-item>
-
-              <v-stepper-window-item :value="2">
-                <p>Na segunda fase a comissão avalia os projetos e pode aprová-los ou não.</p>
-                <div class="d-flex align-center gap-20">
-                  <label for="init" class="app-font-size-sm text-gray-600">
-                    Início: 
-                  </label>
-                  <v-text-field
-                    id="init"
-                    v-model="phaseTwo.init"
-                    v-maska:[dateMask]
-                    class="mt-3"
-                    color="blue-ufba"
-                    placeholder="Data de início"
-                  >
-                    <template v-slot:prepend-inner>
-                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                    </template>
-                  </v-text-field>
-
-                  <label for="end" class="app-font-size-sm text-gray-600">
-                    Fim: 
-                  </label>
-                  <v-text-field
-                    id="end"
-                    v-model="phaseTwo.end"
-                    v-maska:[dateMask]
-                    class="mt-3"
-                    color="blue-ufba"
-                    placeholder="Data de fim"
-                  >
-                    <template v-slot:prepend-inner>
-                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                    </template>
-                  </v-text-field>
-                </div>
-              </v-stepper-window-item>
-
-              <v-stepper-window-item :value="3">
+        <v-row class="px-4">
+          <v-col>
+            <v-row>
+              <div>
+                <p class="app-font-weight-semibold">Fase 3</p>
                 <p>A terceira fase é de votação do público para escolha dos finalistas.</p>
-                <div class="d-flex align-center gap-20">
-                  <label for="init" class="app-font-size-sm text-gray-600">
-                    Início: 
-                  </label>
-                  <v-text-field
-                    id="init"
-                    v-model="phaseThree.init"
-                    v-maska:[dateMask]
-                    class="mt-3"
-                    color="blue-ufba"
-                    placeholder="Data de início"
-                  >
-                    <template v-slot:prepend-inner>
-                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                    </template>
-                  </v-text-field>
-
-                  <label for="end" class="app-font-size-sm text-gray-600">
-                    Fim: 
-                  </label>
-                  <v-text-field
-                    id="end"
-                    v-model="phaseThree.end"
-                    v-maska:[dateMask]
-                    class="mt-3"
-                    color="blue-ufba"
-                    placeholder="Data de fim"
-                  >
-                    <template v-slot:prepend-inner>
-                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                    </template>
-                  </v-text-field>
-                </div>
-              </v-stepper-window-item>
-
-              <v-stepper-window-item :value="4">
+              </div>
+              
+            </v-row>
+            <v-row>
+              <v-col cols="5">
+                <label for="init" class="app-font-size-sm text-gray-600">
+                  Início: 
+                </label>
+                <v-text-field
+                  id="init"
+                  v-model="phaseThree.init"
+                  v-maska:[dateMask]
+                  class="mt-3"
+                  color="blue-ufba"
+                  placeholder="Data de início"
+                >
+                  <template v-slot:prepend-inner>
+                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                  </template>
+                </v-text-field>
+              </v-col>
+              <v-col cols="5">
+                <label for="end" class="app-font-size-sm text-gray-600">
+                  Fim: 
+                </label>
+                <v-text-field
+                  id="end"
+                  v-model="phaseThree.end"
+                  v-maska:[dateMask]
+                  class="mt-3"
+                  color="blue-ufba"
+                  placeholder="Data de fim"
+                >
+                  <template v-slot:prepend-inner>
+                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                  </template>
+                </v-text-field>
+              </v-col>
+            </v-row>
+          </v-col>
+          <v-col>
+            <v-row>
+              <div>
+                <p class="app-font-weight-semibold">Fase 4</p>
                 <p>Na quarta fase há a votação do público para escolha dos vencedores.</p>
-                <div class="d-flex align-center gap-20">
-                  <label for="init" class="app-font-size-sm text-gray-600">
-                    Início: 
-                  </label>
-                  <v-text-field
-                    id="init"
-                    v-model="phaseFour.init"
-                    v-maska:[dateMask]
-                    class="mt-3"
-                    color="blue-ufba"
-                    placeholder="Data de início"
-                  >
-                    <template v-slot:prepend-inner>
-                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                    </template>
-                  </v-text-field>
-
-                  <label for="end" class="app-font-size-sm text-gray-600">
-                    Fim: 
-                  </label>
-                  <v-text-field
-                    id="end"
-                    v-model="phaseFour.end"
-                    v-maska:[dateMask]
-                    class="mt-3"
-                    color="blue-ufba"
-                    placeholder="Data de fim"
-                  >
-                    <template v-slot:prepend-inner>
-                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                    </template>
-                  </v-text-field>
-                </div>
-              </v-stepper-window-item>
-            </v-stepper-window>
-
-            <v-stepper-actions
-              class="d-flex justify-space-between align-center py-3"
-            >
-              <template v-slot:next> 
-                <v-btn 
-                  variant="text" 
-                  append-icon="mdi-arrow-collapse-right"
-                  @click="next"
+              </div>
+              
+            </v-row>
+            <v-row>
+              <v-col cols="5">
+                <label for="init" class="app-font-size-sm text-gray-600">
+                  Início: 
+                </label>
+                <v-text-field
+                  id="init"
+                  v-model="phaseFour.init"
+                  v-maska:[dateMask]
+                  class="mt-3"
+                  color="blue-ufba"
+                  placeholder="Data de início"
                 >
-                  Próximo
-                </v-btn>
-              </template>
-              <template v-slot:prev> 
-                <v-btn 
-                  variant="text" 
-                  prepend-icon="mdi-arrow-collapse-left"
-                  @click="prev"
+                  <template v-slot:prepend-inner>
+                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                  </template>
+                </v-text-field>
+              </v-col>
+              <v-col cols="5">
+                <label for="end" class="app-font-size-sm text-gray-600">
+                  Fim: 
+                </label>
+                <v-text-field
+                  id="end"
+                  v-model="phaseFour.end"
+                  v-maska:[dateMask]
+                  class="mt-3"
+                  color="blue-ufba"
+                  placeholder="Data de fim"
                 >
-                  Anterior
-                </v-btn>
-              </template>
-            </v-stepper-actions>
-          </template>
-
-        </v-stepper>
+                  <template v-slot:prepend-inner>
+                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                  </template>
+                </v-text-field>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
 
         <div class="d-flex gap-20 width-100 bg-white rounded-lg elevation-1 mt-5 px-5 py-5">
           <div class="width-100">
@@ -436,28 +414,6 @@ const phaseFour = ref({
   init: '',
   end: '',
 });
-const stepperPhases = ref([
-  {
-    title: 'Fase 1',
-    value: 1,
-    description: 'A primeira fase é a de submissão de projetos.'
-  },
-  {
-    title: 'Fase 2',
-    value: 2,
-    description: 'Na segunda fase a comissão avalia os projetos e pode aprová-los ou não.'
-  },
-  {
-    title: 'Fase 3',
-    value: 3,
-    description: 'A terceira fase é de votação do público para escolha dos finalistas.  '
-  },
-  {
-    title: 'Fase 4',
-    value: 4,
-    description: 'Na quarta fase há a votação do público para escolha dos vencedores. '
-  }
-]);
 
 interface Criteria {
   name: string
