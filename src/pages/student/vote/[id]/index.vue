@@ -55,7 +55,7 @@
 
       <v-col cols="6">
         <label for="type" class="app-font-size-sm app-font-weight-medium text-gray-600">
-          Tipo
+          Categoria
         </label>
 
         <v-text-field
@@ -64,7 +64,7 @@
           type="url"
           class="mt-3"
           color="primary"
-          placeholder="Tipo"
+          placeholder="Categoria"
           readonly
         />
       </v-col>

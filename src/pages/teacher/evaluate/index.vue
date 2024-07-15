@@ -49,7 +49,7 @@ const isLoading = ref(false);
 const headers = ref<InternalDataTableHeader>([
   {title: 'Projeto', key: 'title'},
   {title: 'Descrição', key:'description'},
-  {title: 'Tipo', key: 'type'},
+  {title: 'Categoria', key: 'type'},
   {title: 'Ação', key: 'action'}
 ]);
 
