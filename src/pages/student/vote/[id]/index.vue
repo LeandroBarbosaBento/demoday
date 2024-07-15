@@ -1,5 +1,5 @@
 <template>
-  <div class="px-8 py-8">
+  <div class="px-8">
     <Loader v-if="isLoading" />
     <go-back-button />
 
@@ -7,86 +7,41 @@
 
     <v-row v-if="project">
       <v-col cols="6">
-        <label for="projectTitle" class="app-font-size-sm app-font-weight-medium text-gray-600">
-          Nome do projeto
-        </label>
-
-        <v-text-field
-          id="projectTitle"
-          v-model="project.title"
-          type="url"
-          class="mt-3"
-          color="primary"
-          placeholder="Nome do projeto"
-          readonly
-        />
+        <p class="text-gray-600">
+          <span class="app-font-weight-semibold">Nome do projeto: </span>
+          {{ project.title }}
+        </p>
       </v-col>
       <v-col cols="6">
-        <label for="linkVideo" class="app-font-size-sm app-font-weight-medium text-gray-600">
-          Link do vídeo
-        </label>
-
-        <v-text-field
-          id="linkVideo"
-          v-model="project.linkvideo"
-          type="url"
-          class="mt-3"
-          color="primary"
-          placeholder="Link do vídeo"
-          readonly
-        />
+        <p class="text-gray-600">
+          <span class="app-font-weight-semibold">Link do vídeo: </span>
+          <a :href="project.linkvideo">{{ project.linkvideo }}</a>
+        </p>
       </v-col>
 
       <v-col cols="6">
-        <label for="tecnologies" class="app-font-size-sm app-font-weight-medium text-gray-600">
-          Tecnologias
-        </label>
-
-        <v-text-field
-          id="tecnologies"
-          v-model="project.tecnologies"
-          type="url"
-          class="mt-3"
-          color="primary"
-          placeholder="Tecnologias"
-          readonly
-        />
+        <p class="text-gray-600">
+          <span class="app-font-weight-semibold">Tecnologias: </span>
+          {{ project.tecnologies }}
+        </p>
       </v-col>
 
       <v-col cols="6">
-        <label for="type" class="app-font-size-sm app-font-weight-medium text-gray-600">
-          Categoria
-        </label>
-
-        <v-text-field
-          id="type"
-          v-model="project.type"
-          type="url"
-          class="mt-3"
-          color="primary"
-          placeholder="Categoria"
-          readonly
-        />
+        <p class="text-gray-600">
+          <span class="app-font-weight-semibold">Categoria: </span>
+          {{ project.type }}
+        </p>
       </v-col>
 
       <v-col cols="12">
-        <label for="description" class="app-font-size-sm app-font-weight-medium text-gray-600">
-          Descrição
-        </label>
-
-        <v-text-field
-          id="description"
-          v-model="project.description"
-          type="url"
-          class="mt-3"
-          color="primary"
-          placeholder="Descrição"
-          readonly
-        />
+        <p class="text-gray-600">
+          <span class="app-font-weight-semibold">Descrição: </span>
+          {{ project.description }}
+        </p>
       </v-col>
     </v-row>
 
-    <h3 class=" mt-5 mb-5">Faça a sua avaliação</h3>
+    <h3 class=" mt-10 mb-5">Faça a sua avaliação</h3>
 
     <v-data-table
       :items="evalCriteria"
