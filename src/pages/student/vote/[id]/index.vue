@@ -56,7 +56,6 @@
           v-model="votes[item.id]"
           active-color="blue-ufba"
           color="orange-lighten-1"
-          @click="onVote(item)"
         />
       </template>
       <template v-slot:bottom></template>
@@ -69,6 +68,7 @@
       size="large"
       flat
       class="mt-10 text-white"
+      @click="sendEvaluation"
     />    
 
   </div>
@@ -78,6 +78,7 @@
 import axiosInstance from '@/api/axiosInstance';
 import { useRoute } from 'vue-router';
 import type { InternalDataTableHeader } from 'vuetify/lib/components/VDataTable/VDataTable'
+import Swal from 'sweetalert2'
 
 
 definePageMeta({
@@ -87,7 +88,6 @@ definePageMeta({
 })
 
 const route = useRoute();
-
 
 const accCriteria = ref([]);
 const evalCriteria = ref([]);
@@ -141,9 +141,72 @@ async function getProjectData() {
   }
 }
 
-function onVote(criteria) {
-  console.log('onVote');
-  console.log(votes.value);
+async function sendEvaluation() {
+
+  console.log(project.value);
+
+
+  if(Object.keys(votes.value).length !== evalCriteria.value.length) {
+
+    Swal.fire({
+      icon: "error",
+      title: "É necessário selecionar todos os critérios",
+      showDenyButton: false,
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: "<span class='text-white'>Fechar</span>",
+      confirmButtonColor: "blue-ufba",
+      timer: 1500,
+    });
+
+    return;
+  } 
+
+  interface Rating {
+    evalCriteriaId: number
+    rate: number
+  }
+
+  interface Vote {
+    projectId: number
+    evalRatings: Rating []
+  }
+
+  let params: Vote = {
+    evalRatings: [],
+    projectId: project.value.id,
+  }
+
+
+  Object.keys(votes.value).forEach((vote) => {
+    params.evalRatings.push({
+      evalCriteriaId: parseInt(vote),
+      rate: votes.value[vote]
+    })
+  });
+
+
+  try {
+    const { data } = await axiosInstance.post(`/evaluateproject`, params);
+
+    Swal.fire({
+      icon: "success",
+      title: "Avaliação enviada com sucesso",
+      showDenyButton: false,
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: "<span class='text-white'>Fechar</span>",
+      confirmButtonColor: "blue-ufba",
+      timer: 1500,
+    });
+    
+    navigateTo('/student/vote/list');
+
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+  }
 }
 
 onMounted(async () => {
