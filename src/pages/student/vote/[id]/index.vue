@@ -15,7 +15,9 @@
       <v-col cols="6">
         <p class="text-gray-600">
           <span class="app-font-weight-semibold">Link do vídeo: </span>
-          <a :href="project.linkvideo">{{ project.linkvideo }}</a>
+          <a :href="project.linkvideo" target="_blank">
+            {{ project.linkvideo }}
+          </a>
         </p>
       </v-col>
 
