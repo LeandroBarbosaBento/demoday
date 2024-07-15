@@ -256,7 +256,7 @@
               :items="applyCriteriaAdded"
               :items-per-page="5"
             >
-              <template v-slot:item.actions="{ index, item }">
+              <template v-slot:item.actions="{ index }">
                 <v-icon 
                   icon="mdi-pen" 
                   color="red-ufba" 
@@ -275,62 +275,20 @@
           </v-col>
         </v-row>
 
-        <div class="d-flex gap-20 width-100 bg-white rounded-lg elevation-1 mt-5 px-5 py-5">
-
-
-          <div class="width-100">
-            <p class="app-font-size-lg app-font-weight-bold text-gray-600 mb-3 mt-3">
-              Critérios de inscrição adicionados
-            </p>
-            <p v-if="!applyCriteriaAdded.length" class="text-center">Sem critérios adicionados</p>
-            <v-table v-else class="elevation-1 rounded-lg">
-              <thead>
-                <tr>
-                  <th>Critério</th>
-                  <th>Descrição</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(criteria, index) in applyCriteriaAdded" :key="index">
-                  <td> {{ criteria.name }}</td>
-                  <td class="py-2">
-                    {{ criteria.description }}
-                  </td>
-                  <td>
-                    <v-icon 
-                      icon="mdi-pen" 
-                      color="red-ufba" 
-                      class="cursor-pointer"
-                      @click="editApplyCriteria(index)"
-                    />
-                    <v-icon 
-                      icon="mdi-delete" 
-                      color="red-ufba" 
-                      class="cursor-pointer" 
-                      @click="removeApplyCriteria(index)"
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </v-table>
-          </div>
-        </div>
-
-        <div class="d-flex gap-20 width-100 bg-white rounded-lg elevation-1 mt-5 px-5 py-5">
-          <div class="width-100">
+        <v-row class="elevation-1 bg-white rounded-lg mt-10 px-5 py-5">
+          <v-col cols="6">
             <p class="app-font-size-lg app-font-weight-bold text-gray-600 mb-3 mt-3">
               Critérios de avaliação
             </p>
             <label 
-              for="evalName" 
+              for="applyName" 
               class="app-font-size-sm text-gray-600"
             >
               Nome do critério
             </label>
 
             <v-text-field
-              id="evalName"
+              id="applyName"
               v-model="evalCriteria.name"
               class="mt-3"
               color="blue-ufba"
@@ -338,19 +296,19 @@
             />  
 
             <label 
-              for="evalDescription" 
+              for="applyDescription" 
               class="app-font-size-sm text-gray-600"
             >
               Descrição do critério
             </label>
 
             <v-textarea
-              id="evalDescription"
+              id="applyDescription"
               v-model="evalCriteria.description"
               rows="3"
               class="mt-3"
               color="blue-ufba"
-              placeholder="Descrição do critério de avaliação"
+              placeholder="Descrição do critério de inscrição"
             /> 
             <button
               class="button button--full text-white bg-red-ufba button--size-md d-flex justify-center py-2"
@@ -359,45 +317,31 @@
             >
               Adicionar critério
             </button> 
-          </div>
-          <div class="width-100">
-            <p class="app-font-size-lg app-font-weight-bold text-gray-600 mb-3 mt-3">
-              Critérios de avaliação adicionados
-            </p>
-            <p v-if="!evalCriteriaAdded.length" class="text-center">Sem critérios adicionados</p>
-            <v-table v-else class="elevation-1 rounded-lg">
-              <thead>
-                <tr>
-                  <th>Critério</th>
-                  <th>Descrição</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(criteria, index) in evalCriteriaAdded" :key="index">
-                  <td> {{ criteria.name }}</td>
-                  <td class="py-2">
-                    {{ criteria.description }}
-                  </td>
-                  <td>
-                    <v-icon 
-                      icon="mdi-pen" 
-                      color="red-ufba" 
-                      class="cursor-pointer"
-                      @click="editEvalCriteria(index)"
-                    />
-                    <v-icon 
-                      icon="mdi-delete" 
-                      color="red-ufba" 
-                      class="cursor-pointer" 
-                      @click="removeEvalCriteria(index)"
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </v-table>
-          </div>
-        </div>
+          </v-col>
+          <v-col cols="6">
+            <v-data-table
+              :headers="criteriaHeaders"
+              :items="evalCriteriaAdded"
+              :items-per-page="5"
+            >
+              <template v-slot:item.actions="{ index }">
+                <v-icon 
+                  icon="mdi-pen" 
+                  color="red-ufba" 
+                  class="cursor-pointer"
+                  @click="editEvalCriteria(index)"
+                />
+                <v-icon 
+                  icon="mdi-delete" 
+                  color="red-ufba" 
+                  class="cursor-pointer" 
+                  @click="removeEvalCriteria(index)"
+                />
+              </template>
+
+            </v-data-table>
+          </v-col>
+        </v-row>
 
         <button
           class="button button--full text-white bg-red-ufba button--size-md d-flex justify-center py-4 mt-15 mb-15"
