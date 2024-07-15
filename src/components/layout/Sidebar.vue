@@ -90,9 +90,7 @@ const menus : Menu = {
             url: '/admin/users/pending',
             slug: 'pending'
         },
-        // REMOVER
         {
-            // text: 'Avaliar projetos',
             text: 'Avaliar submissões',
             icon: 'mdi-format-list-bulleted',
             url: '/teacher/evaluate',
