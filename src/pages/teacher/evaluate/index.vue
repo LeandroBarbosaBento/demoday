@@ -40,7 +40,7 @@ import axiosInstance from '@/api/axiosInstance';
 
 definePageMeta({
   layout: 'default-layout',
-  pageTitle: 'Avaliar projetos',
+  pageTitle: 'Avaliar submissões de projetos',
   activeNavLink: 'evaluate'
 })
 
