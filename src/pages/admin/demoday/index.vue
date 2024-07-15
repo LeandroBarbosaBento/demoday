@@ -207,8 +207,8 @@
           </v-col>
         </v-row>
 
-        <div class="d-flex gap-20 width-100 bg-white rounded-lg elevation-1 mt-5 px-5 py-5">
-          <div class="width-100">
+        <v-row class="elevation-1 bg-white rounded-lg mt-5 px-5 py-5">
+          <v-col cols="6">
             <p class="app-font-size-lg app-font-weight-bold text-gray-600 mb-3 mt-3">
               Critérios de inscrição
             </p>
@@ -249,7 +249,35 @@
             >
               Adicionar critério
             </button> 
-          </div>
+          </v-col>
+          <v-col cols="6">
+            <v-data-table
+              :headers="criteriaHeaders"
+              :items="applyCriteriaAdded"
+              :items-per-page="5"
+            >
+              <template v-slot:item.actions="{ index, item }">
+                <v-icon 
+                  icon="mdi-pen" 
+                  color="red-ufba" 
+                  class="cursor-pointer"
+                  @click="editApplyCriteria(index)"
+                />
+                <v-icon 
+                  icon="mdi-delete" 
+                  color="red-ufba" 
+                  class="cursor-pointer" 
+                  @click="removeApplyCriteria(index)"
+                />
+              </template>
+
+            </v-data-table>
+          </v-col>
+        </v-row>
+
+        <div class="d-flex gap-20 width-100 bg-white rounded-lg elevation-1 mt-5 px-5 py-5">
+
+
           <div class="width-100">
             <p class="app-font-size-lg app-font-weight-bold text-gray-600 mb-3 mt-3">
               Critérios de inscrição adicionados
@@ -414,6 +442,12 @@ const phaseFour = ref({
   init: '',
   end: '',
 });
+
+const criteriaHeaders = [
+  {title: 'Critério', key: 'name'},
+  {title: 'Descrição', key: 'description'},
+  {title: 'Ações', key: 'actions'}
+]
 
 interface Criteria {
   name: string
