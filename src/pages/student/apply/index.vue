@@ -15,7 +15,7 @@
       <v-table class="rounded-lg elevation-2 mt-5 py-5 px-5">
         <thead>
           <tr>
-            <th style="width: 15%;">Critério</th>
+            <th style="width: 20%;">Critério</th>
             <th>Descrição</th>
           </tr>
         </thead>
@@ -38,7 +38,7 @@
       <v-table class="rounded-lg elevation-2 mt-5 py-5 px-5">
         <thead>
           <tr>
-            <th style="width: 15%;">Critério</th>
+            <th style="width: 20%;">Critério</th>
             <th>Descrição</th>
           </tr>
         </thead>
@@ -73,83 +73,79 @@
           required
         />
 
-        <div class="d-flex justify-space-evenly ">
+        <v-row class="elevation-1 mx-1 rounded-lg px-3 py-3">
+          <v-col cols="6">
+            <div class="pr-5" style="width: 100%;">
+              <h2 class="app-font-size-lg app-font-weight-bold mt-5 text-gray-600">
+                Nome dos alunos ou equipe e contatos
+              </h2>
+
+              <!-- mudar variáveis -->
+              <label for="student_name" class="app-font-size-sm app-font-weight-medium text-gray-600">
+                Nome do aluno
+              </label>
+        
+              <v-text-field
+                id="student_name"
+                v-model="collaborator.name"
+                type="text"
+                class="mt-3"
+                color="primary"
+                placeholder="Digite o nome do aluno"
+                :rules="nameRules"
+              />
+
+              <label for="email" class="app-font-size-sm app-font-weight-medium text-gray-600">
+                Email de Contato
+              </label>
+        
+              <v-text-field
+                id="email"
+                v-model="collaborator.email"
+                type="email"
+                class="mt-3"
+                color="primary"
+                placeholder="Digite o email de contato"
+                :rules="emailRules"
+              />
+
+              <v-btn
+                text="Adicionar aluno ou equipe"
+                color="red-ufba"
+                block
+                @click="addCollaborator"
+              />
           
-          <div class="pr-5" style="width: 100%;">
-            <h2 class="app-font-size-lg app-font-weight-bold mt-5 text-gray-600">
-              Nome dos alunos ou equipe e contatos
-            </h2>
+            </div>
+          </v-col>
+          <v-col cols="6">
+            <v-data-table
+              :items="project.collaborators"
+              :headers="[
+                {title: 'Nome', key: 'name'},
+                {title: 'Email', key: 'email'},
+                {title: 'Ações', key: 'actions'}
+              ]"
+              :items-per-page="5"
+            >
 
-            <!-- mudar variáveis -->
-            <label for="student_name" class="app-font-size-sm app-font-weight-medium text-gray-600">
-              Nome do aluno
-            </label>
-      
-            <v-text-field
-              id="student_name"
-              v-model="collaborator.name"
-              type="text"
-              class="mt-3"
-              color="primary"
-              placeholder="Digite o nome do aluno"
-              :rules="nameRules"
-            />
-
-            <label for="email" class="app-font-size-sm app-font-weight-medium text-gray-600">
-              Email de Contato
-            </label>
-      
-            <v-text-field
-              id="email"
-              v-model="collaborator.email"
-              type="email"
-              class="mt-3"
-              color="primary"
-              placeholder="Digite o email de contato"
-              :rules="emailRules"
-            />
-
-            <button
-              class="button button--full text-white bg-red-ufba button--size-md d-flex justify-center py-4 mt-5 app-font-weight-bold app-font-size-xl"
-              type="button"
-              @click="addCollaborator"
-              >
-              Adicionar Aluno ou equipe
-            </button>              
-
-          </div>
-          <div class="mt-15" style="width: 100%;">
-            <v-table>
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Email</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                  <tr v-for="(collaborator, index) in project.collaborators" :key="index">
-                    <td>{{ collaborator.name }}</td>
-                    <td>{{ collaborator.email }}</td>
-                    <td>
-                      <v-icon
-                        icon="mdi-pen"
-                        color="red-ufba"
-                        class="cursor-pointer mr-2"
-                        @click="editCollaborator(index)"
-                      />
-                      <v-icon
-                        icon="mdi-delete"
-                        color="red-ufba"
-                        class="cursor-pointer"
-                        @click="deleteCollaborator(index)"
-                      />
-                    </td>
-                  </tr>
-              </tbody>
-            </v-table>
-          </div>
-        </div>
+              <template v-slot:item.actions="{ index }">
+                <v-icon
+                  icon="mdi-pen"
+                  color="red-ufba"
+                  class="cursor-pointer mr-2"
+                  @click="editCollaborator(index)"
+                />
+                <v-icon
+                  icon="mdi-delete"
+                  color="red-ufba"
+                  class="cursor-pointer"
+                  @click="deleteCollaborator(index)"
+                />
+              </template>
+            </v-data-table>
+          </v-col>
+        </v-row>
 
         <div class="d-flex justify-space-evenly ">
           <div class="mt-10 mr-10" style="width: 100%;">
