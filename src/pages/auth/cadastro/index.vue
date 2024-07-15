@@ -189,7 +189,7 @@ const inputs = ref({
   password: { error_messages: [], value: '', show: false },
   password_confirmation: { error_messages: [], value: '', show: false },
   university: { error_messages: [], value: '' },
-  type: { error_messages: [], value: 'PROFESSOR' },
+  type: { error_messages: [], value: 'STUDENT' },
 })
 
 const isFormValid = ref<boolean>(false)
