@@ -257,6 +257,7 @@
               :headers="criteriaHeaders"
               :items="applyCriteriaAdded"
               :items-per-page="5"
+              :items-per-page-options="[5,10,20]"
             >
               <template v-slot:item.actions="{ index }">
                 <v-icon 
@@ -327,6 +328,7 @@
               :headers="criteriaHeaders"
               :items="evalCriteriaAdded"
               :items-per-page="5"
+              :items-per-page-options="[5,10,20]"
             >
               <template v-slot:item.actions="{ index }">
                 <v-icon 
