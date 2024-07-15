@@ -9,7 +9,6 @@ Norma Oliveira          | Paulo Trigo
 Felipe Angelo           | Indaiara Bonfim 
 .                       | Júlia Passos
 .                       | Reynan da Silva
-.                       | Thales Macêdo
 
 
 ## Artefatos
@@ -19,6 +18,7 @@ Felipe Angelo           | Indaiara Bonfim
 * [Quadro do Trello](https://trello.com/b/cQF1ZpIU/ic0045)
 * [Repositório do backend](https://github.com/samuelrios/demoday-api)
 * [Documentação da API](https://demoday-api.onrender.com/swagger-ui/index.html#/)
+* [Testes no Notion](https://www.notion.so/Testes-d872b37cd5ac44ed8d1b643eedd14e9a)
 
 ## Tecnologias
 Frontend      | Backend
