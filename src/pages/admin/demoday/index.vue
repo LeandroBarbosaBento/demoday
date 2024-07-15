@@ -21,191 +21,193 @@
           Prazos
         </p>
 
-        <v-row class="px-4">
-          <v-col>
-            <v-row>
-              <div>
-                <p class="app-font-weight-semibold">Fase 1</p>
-                <p>A primeira fase é a de submissão de projetos.</p>
-              </div>
-              
-            </v-row>
-            <v-row>
-              <v-col cols="5">
-                <label for="init" class="app-font-size-sm text-gray-600">
-                  Início: 
-                </label>
-                <v-text-field
-                  id="init"
-                  v-model="phaseOne.init"
-                  v-maska:[dateMask]
-                  class="mt-3"
-                  color="blue-ufba"
-                  placeholder="Data de início"
-                >
-                  <template v-slot:prepend-inner>
-                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                  </template>
-                </v-text-field>
-              </v-col>
-              <v-col cols="5">
-                <label for="end" class="app-font-size-sm text-gray-600">
-                  Fim: 
-                </label>
-                <v-text-field
-                  id="end"
-                  v-model="phaseOne.end"
-                  v-maska:[dateMask]
-                  class="mt-3"
-                  color="blue-ufba"
-                  placeholder="Data de fim"
-                >
-                  <template v-slot:prepend-inner>
-                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                  </template>
-                </v-text-field>
-              </v-col>
-            </v-row>
-          </v-col>
-          <v-col>
-            <v-row>
-              <div>
-                <p class="app-font-weight-semibold">Fase 2</p>
-                <p>Na segunda fase a comissão avalia os projetos e pode aprová-los.</p>
-              </div>
-              
-            </v-row>
-            <v-row>
-              <v-col cols="5">
-                <label for="init" class="app-font-size-sm text-gray-600">
-                  Início: 
-                </label>
-                <v-text-field
-                  id="init"
-                  v-model="phaseTwo.init"
-                  v-maska:[dateMask]
-                  class="mt-3"
-                  color="blue-ufba"
-                  placeholder="Data de início"
-                >
-                  <template v-slot:prepend-inner>
-                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                  </template>
-                </v-text-field>
-              </v-col>
-              <v-col cols="5">
-                <label for="end" class="app-font-size-sm text-gray-600">
-                  Fim: 
-                </label>
-                <v-text-field
-                  id="end"
-                  v-model="phaseTwo.end"
-                  v-maska:[dateMask]
-                  class="mt-3"
-                  color="blue-ufba"
-                  placeholder="Data de fim"
-                >
-                  <template v-slot:prepend-inner>
-                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                  </template>
-                </v-text-field>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
+        <div class="px-10 py-10 elevation-3 bg-white rounded-lg">
+          <v-row class="px-4">
+            <v-col>
+              <v-row>
+                <div>
+                  <p class="app-font-weight-semibold">Fase 1</p>
+                  <p>A primeira fase é a de submissão de projetos.</p>
+                </div>
+                
+              </v-row>
+              <v-row>
+                <v-col cols="5">
+                  <label for="init" class="app-font-size-sm text-gray-600">
+                    Início: 
+                  </label>
+                  <v-text-field
+                    id="init"
+                    v-model="phaseOne.init"
+                    v-maska:[dateMask]
+                    class="mt-3"
+                    color="blue-ufba"
+                    placeholder="Data de início"
+                  >
+                    <template v-slot:prepend-inner>
+                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                    </template>
+                  </v-text-field>
+                </v-col>
+                <v-col cols="5">
+                  <label for="end" class="app-font-size-sm text-gray-600">
+                    Fim: 
+                  </label>
+                  <v-text-field
+                    id="end"
+                    v-model="phaseOne.end"
+                    v-maska:[dateMask]
+                    class="mt-3"
+                    color="blue-ufba"
+                    placeholder="Data de fim"
+                  >
+                    <template v-slot:prepend-inner>
+                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                    </template>
+                  </v-text-field>
+                </v-col>
+              </v-row>
+            </v-col>
+            <v-col>
+              <v-row>
+                <div>
+                  <p class="app-font-weight-semibold">Fase 2</p>
+                  <p>Na segunda fase a comissão avalia os projetos e pode aprová-los.</p>
+                </div>
+                
+              </v-row>
+              <v-row>
+                <v-col cols="5">
+                  <label for="init" class="app-font-size-sm text-gray-600">
+                    Início: 
+                  </label>
+                  <v-text-field
+                    id="init"
+                    v-model="phaseTwo.init"
+                    v-maska:[dateMask]
+                    class="mt-3"
+                    color="blue-ufba"
+                    placeholder="Data de início"
+                  >
+                    <template v-slot:prepend-inner>
+                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                    </template>
+                  </v-text-field>
+                </v-col>
+                <v-col cols="5">
+                  <label for="end" class="app-font-size-sm text-gray-600">
+                    Fim: 
+                  </label>
+                  <v-text-field
+                    id="end"
+                    v-model="phaseTwo.end"
+                    v-maska:[dateMask]
+                    class="mt-3"
+                    color="blue-ufba"
+                    placeholder="Data de fim"
+                  >
+                    <template v-slot:prepend-inner>
+                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                    </template>
+                  </v-text-field>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
 
-        <v-row class="px-4">
-          <v-col>
-            <v-row>
-              <div>
-                <p class="app-font-weight-semibold">Fase 3</p>
-                <p>A terceira fase é de votação do público para escolha dos finalistas.</p>
-              </div>
-              
-            </v-row>
-            <v-row>
-              <v-col cols="5">
-                <label for="init" class="app-font-size-sm text-gray-600">
-                  Início: 
-                </label>
-                <v-text-field
-                  id="init"
-                  v-model="phaseThree.init"
-                  v-maska:[dateMask]
-                  class="mt-3"
-                  color="blue-ufba"
-                  placeholder="Data de início"
-                >
-                  <template v-slot:prepend-inner>
-                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                  </template>
-                </v-text-field>
-              </v-col>
-              <v-col cols="5">
-                <label for="end" class="app-font-size-sm text-gray-600">
-                  Fim: 
-                </label>
-                <v-text-field
-                  id="end"
-                  v-model="phaseThree.end"
-                  v-maska:[dateMask]
-                  class="mt-3"
-                  color="blue-ufba"
-                  placeholder="Data de fim"
-                >
-                  <template v-slot:prepend-inner>
-                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                  </template>
-                </v-text-field>
-              </v-col>
-            </v-row>
-          </v-col>
-          <v-col>
-            <v-row>
-              <div>
-                <p class="app-font-weight-semibold">Fase 4</p>
-                <p>Na quarta fase há a votação do público para escolha dos vencedores.</p>
-              </div>
-              
-            </v-row>
-            <v-row>
-              <v-col cols="5">
-                <label for="init" class="app-font-size-sm text-gray-600">
-                  Início: 
-                </label>
-                <v-text-field
-                  id="init"
-                  v-model="phaseFour.init"
-                  v-maska:[dateMask]
-                  class="mt-3"
-                  color="blue-ufba"
-                  placeholder="Data de início"
-                >
-                  <template v-slot:prepend-inner>
-                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                  </template>
-                </v-text-field>
-              </v-col>
-              <v-col cols="5">
-                <label for="end" class="app-font-size-sm text-gray-600">
-                  Fim: 
-                </label>
-                <v-text-field
-                  id="end"
-                  v-model="phaseFour.end"
-                  v-maska:[dateMask]
-                  class="mt-3"
-                  color="blue-ufba"
-                  placeholder="Data de fim"
-                >
-                  <template v-slot:prepend-inner>
-                    <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
-                  </template>
-                </v-text-field>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
+          <v-row class="px-4">
+            <v-col>
+              <v-row>
+                <div>
+                  <p class="app-font-weight-semibold">Fase 3</p>
+                  <p>A terceira fase é de votação do público para escolha dos finalistas.</p>
+                </div>
+                
+              </v-row>
+              <v-row>
+                <v-col cols="5">
+                  <label for="init" class="app-font-size-sm text-gray-600">
+                    Início: 
+                  </label>
+                  <v-text-field
+                    id="init"
+                    v-model="phaseThree.init"
+                    v-maska:[dateMask]
+                    class="mt-3"
+                    color="blue-ufba"
+                    placeholder="Data de início"
+                  >
+                    <template v-slot:prepend-inner>
+                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                    </template>
+                  </v-text-field>
+                </v-col>
+                <v-col cols="5">
+                  <label for="end" class="app-font-size-sm text-gray-600">
+                    Fim: 
+                  </label>
+                  <v-text-field
+                    id="end"
+                    v-model="phaseThree.end"
+                    v-maska:[dateMask]
+                    class="mt-3"
+                    color="blue-ufba"
+                    placeholder="Data de fim"
+                  >
+                    <template v-slot:prepend-inner>
+                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                    </template>
+                  </v-text-field>
+                </v-col>
+              </v-row>
+            </v-col>
+            <v-col>
+              <v-row>
+                <div>
+                  <p class="app-font-weight-semibold">Fase 4</p>
+                  <p>Na quarta fase há a votação do público para escolha dos vencedores.</p>
+                </div>
+                
+              </v-row>
+              <v-row>
+                <v-col cols="5">
+                  <label for="init" class="app-font-size-sm text-gray-600">
+                    Início: 
+                  </label>
+                  <v-text-field
+                    id="init"
+                    v-model="phaseFour.init"
+                    v-maska:[dateMask]
+                    class="mt-3"
+                    color="blue-ufba"
+                    placeholder="Data de início"
+                  >
+                    <template v-slot:prepend-inner>
+                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                    </template>
+                  </v-text-field>
+                </v-col>
+                <v-col cols="5">
+                  <label for="end" class="app-font-size-sm text-gray-600">
+                    Fim: 
+                  </label>
+                  <v-text-field
+                    id="end"
+                    v-model="phaseFour.end"
+                    v-maska:[dateMask]
+                    class="mt-3"
+                    color="blue-ufba"
+                    placeholder="Data de fim"
+                  >
+                    <template v-slot:prepend-inner>
+                      <v-icon icon="mdi-calendar-blank" color="red-ufba"></v-icon>
+                    </template>
+                  </v-text-field>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+        </div>
 
         <v-row class="elevation-1 bg-white rounded-lg mt-5 px-5 py-5">
           <v-col cols="6">
@@ -300,7 +302,9 @@
               class="app-font-size-sm text-gray-600"
             >
               Descrição do critério
-            </label>
+            </label>A primeira fase é a de submissão de projetos.
+
+
 
             <v-textarea
               id="applyDescription"
