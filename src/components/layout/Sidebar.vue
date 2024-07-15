@@ -92,7 +92,8 @@ const menus : Menu = {
         },
         // REMOVER
         {
-            text: 'Avaliar projetos',
+            // text: 'Avaliar projetos',
+            text: 'Avaliar submissões',
             icon: 'mdi-format-list-bulleted',
             url: '/teacher/evaluate',
             slug: 'evaluate',

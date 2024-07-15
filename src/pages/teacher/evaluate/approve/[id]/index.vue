@@ -20,12 +20,14 @@
             readonly
           />
           <div class="d-flex justify-space-evenly">
+            
             <div class="mt-10 mr-10" style="width: 100%;">
               <label for="linkVideo" class="app-font-size-sm app-font-weight-medium text-gray-600">
                 Link para o vídeo
               </label>
-        
-              <v-text-field
+              
+              <a :href="project.linkvideo" target="_blank">
+                <v-text-field
                 id="linkVideo"
                 v-model="project.linkvideo"
                 type="url"
@@ -34,8 +36,8 @@
                 placeholder="Digite o link para o vídeo"
                 required
                 readonly
-              />
-
+                />
+              </a>
             </div>
 
             <div class="mt-10" style="width: 100%;">
@@ -162,8 +164,10 @@
             <label for="linkDocumentation" class="app-font-size-sm app-font-weight-medium text-gray-600">
               Link para documentação (opcional)
             </label>
-      
-            <v-text-field
+            
+            <a :href="project.linkdoc" target="_blank">
+
+              <v-text-field
               id="linkDocumentation"
               v-model="project.linkdoc"
               type="url"
@@ -171,23 +175,25 @@
               color="primary"
               placeholder="Digite o link da documentação"
               readonly
-            />
+              />
+            </a>
           </div>
-
+            
           <div class="mr-10" style="width: 100%;">
             <label for="image" class="app-font-size-sm app-font-weight-medium text-gray-600">
               Foto do projeto (opcional)
             </label>
-      
-            <v-text-field
-              id="image"
-              v-model="project.image"
-              type="url"
-              class="mt-3"
-              color="primary"
-              placeholder="Digite o link da documentação"
-              readonly
-            />
+            
+            <a :href="project.image" target="_blank">
+              <v-text-field
+                id="image"
+                v-model="project.image"
+                type="url"
+                class="mt-3"
+                color="primary"
+                readonly
+              />
+              </a>
           </div>
 
           <button
@@ -196,7 +202,7 @@
             type="submit"
             @click="approveProject"
           >
-            Aprovar Projeto
+            Aprovar candidatura do projeto
           </button>
 
           <button
@@ -205,7 +211,7 @@
             type="submit"
             @click="toggleRejectProject"
           >
-            Rejeitar Projeto
+            Reprovar candidatura do projeto
           </button> 
           
           <!-- class="px-8 py-5 elevation-2 rounded-lg"  -->
@@ -231,7 +237,7 @@
               type="submit"
               @click="submitRejection"
             >
-              Confirmar rejeição do projeto
+              Confirmar rejeição da candidatura do projeto
             </button>
 
             <button
@@ -239,7 +245,7 @@
               type="submit"
               @click="toggleRejectProject"
             >
-              Voltar para avalição do projeto
+              Voltar para avalição da submissão do projeto
             </button> 
           </div>
 
@@ -256,7 +262,7 @@ import { compileScript } from 'vue/compiler-sfc';
 
 definePageMeta({
   layout: 'default-layout',
-  pageTitle: 'Informações do projeto',
+  pageTitle: 'Avaliar submissão do projeto',
   activeNavLink: 'evaluate'
 });
 
