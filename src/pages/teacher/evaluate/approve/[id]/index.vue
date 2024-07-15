@@ -211,7 +211,7 @@
             type="submit"
             @click="toggleRejectProject"
           >
-            Reprovar candidatura do projeto
+            Rejeitar candidatura do projeto
           </button> 
           
           <!-- class="px-8 py-5 elevation-2 rounded-lg"  -->
