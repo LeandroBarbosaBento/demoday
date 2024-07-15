@@ -303,7 +303,7 @@
               class="app-font-size-sm text-gray-600"
             >
               Descrição do critério
-            </label>A primeira fase é a de submissão de projetos.
+            </label>
 
 
 
