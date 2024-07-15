@@ -19,7 +19,7 @@
       v-model="userHelper.selected"
       label="Selecione um tipo de usuário"
       placeholder="Selecione um tipo de usuário"
-      :items="['student', 'professor', 'admin']"
+      :items="['estudante', 'professor', 'admin']"
       class="mt-5"
       @update:modelValue="onUserHelper"
     />
@@ -127,7 +127,7 @@ function onUserHelper() {
     inputs.value.email.value = 'meumiler@gmail.com';
   }
 
-  if(userHelper.value.selected === 'student') {
+  if(userHelper.value.selected === 'estudante') {
     inputs.value.password.value = '123456';
     inputs.value.email.value = 'aluno3@email.com';
   }
