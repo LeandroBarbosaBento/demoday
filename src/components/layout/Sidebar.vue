@@ -69,8 +69,8 @@ const menus : Menu = {
         {
             text: 'Inicio',
             icon: 'mdi-home',
-            url: '/inicio',
-            slug: '/inicio'
+            url: '/admin/inicio',
+            slug: '/admin/inicio'
         },
         {
             text: 'Criar novo demoday',
@@ -100,6 +100,12 @@ const menus : Menu = {
     ],
     [userType.PROFESSOR]: [
         {
+            text: 'Inicio',
+            icon: 'mdi-home',
+            url: '/teacher/inicio',
+            slug: '/teacher/inicio'
+        },
+        {
             text: 'Avaliar submissões',
             icon: 'mdi-format-list-bulleted',
             url: '/teacher/evaluate',
@@ -107,6 +113,12 @@ const menus : Menu = {
         },
     ],
     [userType.STUDENT]: [
+        {
+            text: 'Inicio',
+            icon: 'mdi-home',
+            url: '/student/inicio',
+            slug: '/student/inicio'
+        },
         {
             text: 'Cadastro de projeto',
             icon: 'mdi-projector-screen',
