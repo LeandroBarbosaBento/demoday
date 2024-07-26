@@ -100,7 +100,7 @@ const menus : Menu = {
     ],
     [userType.PROFESSOR]: [
         {
-            text: 'Avaliar projetos',
+            text: 'Avaliar submissões',
             icon: 'mdi-format-list-bulleted',
             url: '/teacher/evaluate',
             slug: 'evaluate',
