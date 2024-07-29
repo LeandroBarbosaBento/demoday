@@ -1,3 +1,13 @@
+import { ProjectType } from '@/types/index';
+
+export const typeColorCategory: Record<ProjectType, string> = {
+    [ProjectType.IC]: 'orange',
+    [ProjectType.TCC]: 'blue',
+    [ProjectType.DISC]: 'red',
+    [ProjectType.MSC]: 'green',
+    [ProjectType.PHD]: 'pink'
+};
+
 export default {
     colors: {
       light: {
@@ -189,4 +199,3 @@ export default {
         secondary: 'Montserrat',
     },
 } as const
-  

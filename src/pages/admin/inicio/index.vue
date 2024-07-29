@@ -21,7 +21,7 @@
                           <p><b>Professor(a):</b> {{ project.professor }}</p>
                           <p><b>Tecnologias: </b> {{ project.tecnologies }}</p>
                           <p
-                              :style="{   backgroundColor: typeColor[project.type],
+                              :style="{   backgroundColor: typeColorCategory[project.type],
                                           padding: '10px 0',
                                           borderRadius: '10px'
                                       }"
@@ -65,6 +65,7 @@ import { ref, onMounted } from 'vue';
 import axiosInstance from '@/api/axiosInstance';
 import colors from '@/theme/default/index';
 import { Demoday, Project } from '@/types/index';
+import { typeColorCategory } from '@/theme/default/index'
 
 definePageMeta({
   layout: 'default-layout',
@@ -73,14 +74,6 @@ definePageMeta({
 })
 
 const isLoading = ref(false);
-
-const typeColor = ref({
-  IC: 'orange', 
-  TCC: 'blue', 
-  DISC: 'red',
-  MSC: 'green',
-  PHD: 'pink',
-});
 
 const activeDemoday = ref<Demoday>();
 

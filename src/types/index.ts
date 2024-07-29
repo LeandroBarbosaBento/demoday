@@ -1,6 +1,14 @@
 import { Value } from "sass"
 
 // types
+export enum ProjectType {
+    IC = 'IC',
+    TCC = 'TCC',
+    DISC = 'DISC',
+    MSC = 'MSC',
+    PHD = 'PHD'
+}
+
 export interface User {
     id: string
     name: string
