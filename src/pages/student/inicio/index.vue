@@ -6,12 +6,15 @@
             </h1>
             <div
                 v-for="project in projectsAccepted.value" 
-                class="px-4 py-4 border-solid rounded-lg mt-3"
+                class="px-4 py-4 rounded-lg mt-3"
+                :style="{ border: `3px solid ${colors.colors.light['gray-600']}` }"
             >
             <v-row>
                 <v-col>
                     <v-row>
-                        <v-col>
+                        <v-col
+                            class="d-flex justify-space-between flex-column"
+                        >
                             <h3>{{ project.title }}</h3>
                             <p><b>Disciplina:</b> {{ project.discipline }}</p>
                             <p><b>Professor(a):</b> {{ project.professor }}</p>
@@ -24,7 +27,9 @@
                             >
                             <b>Categoria: </b> {{ project.type }}</p>
                         </v-col>
-                        <v-col>
+                        <v-col
+                            class="d-flex justify-space-between flex-column"
+                        >
                             <p class="mt-5"><b>Descrição:</b></p>
                             <p>{{ project.description }}</p>
                         </v-col>
@@ -41,6 +46,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/api/axiosInstance';
+import colors from '@/theme/default/index';
 // import { Demoday } from '@/src/types/index.ts';
 
 definePageMeta({
