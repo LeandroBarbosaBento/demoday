@@ -48,6 +48,7 @@
 import type { InternalDataTableHeader } from 'vuetify/lib/components/VDataTable/VDataTable'
 import axiosInstance from '@/api/axiosInstance';
 import Swal from 'sweetalert2'
+import { User } from '@/types/index'
 
 definePageMeta({
   layout: 'default-layout',
@@ -55,14 +56,14 @@ definePageMeta({
   activeNavLink: 'pending'
 })
 
-interface User {
-  id: string
-  cpf: string
-  email: string
-  status: string
-  type: 'STUDENT' | 'ADMIN' | 'PROFESSOR'
-  university: string
-}
+// interface User {
+//   id: string
+//   cpf: string
+//   email: string
+//   status: string
+//   type: 'STUDENT' | 'ADMIN' | 'PROFESSOR'
+//   university: string
+// }
 
 const items = ref<User []>([]);
 const isLoading = ref(false);
@@ -80,7 +81,7 @@ const headers = ref<InternalDataTableHeader>([
   {title: 'Ação', key: 'action'}
 ]);
 
-function handleAproveUser(user) {
+function handleAproveUser(user: User) {
   Swal.fire({
     title: `Deseja mesmo aprovar o usuário ${user.name}?`,
     showDenyButton: true,
@@ -94,7 +95,7 @@ function handleAproveUser(user) {
   }); 
 }
 
-async function aproveUser(user) {
+async function aproveUser(user: User) {
   try {
     isLoading.value = true;
     const { data } = await axiosInstance.post('/user/setuserstatus', null, {
@@ -119,7 +120,7 @@ async function aproveUser(user) {
   }
 }
 
-function handleRejectUser(user) {
+function handleRejectUser(user: User) {
   Swal.fire({
     title: `Deseja mesmo rejeitar o usuário ${user.name}?`,
     showDenyButton: true,
@@ -134,7 +135,7 @@ function handleRejectUser(user) {
   });
 }
 
-async function rejectUser(user) {
+async function rejectUser(user: User) {
   try {
     isLoading.value = true;
     const { data } = await axiosInstance.post('/user/setuserstatus', null, {
