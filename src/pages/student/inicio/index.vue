@@ -8,7 +8,30 @@
                 v-for="project in projectsAccepted.value" 
                 class="px-4 py-4 border-solid rounded-lg mt-3"
             >
-                {{ project.title }}
+            <v-row>
+                <v-col>
+                    <v-row>
+                        <v-col>
+                            <h3>{{ project.title }}</h3>
+                            <p><b>Disciplina:</b> {{ project.discipline }}</p>
+                            <p><b>Professor(a):</b> {{ project.professor }}</p>
+                            <p><b>Tecnologias: </b> {{ project.tecnologies }}</p>
+                            <p
+                                :style="{   backgroundColor: typeColor[project.type],
+                                            padding: '10px 0',
+                                            borderRadius: '10px'
+                                        }"
+                            >
+                            <b>Categoria: </b> {{ project.type }}</p>
+                        </v-col>
+                        <v-col>
+                            <p class="mt-5"><b>Descrição:</b></p>
+                            <p>{{ project.description }}</p>
+                        </v-col>
+                    </v-row>
+                </v-col>
+                <v-col class="image"><h1>Imagem</h1></v-col>
+            </v-row>
             </div>
         </div>
     </div>
@@ -27,13 +50,30 @@ definePageMeta({
 })
 
 const isLoading = ref(false);
+
+const typeColor = ref({
+  IC: 'orange', 
+  TCC: 'blue', 
+  DISC: 'red',
+  MSC: 'green',
+  PHD: 'pink',
+});
+
 let activeDemoday = {
     value: {name: ''}
 };
+
 let projectsAccepted = { 
-    value: [{title: 'sdasdsad'}]
-}
-;
+    value: [{
+        title: '',
+        linkvideo: '',
+        discipline: '',
+        professor: '',
+        tecnologies: '',
+        description: '',
+        type: '',
+    }]
+};
 
 async function getActiveDemoday() {
     try {
@@ -70,3 +110,14 @@ onMounted(async () => {
     }
 });
 </script>
+<style lang="scss" scoped>
+.image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 7px;
+    background-color: black;
+    color: white;
+}
+</style>

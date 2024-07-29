@@ -49,3 +49,5 @@ onMounted(() => {
     // items.value = menus[userData.value.type];
 });
 </script>
+<style lang="scss" scoped>
+</style>
