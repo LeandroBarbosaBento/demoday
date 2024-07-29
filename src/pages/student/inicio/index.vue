@@ -2,10 +2,10 @@
     <div class="px-8 py-8">
         <div class="px-4 py-4 elevation-1 rounded-lg ">
             <h1 v-if="activeDemoday" class="app-font-size-xlg app-font-weight-bold text-gray-600">
-                {{ activeDemoday.value.name }}
+                {{ activeDemoday.name }}
             </h1>
             <div
-                v-for="project in projectsAccepted.value" 
+                v-for="project in projectsAccepted" 
                 class="px-4 py-4 rounded-lg mt-3"
                 :style="{ border: `3px solid ${colors.colors.light['gray-600']}` }"
             >
@@ -47,7 +47,7 @@
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/api/axiosInstance';
 import colors from '@/theme/default/index';
-// import { Demoday } from '@/src/types/index.ts';
+import { Demoday, Project } from '@/types/index';
 
 definePageMeta({
   layout: 'default-layout',
@@ -65,28 +65,15 @@ const typeColor = ref({
   PHD: 'pink',
 });
 
-let activeDemoday = {
-    value: {name: ''}
-};
+const activeDemoday = ref<Demoday>();
 
-let projectsAccepted = { 
-    value: [{
-        title: '',
-        linkvideo: '',
-        discipline: '',
-        professor: '',
-        tecnologies: '',
-        description: '',
-        type: '',
-    }]
-};
+const projectsAccepted = ref<Project []>([]);
 
 async function getActiveDemoday() {
     try {
         isLoading.value = true;
         const { data } = await axiosInstance.get('/getactivedemoday');
         activeDemoday.value = data[0];
-        // console.log(activeDemoday.value)
     } catch (error) {
         console.error(error);
     } finally {
@@ -99,7 +86,6 @@ async function getDemodayAcceptedProjects(demodayId: number) {
         isLoading.value = true;
         const { data } = await axiosInstance.get(`/getdemodayacceptedprojects/${demodayId}`);
         projectsAccepted.value = data;
-        // console.log(projectsAccepted.value[0].title);
     } catch (error) {
         console.error(error);
     } finally {
@@ -111,7 +97,6 @@ onMounted(async () => {
     await getActiveDemoday();
     if(activeDemoday.value){
         const idDemoday = activeDemoday.value.id
-        // console.log(idDemoday)
         await getDemodayAcceptedProjects(idDemoday);
     }
 });

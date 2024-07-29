@@ -1,7 +1,7 @@
 import { Value } from "sass"
 
 // types
-interface User {
+export interface User {
     id: string
     name: string
     email: string
@@ -12,19 +12,19 @@ interface User {
     password: string
 }
 
-interface AccCriteriaDemoday{
+export interface AccCriteriaDemoday{
     id: number
     name: string
     description: string
 }
 
-interface EvalCriteriaDemoday{
+export interface EvalCriteriaDemoday{
     id: number
     name: string
     description: string
 }
 
-interface Demoday{
+export interface Demoday{
     id: number
     name: string
     year: number
@@ -40,7 +40,7 @@ interface Demoday{
     evalCriteriaDemoday: EvalCriteriaDemoday
 }
 
-interface Project{
+export interface Project{
     id: number
     period: number
     title: string
@@ -62,11 +62,11 @@ interface Project{
     projectType: string
 }
 
-interface Committee{
+export interface Committee{
     demoday: Demoday
 }
 
-interface CommitteeUser{
+export interface CommitteeUser{
     committee: Committee
     user: User
 }

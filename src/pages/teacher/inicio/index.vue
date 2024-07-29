@@ -3,10 +3,10 @@
     <v-col>
       <div class="px-4 py-4 elevation-1 rounded-lg ">
           <h1 v-if="activeDemoday" class="app-font-size-xlg app-font-weight-bold text-gray-600">
-              {{ activeDemoday.value.name }}
+              {{ activeDemoday.name }}
           </h1>
           <div
-              v-for="project in projectsAccepted.value" 
+              v-for="project in projectsAccepted" 
               class="px-4 py-4 rounded-lg mt-3"
               :style="{ border: `3px solid ${colors.colors.light['gray-600']}` }"
           >
@@ -41,7 +41,6 @@
                             rounded="lg"
                             @click="evaluateProject(project.id)"
                             >
-                            <!-- @click="analyzeProject(item)" -->
                             Votar
                           </v-btn>
                       </v-col>
@@ -60,6 +59,7 @@
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/api/axiosInstance';
 import colors from '@/theme/default/index';
+import { Demoday, Project } from '@/types/index';
 
 definePageMeta({
   layout: 'default-layout',
@@ -77,22 +77,9 @@ const typeColor = ref({
   PHD: 'pink',
 });
 
-let activeDemoday = {
-  value: {name: ''}
-};
+const activeDemoday = ref<Demoday>();
 
-let projectsAccepted = { 
-  value: [{
-    id: '',
-    title: '',
-    linkvideo: '',
-    discipline: '',
-    professor: '',
-    tecnologies: '',
-    description: '',
-    type: '',
-  }]
-};
+const projectsAccepted = ref<Project []>([]);
 
 async function evaluateProject(id: any) {
   navigateTo(`/student/vote/${id}`);
@@ -114,7 +101,6 @@ async function getDemodayAcceptedProjects(demodayId: number) {
   try {
       isLoading.value = true;
       const { data } = await axiosInstance.get(`/getdemodayacceptedprojects/${demodayId}`);
-      console.log(data);
       projectsAccepted.value = data;
   } catch (error) {
       console.error(error);
