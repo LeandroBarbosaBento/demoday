@@ -6,8 +6,8 @@ Frontend                | Backend       | Testes
 ---------               |---------      |---------  
 Leandro Barbosa         | Samuel Rios   | Júlia Passos
 Felipe Angelo           | Paulo Trigo   | Norma Oliveira
-                        | Indaiara Bonfim 
-                        | Reynan da Silva
+.                       | Indaiara Bonfim 
+.                       | Reynan da Silva
                         | 
 
 
