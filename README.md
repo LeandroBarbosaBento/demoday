@@ -8,7 +8,7 @@ Leandro Barbosa         | Samuel Rios   | Júlia Passos
 Felipe Angelo           | Paulo Trigo   | Norma Oliveira
 .                       | Indaiara Bonfim 
 .                       | Reynan da Silva
-                        | 
+                        
 
 
 ## Artefatos
