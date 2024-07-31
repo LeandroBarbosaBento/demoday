@@ -139,7 +139,6 @@ function onUserHelper() {
   
 }
 
-
 const isLoading = ref(false);
 
 const isFormValid = ref<boolean>(false)
@@ -155,9 +154,10 @@ async function handleLoginRequest() {
     );
     const idToken = userCredential._tokenResponse.idToken;
     const { data } = await axiosInstance.post(`signin?userToken=${idToken}`)
-
     localStorage.setItem('userData', JSON.stringify(data));
-    navigateTo({ path: '/inicio' })
+    if(data.type === 'ADMIN') navigateTo({ path: '/admin/inicio' })
+    if(data.type === 'PROFESSOR') navigateTo({ path: '/teacher/inicio' })
+    if(data.type === 'STUDENT') navigateTo({ path: '/student/inicio' })
   } catch (error) {
     console.error(error);
     isLoading.value = false;

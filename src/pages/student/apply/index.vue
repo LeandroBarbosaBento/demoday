@@ -57,6 +57,7 @@
       <v-form 
         v-model="isFormValid" 
         class="pt-8 pb-5"
+        id="myForm"
         @submit.prevent="handleCreateProject"
       >
         <label for="title" class="app-font-size-lg app-font-weight-bold mt-5 text-gray-600">
@@ -304,15 +305,13 @@
             Foto do projeto (opcional)
           </label>
     
-          <v-text-field
+          <v-file-input
             id="image"
             v-model="project.image"
-            type="url"
+            accept="image/*"
             class="mt-3"
             color="primary"
-            placeholder="Digite o link da documentação"
-            :rules="linkRulesOptional"
-          />
+          ></v-file-input>
         </div>
 
         <button
@@ -378,7 +377,7 @@ interface ProjectLocal {
   technologies: string
   category: string
   linkDocumentation: string
-  image: string
+  image: any
 }
 
 // const project = ref<ProjectLocal>({
@@ -408,7 +407,7 @@ const project = ref<ProjectLocal>({
   technologies: 'Vue.js, Nuxt.js, SpringBoot, Java',
   category: 'IC',
   linkDocumentation: 'https://github.com/LeandroBarbosaBento/demoday',
-  image: 'demoday.png'
+  image: null,
 })
 
 interface Collaborator {
@@ -532,17 +531,48 @@ async function handleCreateProject(){
     status: 'SUBMITTED',
     type: project.value.category,
     emails: tempContacts(),
-    image: project.value.image,
+    image: project.value.image ? project.value.image[0] : null,
     projectType: project.value.category
   };
 
+  const formData = new FormData();
+
+  project.value.collaborators.forEach((collaborator, index) => {
+    formData.append(`emails[${index}]`, collaborator.email);
+  });
+
+  formData.append('period', project.value.period.toString());
+  formData.append('title', project.value.title);
+  formData.append('linkvideo', project.value.linkVideo);
+  formData.append('discipline', project.value.discipline);
+  formData.append('professor', project.value.teacher);
+  formData.append('year', project.value.year);
+  formData.append('description', project.value.description);
+  formData.append('category', project.value.category);
+  formData.append('tecnologies', project.value.technologies.toString());
+  formData.append('linkdoc', project.value.linkDocumentation);
+  formData.append('status', 'SUBMITTED');
+  formData.append('type', project.value.category);
+  formData.append('image', project.value.image ? project.value.image[0] : null);
+  formData.append('projectType', project.value.category);
+
+
   console.log('data')
   console.log(data)
+  console.log(formData)
 
   try {
     isLoading.value = true;
 
-    const response = await axiosInstance.post('/submitproject', data);
+    const response = await axiosInstance.post(
+      '/submitproject',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+    );
     console.log('responde');
     console.log(response);
 

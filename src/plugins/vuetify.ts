@@ -70,6 +70,13 @@ export default defineNuxtPlugin((app) => {
             height: 60,
             noDataText: 'Sem dados'
         },
+        VFileInput: {
+            color: 'blue-ufba',
+            rounded: 8,
+            outlined: true,
+            variant: 'outlined',
+            height: 60,
+        },
         VRadio: {
             color: 'primary',
         },
