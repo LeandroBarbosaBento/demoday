@@ -2,13 +2,13 @@
 O Demoday é um sistema feito por alunos da UFBA para a disciplina Tópicos em Sistemas de Informação e Web no semestre 2024.1.
 
 ## Membros da equipe
-Frontend                | Backend
----------               |---------
-Leandro Barbosa         | Samuel Rios
-Norma Oliveira          | Paulo Trigo
-Felipe Angelo           | Indaiara Bonfim 
-.                       | Júlia Passos
-.                       | Reynan da Silva
+Frontend                | Backend       | Testes
+---------               |---------      |---------  
+Leandro Barbosa         | Samuel Rios   | Júlia Passos
+Felipe Angelo           | Paulo Trigo   | Norma Oliveira
+                        | Indaiara Bonfim 
+                        | Reynan da Silva
+                        | 
 
 
 ## Artefatos
