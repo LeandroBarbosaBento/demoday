@@ -138,6 +138,12 @@ const items = ref<RouterItem[]>([]);
 
 const menuGeneral: RouterItem[] = [
     {
+        text: 'Classificação',
+        icon: 'mdi-star',
+        url: '/ratings',
+        slug: 'ratings',
+    },
+    {
         text: 'Histórico de demodays',
         icon: 'mdi-database-eye',
         url: '/historic',

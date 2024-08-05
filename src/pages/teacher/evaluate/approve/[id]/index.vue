@@ -1,10 +1,12 @@
 <template>
-    <div class="px-8 py-5">
-      <div 
-        v-if="project"
-        class="px-8 py-5 elevation-2 rounded-lg" 
-        style="background-color: white"
-      >
+  
+  <div class="px-8 py-5">
+    <go-back-button />
+    <div 
+      v-if="project"
+      class="px-8 py-5 elevation-2 rounded-lg" 
+      style="background-color: white"
+    >
           <label for="title" class="app-font-size-lg app-font-weight-bold mt-5 text-gray-600">
             Nome do projeto
           </label>
@@ -259,6 +261,7 @@ import { useRoute } from 'vue-router';
 import { useAsyncData } from '#app';
 import axiosInstance from '@/api/axiosInstance';
 import { compileScript } from 'vue/compiler-sfc';
+import { Project } from '@/types/index';
 
 definePageMeta({
   layout: 'default-layout',
@@ -269,7 +272,7 @@ definePageMeta({
 // Recebendo dados do usuário passados como String
 const route = useRoute();
 
-const project = ref(null);
+const project = ref<Project>();
 const isLoading = ref(false);
 const isRejected = ref(false);
 const rejectionReason = ref('');

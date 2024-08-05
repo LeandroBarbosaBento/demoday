@@ -4,13 +4,13 @@
         <h1 v-if="activeDemoday" class="app-font-size-3xl app-font-weight-bold text-gray-600 my-1">
             {{ activeDemoday.name }}
         </h1>
-        <p class="app-font-size-2xl app-font-weight-semibold text-gray-500 mb-5">Projetos aprovados</p>
+        <p class="app-font-size-2xl app-font-weight-semibold text-gray-500 mb-5">Pódio - Melhores classificados </p>
 
         <v-row
             align-content="stretch"
         >   
             <v-col
-                v-for="project in projectsAccepted"
+                v-for="(project, index) in podium"
                 :key="project.id"
                 sm="4"
                 cols="12"
@@ -39,40 +39,84 @@
                     </v-img>
                     <v-card-text>
                         <div
-                        style="overflow:hidden;"
+                            style="min-height: 200px; overflow:hidden;"
                         >
-                            <h2 class="text-gray-700 app-font-size-md text-center">
+                            <h1 class="text-gray-800 mt-1 mb-5">
+                                {{ index + 1 }}º Lugar
+                            </h1>
+                            <h2 class="text-gray-700 app-font-size-md">
                                 {{ project.title }}
                             </h2>
+                            <p class="mt-1 text-gray-600">
+                                <span class="app-font-weight-semibold">
+                                    Descrição:
+                                </span>
+                                {{ project.description }}
+                            </p>
+                            <p class="mt-1 text-gray-600">
+                                <span class="app-font-weight-semibold">
+                                    Disciplina:
+                                </span>
+                                    {{ project.discipline }}
+                            </p>
+                            <p class="mt-1 text-gray-600">
+                                <span class="app-font-weight-semibold">
+                                    Tecnologias:
+                                </span>
+                                {{ project.tecnologies }}
+                            </p>
                         </div>
-                        <v-btn
-                            color="green-ufba"
-                            size="large"
-                            block
-                            flat
-                            class="mt-3"
-                            @click="evaluateProject(project.id)"
-                        >
-                            <span class="text-white app-font-weight-semibold" style="text-transform: none;">
-                                Ver detalhes e avaliar
-                            </span>
-                        </v-btn>
                     </v-card-text>
                 </v-card>
             </v-col>
         </v-row>
+
+        <v-data-table class="px-4 py-4 mt-10 elevation-1 rounded-lg"
+          :headers="headers"
+          :items="projectsAccepted"
+      >
+          <template v-slot:item.action="{ item }">
+              <v-btn 
+                  variant="outlined" 
+                  block
+                  color="blue-ufba" 
+                  rounded="lg"
+                  >
+                  <!-- @click="analyzeProject(item)" -->
+                  Detalhes
+              </v-btn>
+          </template>
+          
+          <template v-slot:item.type="{ item }">
+              <v-btn
+                  class="py-4 cursor-default"
+                  block
+                  rounded="lg"
+                  size="small"
+                  flat
+                  :color="projectType[item.type].color" 
+              >
+                  <span class="text-white font-weight-bold"> 
+                    {{ projectType[item.type].text }}
+                  </span> 
+              </v-btn>
+          </template>
+      </v-data-table>
+
     </div>
     <Loader v-if="isLoading" />
 </template>
+
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/api/axiosInstance';
 import { Demoday, Project } from '@/types/index';
+import type { InternalDataTableHeader } from 'vuetify/lib/components/VDataTable/VDataTable'
 
 definePageMeta({
-  layout: 'default-layout',
-  pageTitle: 'Início',
-  activeNavLink: '/student/inicio'
+layout: 'default-layout',
+pageTitle: 'Classificação',
+activeNavLink: 'ratings'
 })
 
 const isLoading = ref(false);
@@ -80,6 +124,14 @@ const isLoading = ref(false);
 const activeDemoday = ref<Demoday>();
 
 const projectsAccepted = ref<Project []>([]);
+const podium = ref<Project []>([]);
+
+const headers = ref<InternalDataTableHeader>([
+  {title: 'Projeto', key: 'title'},
+  {title: 'Descrição', key:'description'},
+  {title: 'Categoria', key: 'type'},
+  {title: 'Ação', key: 'action'}
+]);
 
 const projectType = ref({
   'IC': {color: 'blue-ufba', text: 'IC'},
@@ -89,8 +141,11 @@ const projectType = ref({
   'PHD': {color: 'orange', text: 'PHD'},
 })
 
-async function evaluateProject(id: number) {
-  navigateTo(`/student/vote/${id}`);
+function getPodium(){
+    console.log(projectsAccepted.value[0])
+    for (let index = 0; index < 3; index++) {
+        podium.value = projectsAccepted.value.slice(0, 3);
+    }
 }
 
 async function getActiveDemoday() {
@@ -123,6 +178,7 @@ onMounted(async () => {
         const idDemoday = activeDemoday.value.id
         await getDemodayAcceptedProjects(idDemoday);
     }
+    getPodium();
 });
 </script>
 <style lang="scss" scoped>

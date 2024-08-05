@@ -1,6 +1,7 @@
 <template>
   <Loader v-if="isLoading" />
-  <div class="px-8 py-5">
+  <div class="px-8">
+    <go-back-button />
     <div class="px-8 elevation-2 rounded-lg">
     <v-form v-model="isFormValid" class="pt-2 pb-5">
       <label for="name" class="app-font-size-sm text-gray-600 app-font-weight-medium">
@@ -9,11 +10,11 @@
 
       <v-text-field
         id="name"
-        v-model="inputs.name.value"
+        v-model="userUpdate.name"
         class="mt-3"
         color="primary"
         placeholder="Digite o seu nome"
-        :error-messages="inputs.name.error_messages"
+        required
       />
 
       <label for="cpf" class="app-font-size-sm text-gray-600 app-font-weight-medium">
@@ -22,12 +23,11 @@
 
       <v-text-field
         id="cpf"
-        v-model="inputs.cpf.value"
+        v-model="userUpdate.cpf"
         class="mt-3"
         color="primary"
         placeholder="Digite seu CPF"
         v-maska:[{'mask':'###.###.###-##'}]
-        :error-messages="inputs.cpf.error_messages"
       />
 
       <label for="email" class="app-font-size-sm text-gray-600 app-font-weight-medium">
@@ -36,11 +36,10 @@
 
       <v-text-field
         id="email"
-        v-model="inputs.email.value"
+        v-model="userUpdate.email"
         class="mt-3"
         color="primary"
         placeholder="Digite seu e-mail institucional"
-        :error-messages="inputs.email.error_messages"
       >
         <template #append-inner>
           <v-icon 
@@ -58,11 +57,10 @@
 
       <v-text-field
         id="university"
-        v-model="inputs.university.value"
+        v-model="userUpdate.university"
         class="mt-3"
         color="primary"
         placeholder="Digite o seu nome"
-        :error-messages="inputs.university.error_messages"
       />
 
       <label for="type" class="app-font-size-sm text-gray-600 app-font-weight-medium">
@@ -74,10 +72,9 @@
         :items="typeOptions"
         item-title="text"
         item-value="type"
-        v-model="inputs.type.value"
+        v-model="userUpdate.type"
         class="mt-3"
         color="primary"
-        :error-messages="inputs.type.error_messages"
       />
 
       <v-alert 
@@ -107,6 +104,8 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router';
 import { useAsyncData } from '#app';
+import { User } from "@/types/index"
+import axiosInstance from '@/api/axiosInstance';
 
 definePageMeta({
   layout: 'default-layout',
@@ -117,15 +116,6 @@ definePageMeta({
 // Recebendo dados do usuário passados como String
 const route = useRoute();
 
-const { data: user } = await useAsyncData('user', async () => {
-  let user = null;
-  if (route.query.user) {
-    user = JSON.parse(route.query.user as string);
-  }
-  return user;
-});
-
-//
 const typeOptions = ref([
   {
     type: 'PROFESSOR',
@@ -144,22 +134,67 @@ const isLoading = ref(false);
 const showErrorMessage = ref(false);
 const errorMessage = ref('');
 
-const inputs = ref({
-  name: { error_messages: [], value: user.value.name },
-  cpf: { error_messages: [], value: user.value.cpf },
-  email: { error_messages: [], value: user.value.email },
-  password: { error_messages: [], value: '', show: false },
-  password_confirmation: { error_messages: [], value: '', show: false },
-  university: { error_messages: [], value: user.value.university },
-  type: { error_messages: [], value: user.value.type },
-})
+const userUpdate = ref<User>({
+  id: "",
+  name: "",
+  email: "",
+  cpf: "",
+  university: "",
+  type: "STUDENT",
+  status: "APPROVED",
+  password: ""
+});
 
 const isFormValid = ref<boolean>(false)
 
-function handleUpdateUser() {
-  if(!isFormValid.value) return;
+async function handleUpdateUser() {
+  if(isFormValid.value){
+    try {
+      isLoading.value = true;
+      const data = {
+        name: userUpdate.value.name,
+        email: userUpdate.value.email,
+        cpf: userUpdate.value.cpf,
+        university: userUpdate.value.university,
+      };
+      const response = await axiosInstance.post(
+        `/user/update/${route.params.id}`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      console.log('response: ');
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+      
+    } finally {
+      isLoading.value = false;
+      await navigateTo({ path: `/admin/users/`});
+    }
 
-  
+  } else {
+    console.log("Formulário inválido");
+
+  }
 }
 
+async function getUser(id: any){
+  try {
+    isLoading.value = true;
+    const { data } = await axiosInstance.get(`/user/${id}`);
+    userUpdate.value = data;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+  }
+}
+
+onMounted(async () => {
+  await getUser(route.params.id);
+})
 </script>
