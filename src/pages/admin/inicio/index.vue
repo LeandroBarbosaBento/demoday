@@ -4,7 +4,7 @@
       <h1 v-if="activeDemoday" class="app-font-size-3xl app-font-weight-bold text-gray-600 my-1">
         {{ activeDemoday.name }}
       </h1>
-      <p class="app-font-size-2xl app-font-weight-semibold text-gray-500 mb-5">Projetos submetidos</p>
+      <p class="app-font-size-2xl app-font-weight-semibold text-gray-500 mb-5">Projetos a serem aprovados</p>
 
       <v-row
         align-content="stretch"
@@ -62,6 +62,8 @@
         </v-col>
       </v-row>
 
+      <p class="app-font-size-2xl app-font-weight-semibold text-gray-500 mb-5 mt-10">Projetos aprovados</p>
+      
       <v-row
         align-content="stretch"
       >   

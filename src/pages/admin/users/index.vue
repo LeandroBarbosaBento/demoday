@@ -37,8 +37,9 @@
 
 </template>
 <script setup lang="ts">
-import type { InternalDataTableHeader } from 'vuetify/lib/components/VDataTable/VDataTable'
+import type { InternalDataTableHeader } from 'vuetify/lib/components/VDataTable/VDataTable';
 import axiosInstance from '@/api/axiosInstance';
+import { User } from "@/types/index";
 
 definePageMeta({
   layout: 'default-layout',
@@ -46,14 +47,14 @@ definePageMeta({
   activeNavLink: 'users'
 })
 
-interface User {
-  id: string
-  cpf: string
-  email: string
-  status: string
-  type: 'STUDENT' | 'ADMIN' | 'PROFESSOR'
-  university: string
-}
+// interface User {
+//   id: string
+//   cpf: string
+//   email: string
+//   status: string
+//   type: 'STUDENT' | 'ADMIN' | 'PROFESSOR'
+//   university: string
+// }
 
 const items = ref<User []>([]);
 const isLoading = ref(false);
@@ -71,10 +72,15 @@ const headers = ref<InternalDataTableHeader>([
   {title: 'Ação', key: 'action'}
 ]);
 
-async function editUser(user: any) {
-  console.log(user)
-  await navigateTo({ path: '/admin/users/edit', query: { user: JSON.stringify(user) } });
+// async function editUser(user: string) {
+//   // console.log(user)
+//   await navigateTo({ path: '/admin/users/edit', query: { user: JSON.stringify(user) } });
+// }
+
+async function editUser(user: User) {
+  await navigateTo({ path: `/admin/users/edit/${user.id}`});
 }
+
 
 async function listUsers(){
   try {
