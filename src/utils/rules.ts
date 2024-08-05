@@ -16,6 +16,4 @@ export const rules = {
     greaterThan: (max: number) => {
         return (v: number) => v >= max || `O valor deve ser maior ou igual a ${max}`
     },
-
-
 }

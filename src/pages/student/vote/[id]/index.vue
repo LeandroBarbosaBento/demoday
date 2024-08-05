@@ -7,32 +7,43 @@
 
     <v-row v-if="project">
       <v-col cols="6">
-        <p class="text-gray-600">
-          <span class="app-font-weight-semibold">Nome do projeto: </span>
-          {{ project.title }}
-        </p>
-      </v-col>
-      <v-col cols="6">
-        <p class="text-gray-600">
-          <span class="app-font-weight-semibold">Link do vídeo: </span>
-          <a :href="project.linkvideo" target="_blank">
-            {{ project.linkvideo }}
-          </a>
-        </p>
-      </v-col>
+        <v-col cols="12">
+          <p class="text-gray-600">
+            <span class="app-font-weight-semibold">Nome do projeto: </span>
+            {{ project.title }}
+          </p>
+        </v-col>
 
-      <v-col cols="6">
-        <p class="text-gray-600">
-          <span class="app-font-weight-semibold">Tecnologias: </span>
-          {{ project.tecnologies }}
-        </p>
-      </v-col>
+        <v-col cols="12">
+          <p class="text-gray-600">
+            <span class="app-font-weight-semibold">Tecnologias: </span>
+            {{ project.tecnologies }}
+          </p>
+        </v-col>
 
+        <v-col cols="12">
+          <p class="text-gray-600">
+            <span class="app-font-weight-semibold">Link do vídeo: </span>
+            <a :href="project.linkvideo" target="_blank">
+              {{ project.linkvideo }}
+            </a>
+          </p>
+        </v-col>
+
+        <v-col cols="12">
+          <p class="text-gray-600">
+            <span class="app-font-weight-semibold">Categoria: </span>
+            {{ project.type }}
+          </p>
+        </v-col>
+
+      </v-col>
       <v-col cols="6">
-        <p class="text-gray-600">
-          <span class="app-font-weight-semibold">Categoria: </span>
-          {{ project.type }}
-        </p>
+        <v-img
+          :src="`data:image/jpeg;base64, ${project.image}`"
+          cover
+          style="width: 400px;"
+        />c
       </v-col>
 
       <v-col cols="12">
@@ -67,10 +78,9 @@
       color="green-ufba"
       size="large"
       flat
-      class="mt-10 text-white"
+      class="mt-10 text-white mb-15"
       @click="sendEvaluation"
     />    
-
   </div>
 
 </template>

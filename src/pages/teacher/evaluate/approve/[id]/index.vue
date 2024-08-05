@@ -21,7 +21,7 @@
           />
           <div class="d-flex justify-space-evenly">
             
-            <div class="mt-10 mr-10" style="width: 100%;">
+            <div class="mt-2 mr-10" style="width: 100%;">
               <label for="linkVideo" class="app-font-size-sm app-font-weight-medium text-gray-600">
                 Link para o vídeo
               </label>
@@ -40,7 +40,7 @@
               </a>
             </div>
 
-            <div class="mt-10" style="width: 100%;">
+            <div class="mt-2" style="width: 100%;">
               <label for="discipline" class="app-font-size-sm app-font-weight-medium text-gray-600">
                 Disciplina (Opicional)
               </label>
@@ -179,21 +179,21 @@
             </a>
           </div>
             
-          <div class="mr-10" style="width: 100%;">
+          <div 
+            v-if="project.image"
+            class="mr-10 my-4" 
+            style="width: 100%;"
+          >
             <label for="image" class="app-font-size-sm app-font-weight-medium text-gray-600">
               Foto do projeto (opcional)
             </label>
-            
-            <a :href="project.image" target="_blank">
-              <v-text-field
-                id="image"
-                v-model="project.image"
-                type="url"
-                class="mt-3"
-                color="primary"
-                readonly
-              />
-              </a>
+
+            <v-img
+              class="align-end text-white"
+              :src="`data:image/jpeg;base64, ${project.image}`"
+              cover
+            />
+
           </div>
 
           <button
@@ -223,6 +223,18 @@
             <label class="app-font-size-lg app-font-weight-bold mt-5 text-gray-600">
               Por que o projeto será rejeitado?
             </label>
+            <p class="text-gray-700 mt-2">É recomendado que na justificativa os critérios de aceitação não atendidos estejam explicitados de maneira clara.</p>
+
+            <v-data-table
+              :items="project.demoday.accCriteriaDemoday"
+              :headers="[
+                {title: 'Nome', key: 'name'},
+                {title: 'Descrição', key: 'description'},
+              ]"
+              :items-per-page="5"
+              class="mt-5 mb-4 rounded-lg elevation-1"
+            />
+
             <v-textarea
               rows="6"
               id="rejectionReason"
