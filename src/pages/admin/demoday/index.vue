@@ -1,6 +1,8 @@
 <template>
     <Loader v-if="isLoading" />
-    <div class="px-8 py-8">
+    <div 
+      v-if="!activeDemoday"
+      class="px-8 py-8">
       <v-form>
         <label 
           for="name" 
@@ -360,10 +362,15 @@
       </v-form>
      
     </div>
+    <div v-else class="px-8 py-8 text-center">
+      <h1>Já existe um Demoday ativo...</h1>
+      <h2>Aguarde o seu encerramento</h2>
+    </div>
 </template>
 <script setup lang="ts">
 import axiosInstance from '@/api/axiosInstance';
 import Swal from 'sweetalert2'
+import { Demoday } from '@/types/index';
 
 definePageMeta({
   layout: 'default-layout',
@@ -374,6 +381,8 @@ definePageMeta({
 const dateMask = {'mask':'##/##/####'}; 
 
 const isLoading = ref(false);
+
+const activeDemoday = ref<Demoday>();
 
 const name = ref('');
 const phaseOne = ref({
@@ -501,6 +510,22 @@ function formatSendDate(date) {
   let splited = date.split('/')
   return `${splited[2]}-${splited[1]}-${splited[0]}`;
 }
+
+async function getActiveDemoday() {
+    try {
+        isLoading.value = true;
+        const { data } = await axiosInstance.get('/getactivedemoday');
+        activeDemoday.value = data[0];
+    } catch (error) {
+        console.error(error);
+    } finally {
+        isLoading.value = false;
+    }
+  }
+
+onMounted(() => {
+  getActiveDemoday();
+})
 </script>
 <style scoped lang="scss">
 </style>

@@ -39,29 +39,11 @@
                     </v-img>
                     <v-card-text>
                         <div
-                            style="height: 150px; overflow:hidden;"
+                        style="overflow:hidden;"
                         >
-                            <h2 class="text-gray-700 app-font-size-md">
+                            <h2 class="text-gray-700 app-font-size-md text-center">
                                 {{ project.title }}
                             </h2>
-                            <p class="mt-1 text-gray-600">
-                                <span class="app-font-weight-semibold">
-                                    Descrição:
-                                </span>
-                                {{ project.description }}
-                            </p>
-                            <p class="mt-1 text-gray-600">
-                                <span class="app-font-weight-semibold">
-                                    Disciplina:
-                                </span>
-                                    {{ project.discipline }}
-                            </p>
-                            <p class="mt-1 text-gray-600">
-                                <span class="app-font-weight-semibold">
-                                    Tecnologias:
-                                </span>
-                                {{ project.tecnologies }}
-                            </p>
                         </div>
                         <v-btn
                             color="green-ufba"
@@ -69,6 +51,7 @@
                             block
                             flat
                             class="mt-3"
+                            @click="evaluateProject(project.id)"
                         >
                             <span class="text-white app-font-weight-semibold" style="text-transform: none;">
                                 Ver detalhes e avaliar
@@ -106,6 +89,10 @@ const projectType = ref({
   'MSC': {color: 'yellow-ufba', text: 'MSC'},
   'PHD': {color: 'orange', text: 'PHD'},
 })
+
+async function evaluateProject(id: number) {
+  navigateTo(`/student/vote/${id}`);
+}
 
 async function getActiveDemoday() {
     try {
