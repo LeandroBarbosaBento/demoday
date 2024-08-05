@@ -6,61 +6,92 @@
         </h1>
         <p class="app-font-size-2xl app-font-weight-semibold text-gray-500 mb-5">Projetos aprovados</p>
 
-        <v-row
-            align-content="stretch"
-        >   
-            <v-col
-                v-for="project in projectsAccepted"
-                :key="project.id"
-                sm="4"
-                cols="12"
-            >
-                <v-card
-                    elevation="1"
+        <v-data-iterator
+            :items="projectsAccepted"
+            :items-per-page="$vuetify.display.xs ? 1 : 4"
+        >
+            <template v-slot:default="{ items }">
+                <v-row dense>
+                <v-col
+                    v-for="project in items"
+                    :key="project.raw.id"
+                    sm="3"
+                    cols="12"
                 >
+                    <v-card elevation="1">
                     <v-img
                         class="align-end text-white"
-                        height="200"
-                        :src="`data:image/jpeg;base64, ${project.image}`"
+                        height="100"
+                        :src="`data:image/jpeg;base64, ${project.raw.image}`"
                         cover
                     >
                         <v-btn
-                            class="cursor-default"
-                            style="position: absolute; top: 10px; right: 10px;"
-                            rounded="lg"
-                            size="small"
-                            :color="projectType[project.type].color" 
-                            elevation="2"
+                        class="cursor-default"
+                        style="position: absolute; top: 10px; right: 10px;"
+                        rounded="lg"
+                        size="small"
+                        :color="projectType[project.raw.type].color" 
+                        elevation="2"
                         >
-                            <span class="text-white font-weight-bold"> 
-                                {{ projectType[project.type].text }}
-                            </span> 
+                        <span class="text-white font-weight-bold"> 
+                            {{ projectType[project.raw.type].text }}
+                        </span> 
                         </v-btn>
                     </v-img>
                     <v-card-text>
-                        <div
-                        style="overflow:hidden;"
-                        >
-                            <h2 class="text-gray-700 app-font-size-md text-center">
-                                {{ project.title }}
-                            </h2>
-                        </div>
+                        <h2 class="text-gray-700 app-font-size-md text-center">
+                        {{ project.raw.title }}
+                        </h2>
                         <v-btn
-                            color="green-ufba"
-                            size="large"
-                            block
-                            flat
-                            class="mt-3"
-                            @click="evaluateProject(project.id)"
+                        color="green-ufba"
+                        block
+                        flat
+                        class="mt-3"
+                        @click="evaluateProject(project.raw.id)"
                         >
-                            <span class="text-white app-font-weight-semibold" style="text-transform: none;">
-                                Ver detalhes e avaliar
-                            </span>
+                        <span class="text-white app-font-weight-semibold" style="text-transform: none;">
+                            Ver detalhes e avaliar
+                        </span>
                         </v-btn>
                     </v-card-text>
-                </v-card>
-            </v-col>
-        </v-row>
+                    </v-card>
+                </v-col>
+                </v-row>
+            </template>
+
+            <template v-slot:footer="{ page, pageCount, prevPage, nextPage }">
+            <div class="d-flex align-center justify-center pa-4">
+                <v-btn
+                :disabled="page === 1"
+                density="comfortable"
+                icon="mdi-arrow-left"
+                variant="tonal"
+                rounded
+                @click="prevPage"
+                />
+
+                <div class="mx-2 text-caption text-center">
+                Página {{ page }} de {{ pageCount }}
+                </div>
+
+                <v-btn
+                :disabled="page >= pageCount"
+                density="comfortable"
+                icon="mdi-arrow-right"
+                variant="tonal"
+                rounded
+                @click="nextPage"
+                />
+
+                <v-btn 
+                variant="tonal"
+                class="ml-2"
+                @click="$router.push('/student/vote/list')"
+                >Ver todos</v-btn>
+            </div>
+            
+            </template>
+        </v-data-iterator>
     </div>
     <Loader v-if="isLoading" />
 </template>

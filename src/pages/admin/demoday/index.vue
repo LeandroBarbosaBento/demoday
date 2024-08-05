@@ -2,7 +2,9 @@
     <Loader v-if="isLoading" />
     <div 
       v-if="!activeDemoday"
-      class="px-8 py-8">
+      class="px-8 py-4"
+    >
+      <go-back-button class="mb-3 mt-3" />
       <v-form>
         <label 
           for="name" 
@@ -362,7 +364,8 @@
       </v-form>
      
     </div>
-    <div v-else class="px-8 py-8 text-center">
+    <div v-else class="px-8 py-4">
+      <go-back-button class="mb-3 mt-3" />
       <h1>Já existe um Demoday ativo...</h1>
       <h2>Aguarde o seu encerramento</h2>
     </div>

@@ -1,6 +1,7 @@
 <template>
   <Loader v-if="isLoading" />
   <div class="px-8 py-5">
+    <go-back-button class="mb-3 mt-1" />
       <h1 class="app-font-size-lg">
         Bem vindo ao Demoday 2024!
       </h1>
@@ -67,8 +68,9 @@
         <v-text-field
           id="title"
           v-model="project.title"
+          :rules="[rules.required]"
           type="text"
-          class="mt-3"
+          class="mt-3 mb-5"
           color="primary"
           placeholder="Digite o nome do projeto"
           required
@@ -93,7 +95,7 @@
                 class="mt-3"
                 color="primary"
                 placeholder="Digite o nome do aluno"
-                :rules="nameRules"
+                :rules="[rules.onlyLettersAccentsAndSpaces]"
               />
 
               <label for="email" class="app-font-size-sm app-font-weight-medium text-gray-600">
@@ -107,7 +109,7 @@
                 class="mt-3"
                 color="primary"
                 placeholder="Digite o email de contato"
-                :rules="emailRules"
+                :rules="[rules.email]"
               />
 
               <v-btn
@@ -161,7 +163,7 @@
               class="mt-3"
               color="primary"
               placeholder="Digite o link para o vídeo"
-              :rules="linkRules"
+              :rules="[rules.required, rules.link]"
             />
 
           </div>
@@ -194,7 +196,7 @@
               class="mt-3"
               color="primary"
               placeholder="Digite o nome do Professor ou Orientador"
-              :rules="stringRules"
+              :rules="[rules.required]"
             />
           </div>
 
@@ -212,7 +214,7 @@
               class="mt-3"
               color="primary"
               placeholder="Digite o ano"
-              :rules="yearRules"
+              :rules="[rules.required]"
               />
             </div>
             <div style="width: 100%;">
@@ -228,7 +230,7 @@
               class="mt-3"
               color="primary"
               placeholder="Digite o semestre"
-              :rules="periodRules"
+              :rules="[rules.required]"
               />
             </div>
           </div>
@@ -262,7 +264,7 @@
               class="mt-3"
               color="primary"
               placeholder="Digite as tecnologias utilizadas"
-              :rules="stringRules"
+              :rules="[rules.required]"
             />
 
           </div>
@@ -279,7 +281,7 @@
               class="mt-3"
               color="primary"
               placeholder="Digite a sua categoria"
-              :rules="stringRules"
+              :rules="[rules.required]"
             />
           </div>
         </div>
@@ -296,7 +298,7 @@
             class="mt-3"
             color="primary"
             placeholder="Digite o link da documentação"
-            :rules="linkRulesOptional"
+            :rules="[rules.link]"
           />
         </div>
 
@@ -328,6 +330,7 @@
 <script setup lang="ts">
 import axiosInstance from '@/api/axiosInstance';
 import { User, Project, Demoday } from '@/src/types/index.ts';
+import { rules } from '@/utils/rules';
 
 definePageMeta({
   layout: 'default-layout',
@@ -344,26 +347,6 @@ const projectType = ref(['IC', 'TCC', 'DISC', 'MSC', 'PHD']);
 const itemsApply = ref<Demoday>({});
 
 const user= ref<User>({});
-
-// const itemsApply = ref<AccCriteriaDemoday[]>([])
-
-// const itemsEvaluation = ref<EvalCriteriaDemoday[]>([])
-
-// const itemsApply = ref([
-//   {
-//     name: 'Critério 1',
-//     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget arcu convallis, pretium velit vitae, egestas nisi. Duis quis rutrum urna. Vivamus urna arcu, ullamcorper et varius eget, venenatis ut est.'
-//   },
-//   {
-//     name: 'Critério 2',
-//     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget arcu convallis, pretium velit vitae, egestas nisi. Duis quis rutrum urna. Vivamus urna arcu, ullamcorper et varius eget, venenatis ut est.'
-//   },
-//   {
-//     name: 'Critério 3',
-//     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget arcu convallis, pretium velit vitae, egestas nisi. Duis quis rutrum urna. Vivamus urna arcu, ullamcorper et varius eget, venenatis ut est.'
-//   }
-// ]);
-
 
 interface ProjectLocal {
   title: string
@@ -420,71 +403,17 @@ const collaborator = ref<Collaborator>({
   email: "",
 })
 
-// Expressão regular para validar apenas letras, espaços e acentos
-const namePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]*$/;
-
-// Regras de validação para o campo de nome
-const nameRules = [
-  // (v: string) => !!v || 'O nome é obrigatório',
-  (v: string) => v.length === 0 || namePattern.test(v) || 'Apenas letras, espaços e acentos são permitidos'
-];
-
-// Regras de validação para o campo de email
-const emailRules = [
-  // (v: string) => v.length === 0 || 'Email é obrigatório',
-  (v: string) => v.length === 0 || /.+@.+\..+/.test(v) || 'Email inválido'
-];
-
-// Expressão regular para validar links
-const linkPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
-
-// Regras de validação para o campo de link
-const linkRules = [
-  (v: string) => !!v || 'O link é obrigatório',
-  (v: string) => linkPattern.test(v) || 'Por favor, insira um link válido'
-];
-
-// Regra de validação de campo string nulo
-const stringRules = [
-  (v: string) => !!v || 'O campo é obrigatório'
-];
-
-// Regras de validação para o campo de ano
-const yearRules = [
-  (v: string) => !!v || 'O ano é obrigatório (apenas dígitos)',
-  (v: string) => /^[2-9]\d{3}$/.test(v) || 'O ano deve ser a partir de 2024 e deve ter 4 dígitos'
-];
-
-// Regra de validação para o campo semestre
-const periodRules = [
-  (v: number) => !!v || 'O campo é obrigatório (apenas dígitos)',
-];
-
-// Regras de validação para o campo de link (opcional)
-const linkRulesOptional = [
-  (v: string) => {
-    if (!v) return true; // Se o campo estiver vazio, não há problema
-    return linkPattern.test(v) || 'Por favor, insira um link válido';
-  }
-];
-// const collaborator = ref<Collaborator>({
-//   name: "Reynan",
-//   email: "reynan@ufba.br",
-// })
-
 function validate(value: string, rules: any[]) {
   for (let rule of rules) {
     const validationResult = rule(value);
-    if (validationResult !== true) {
-      return validationResult; // Retorna a mensagem de erro se a validação falhar
-    }
+    if (validationResult !== true) return validationResult;
   }
-  return true; // Retorna true se todas as validações passarem
+  return true; 
 }
 
 function addCollaborator(){
-  const validateName = validate(collaborator.value.name, nameRules);
-  const validateEmail = validate(collaborator.value.email, emailRules);
+  const validateName = validate(collaborator.value.name, [rules.onlyLettersAccentsAndSpaces]);
+  const validateEmail = validate(collaborator.value.email, [rules.email]);
   if (!collaborator.value.name || !collaborator.value.email || validateName !== true || validateEmail !== true) {
   console.log("Error");
   return ;
@@ -502,39 +431,12 @@ function deleteCollaborator(index: number){
   project.value.collaborators.splice(index, 1)
 }
 
-function tempContacts(){
-  const emails: string[] = [];
-  project.value.collaborators.forEach(element => {
-    emails.push(element.email);
-  });
-  console.log(emails);
-  return emails;
-}
-
 async function handleCreateProject(){
   if(!isFormValid.value){
     console.error("Form Inválido");
     return;
   }
-    
-  const data = {
-    period: project.value.period,
-    title: project.value.title,
-    linkvideo: project.value.linkVideo,
-    discipline: project.value.discipline,
-    professor: project.value.teacher,
-    year: project.value.year,
-    description: project.value.description,
-    category: project.value.category,
-    tecnologies: project.value.technologies,
-    linkdoc: project.value.linkDocumentation,
-    status: 'SUBMITTED',
-    type: project.value.category,
-    emails: tempContacts(),
-    image: project.value.image ? project.value.image[0] : null,
-    projectType: project.value.category
-  };
-
+  
   const formData = new FormData();
 
   project.value.collaborators.forEach((collaborator, index) => {
@@ -556,11 +458,6 @@ async function handleCreateProject(){
   formData.append('image', project.value.image ? project.value.image[0] : null);
   formData.append('projectType', project.value.category);
 
-
-  console.log('data')
-  console.log(data)
-  console.log(formData)
-
   try {
     isLoading.value = true;
 
@@ -573,8 +470,6 @@ async function handleCreateProject(){
         }
       }
     );
-    console.log('responde');
-    console.log(response);
 
   } catch (error) {
     console.error(error);
@@ -609,8 +504,8 @@ async function receivingUser(){
 
 }
 
-onMounted(() => {
-  receivingCriteria();
-  receivingUser();
+onMounted( async () => {
+  await receivingCriteria();
+  await receivingUser();
 });
 </script>

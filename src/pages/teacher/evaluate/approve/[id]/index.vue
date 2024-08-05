@@ -1,11 +1,9 @@
 <template>
   
   <div class="px-8 py-5">
-    <go-back-button />
+    <go-back-button class="mb-3" />
     <div 
       v-if="project"
-      class="px-8 py-5 elevation-2 rounded-lg" 
-      style="background-color: white"
     >
           <label for="title" class="app-font-size-lg app-font-weight-bold mt-5 text-gray-600">
             Nome do projeto

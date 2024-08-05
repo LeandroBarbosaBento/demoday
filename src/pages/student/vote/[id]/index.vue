@@ -1,7 +1,7 @@
 <template>
   <div class="px-8">
     <Loader v-if="isLoading" />
-    <go-back-button />
+    <go-back-button class="mb-3 mt-3" />
 
     <h2 class="mb-5">Dados do projeto</h2>
 

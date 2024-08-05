@@ -1,5 +1,6 @@
 <template>
-  <div class="px-8 py-8">
+  <div class="px-8 py-4">
+    <go-back-button class="mb-3" />
     <v-data-table class="px-4 py-4 elevation-1 rounded-lg"
         :headers="headers"
         :items="projectsToEvaluateList"

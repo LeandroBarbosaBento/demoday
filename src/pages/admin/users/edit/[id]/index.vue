@@ -1,8 +1,8 @@
 <template>
   <Loader v-if="isLoading" />
-  <div class="px-8">
-    <go-back-button />
-    <div class="px-8 elevation-2 rounded-lg">
+  <div class="px-8 py-4">
+    <go-back-button class="mb-4" />
+    <div class="px-8 elevation-1 rounded-lg">
     <v-form v-model="isFormValid" class="pt-2 pb-5">
       <label for="name" class="app-font-size-sm text-gray-600 app-font-weight-medium">
         Nome
@@ -154,7 +154,7 @@ async function handleUpdateUser() {
       const data = {
         name: userUpdate.value.name,
         email: userUpdate.value.email,
-        cpf: userUpdate.value.cpf,
+        cpf: userUpdate.value.cpf.split('.').join('').split('-').join(''),
         university: userUpdate.value.university,
       };
       const response = await axiosInstance.post(

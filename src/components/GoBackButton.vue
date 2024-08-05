@@ -1,6 +1,6 @@
 <template>
     <v-btn
-        class="py-1 px-1 mt-10 mb-10"
+        class="py-1 px-1"
         @click="$router.go(-1)"
         icon
         flat
