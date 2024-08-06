@@ -19,6 +19,7 @@ Felipe Angelo           | Paulo Trigo   | Norma Oliveira
 * [Repositório do backend](https://github.com/samuelrios/demoday-api)
 * [Documentação da API](https://demoday-api.onrender.com/swagger-ui/index.html#/)
 * [Testes no Notion](https://www.notion.so/Testes-d872b37cd5ac44ed8d1b643eedd14e9a)
+* [Documento de instalação](https://docs.google.com/document/d/1Y6fzLJuLpv5EReOx1G66P825dxSsBL7T1_htYAxlEd4/edit?usp=sharing)
 
 ## Tecnologias
 Frontend      | Backend
