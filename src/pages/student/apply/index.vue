@@ -331,6 +331,7 @@
 import axiosInstance from '@/api/axiosInstance';
 import { User, Project, Demoday } from '@/src/types/index.ts';
 import { rules } from '@/utils/rules';
+import Swal from 'sweetalert2'
 
 definePageMeta({
   layout: 'default-layout',
@@ -470,9 +471,24 @@ async function handleCreateProject(){
         }
       }
     );
+    
+    Swal.fire({
+      title: 'Parabéns!',
+      text: 'Seu projeto foi enviado com sucesso!',
+      icon: 'success',
+      confirmButtonText: '<span class="text-white">Ok</span>'
+
+    })
+    await navigateTo({path: `/inicio`})
 
   } catch (error) {
     console.error(error);
+    Swal.fire({
+      title: 'Erro!',
+      text: 'Ocorreu um erro, tente novamente...',
+      icon: 'error',
+      confirmButtonText: '<span class="text-white">Ok</span>'
+    })
   } finally {
     isLoading.value = false;
   }

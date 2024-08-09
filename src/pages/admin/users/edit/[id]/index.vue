@@ -106,6 +106,7 @@ import { useRoute } from 'vue-router';
 import { useAsyncData } from '#app';
 import { User } from "@/types/index"
 import axiosInstance from '@/api/axiosInstance';
+import Swal from 'sweetalert2'
 
 definePageMeta({
   layout: 'default-layout',
@@ -168,8 +169,24 @@ async function handleUpdateUser() {
       );
       console.log('response: ');
       console.log(response);
+
+      Swal.fire({
+      title: 'Concluído!',
+      text: 'Usuário editado com sucesso!',
+      icon: 'success',
+      confirmButtonText: '<span class="text-white">Ok</span>'
+
+    })
+    await navigateTo({path: `/inicio`})
+
     } catch (error) {
       console.error(error);
+      Swal.fire({
+      title: 'Erro!',
+      text: 'Ocorreu um erro, tente novamente...',
+      icon: 'error',
+      confirmButtonText: '<span class="text-white">Ok</span>'
+    })
       
     } finally {
       isLoading.value = false;

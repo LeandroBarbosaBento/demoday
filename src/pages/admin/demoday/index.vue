@@ -491,6 +491,15 @@ async function handleCreateDemoday() {
     console.log('response: ');
     console.log(response);
 
+    Swal.fire({
+      title: 'Concluído!',
+      text: 'Demoday criado com sucesso!',
+      icon: 'success',
+      confirmButtonText: '<span class="text-white">Ok</span>'
+
+    })
+    await navigateTo({path: `/inicio`})
+
   } catch (error) {
     console.error(error);
     let message = '';
