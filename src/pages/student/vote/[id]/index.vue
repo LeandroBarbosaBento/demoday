@@ -210,6 +210,12 @@ async function sendEvaluation() {
 
   } catch (error) {
     console.error(error);
+    Swal.fire({
+      title: 'Erro!',
+      text: 'Ocorreu um erro, tente novamente...',
+      icon: 'error',
+      confirmButtonText: '<span class="text-white">Ok</span>'
+    })
   } finally {
     isLoading.value = false;
   }

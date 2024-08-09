@@ -272,6 +272,7 @@ import { useAsyncData } from '#app';
 import axiosInstance from '@/api/axiosInstance';
 import { compileScript } from 'vue/compiler-sfc';
 import { Project } from '@/types/index';
+import Swal from 'sweetalert2'
 
 definePageMeta({
   layout: 'default-layout',
@@ -312,10 +313,22 @@ async function submitRejection() {
       reason: rejectionReason.value
     });
     console.log('Rejection submitted:', response.data);
-    // Handle successful submission (e.g., show a message to the user)
+    Swal.fire({
+      title: 'Concluído!',
+      text: 'Projeto rejeitado!',
+      icon: 'success',
+      confirmButtonText: '<span class="text-white">Ok</span>'
+
+    })
+    await navigateTo({path: `/inicio`})
   } catch (error) {
     console.error('Error submitting rejection:', error);
-    // Handle error (e.g., show an error message to the user)
+    Swal.fire({
+      title: 'Erro!',
+      text: 'Ocorreu um erro, tente novamente...',
+      icon: 'error',
+      confirmButtonText: '<span class="text-white">Ok</span>'
+    })
   } finally {
     isLoading.value = false;
     await navigateTo({ path: `/teacher/evaluate/`});
@@ -327,13 +340,24 @@ async function approveProject() {
     isLoading.value = true;
     const response = await axiosInstance.post(`/approveproject/${route.params.id}`);
     console.log('Approval submitted:', response.data);
-    // Handle successful submission (e.g., show a message to the user)
+    Swal.fire({
+      title: 'Concluído!',
+      text: 'Projeto aprovado com sucesso!',
+      icon: 'success',
+      confirmButtonText: '<span class="text-white">Ok</span>'
+
+    })
+    await navigateTo({ path: `/teacher/evaluate/`});
   } catch (error) {
     console.error('Error submitting approval:', error);
-    // Handle error (e.g., show an error message to the user)
+    Swal.fire({
+      title: 'Erro!',
+      text: 'Ocorreu um erro, tente novamente...',
+      icon: 'error',
+      confirmButtonText: '<span class="text-white">Ok</span>'
+    })
   } finally {
     isLoading.value = false;
-    await navigateTo({ path: `/teacher/evaluate/`});
   }
 }
 
