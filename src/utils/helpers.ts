@@ -2,6 +2,8 @@ import {Demoday} from "@/types"
 
 export function getCurrentPhase(demoday: Demoday) {
 
+    return 1;
+    
     const today = new Date();
 
     function parseDate(dateString: string) {

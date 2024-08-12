@@ -1,5 +1,10 @@
 <template>
     <div class="mt-5 mb-5">
+        <template v-if="userData.type === 'PROFESSOR'"> 
+            <p class="text-center text-gray-500 mt-10">
+                Na fase 1 ainda não há nada a ser feito! Aguarde a fase 2 para avaliar os projetos que forem submetidos pelos estudantes. 
+            </p>
+        </template>
         <template v-if="userData.type === 'ADMIN'">
             <v-card
                 class="d-flex justify-center align-center gap-20 py-3"
@@ -17,6 +22,7 @@
             <v-data-iterator
                 class="mt-5"
                 :items="projects"
+                :items-per-page="projects.length"
             >
                 <template v-slot:default="{ items }">
                     <v-row dense>
