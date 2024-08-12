@@ -68,6 +68,7 @@ export interface Project{
     rejectionReason: string
     user: User
     projectType: string
+    rating?: number
 }
 
 export interface Committee{

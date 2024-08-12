@@ -20,14 +20,11 @@
             </v-btn>
 
             <v-data-table
+                :sort-by="[{ key: 'rating', order: 'desc' }]"
                 :headers="semiFinalistsTableHeaders"
                 :items="projects"
                 :items-per-page-options="[5,10,20]"
             >
-
-                <template v-slot:item.rating="{ item }">
-                    {{ ratings[item.id] }}
-                </template>
                 <template v-slot:item.actions="{ item }">
                     <v-btn
                         color="green-ufba"
@@ -68,7 +65,7 @@ const projectType = ref({
 
 const isLoading = ref(false);
 
-const ratings = ref<{id: string, rating: number}[]>([]);
+const ratings = ref([]);
 
 const semiFinalistsTableHeaders = [
   {title: 'Projeto', key: 'title'},
@@ -79,7 +76,7 @@ const semiFinalistsTableHeaders = [
 async function test() {
     console.log('teste');
     console.log(ratings.value);
-    console.log(acceptedProjectsByCategory.value);
+    console.log(projectsAccepted.value);
 }
 
 async function getDemodayAcceptedProjects(demodayId: number) {
@@ -87,6 +84,11 @@ async function getDemodayAcceptedProjects(demodayId: number) {
       isLoading.value = true;
       const { data } = await axiosInstance.get(`/getdemodayacceptedprojects/${demodayId}`);
       projectsAccepted.value = data;
+
+      setProjectRating();
+
+      console.log('projectsAccepted');
+      console.log(projectsAccepted.value);
 
       Object.keys(acceptedProjectsByCategory.value).forEach((category: string) => {
         return acceptedProjectsByCategory.value[category] = filterProjectsByCategory(projectsAccepted.value, category)
@@ -98,6 +100,12 @@ async function getDemodayAcceptedProjects(demodayId: number) {
   } finally {
       isLoading.value = false;
   }
+}
+
+function setProjectRating() {
+    projectsAccepted.value.forEach((project) => {
+        return project.rating = ratings.value[project.id];
+    });
 }
 
 function filterProjectsByCategory(projects, category) {
