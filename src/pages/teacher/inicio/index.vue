@@ -33,6 +33,17 @@
           v-if="getCurrentPhase(activeDemoday) == 2"
           :demoday="activeDemoday"
         />
+
+        <demoday-phase-three 
+          v-if="getCurrentPhase(activeDemoday) == 3"
+          :demoday="activeDemoday"
+        />
+
+        <demoday-phase-four 
+          v-if="getCurrentPhase(activeDemoday) == 4"
+          :demoday="activeDemoday"
+        />
+
       </template>
     </div>
     <Loader v-if="isLoading" />

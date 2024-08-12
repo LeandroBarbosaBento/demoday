@@ -25,8 +25,20 @@
 
             <v-divider />
 
-            
+            <demoday-phase-one 
+                v-if="getCurrentPhase(activeDemoday) == 1"
+                :demoday="activeDemoday"
+            />
 
+            <demoday-phase-three 
+                v-if="getCurrentPhase(activeDemoday) == 3"
+                :demoday="activeDemoday"
+            />
+
+            <demoday-phase-four 
+                v-if="getCurrentPhase(activeDemoday) == 4"
+                :demoday="activeDemoday"
+            />
 
         </template>
     </div>

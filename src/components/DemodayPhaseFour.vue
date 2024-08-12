@@ -1,7 +1,9 @@
 <template>
     <div>
-        <v-btn @click="getFinalists">Teste</v-btn>
 
+        <h2 class="app-font-size-2xl app-font-weight-semibold text-gray-500 mb-5 mt-8 text-center">
+            Finalistas escolhidos
+        </h2>
         <template
             v-for="(projects, index) in finalistsByCategory"
             :key="index"
@@ -53,6 +55,10 @@
         <v-divider />
 
         <template v-if="userData.type === 'ADMIN'">
+            <h2 class="app-font-size-2xl app-font-weight-semibold text-gray-500 mt-8 text-center">
+                Resultados da fase 3
+            </h2>
+            <p class="text-center text-gray-400 mb-5">Escolha os seus finalistas.</p>
             <template
                 v-for="(projects, index) in acceptedProjectsByCategory"
                 :key="index"
@@ -139,12 +145,6 @@ const finalistsByCategory = ref({
   'PHD': [],
 });
 
-async function test() {
-    console.log('teste');
-    console.log(ratings.value);
-    console.log(projectsAccepted.value);
-}
-
 async function getDemodayAcceptedProjects(demodayId: number) {
   try {
     isLoading.value = true;
@@ -169,6 +169,10 @@ function setProjectRating() {
     projectsAccepted.value.forEach((project) => {
         return project.rating = ratings.value[project.id];
     });
+}
+
+function evaluateProject(id: number) {
+    navigateTo(`/student/vote/${id}`);
 }
 
 function filterProjectsByCategory(projects, category) {
@@ -227,6 +231,7 @@ async function getFinalists(){
     try {
         isLoading.value = true;
         const { data } = await axiosInstance.get(`/getfinalists/${props.demoday.id}`);
+        finalists.value = [];
         data.forEach((item) => {
             finalists.value.push(item.project)
         });

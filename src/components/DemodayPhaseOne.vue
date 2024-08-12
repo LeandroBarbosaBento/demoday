@@ -42,6 +42,20 @@
                 </template>
             </v-data-iterator>
         </template>
+        <template v-if="userData.type === 'STUDENT'">
+            <v-card
+                class="d-flex justify-center align-center gap-20 py-3"
+            >
+                <v-btn 
+                    icon="mdi-archive-clock"
+                    color="green"
+                    flat
+                />
+                <p class="text-center text-green app-font-weight-medium">
+                    Submeta o seu projeto!
+                </p>
+            </v-card>
+        </template>
         <Loader v-if="isLoading" />
     </div>
 </template>

@@ -77,7 +77,7 @@
                     <v-btn 
                         variant="tonal"
                         class="ml-2"
-                        @click="$router.push('/teacher/evaluate')"
+                        @click="$router.push('/student/vote/list')"
                     >Ver todos</v-btn>
                     </div>
                 </template>
