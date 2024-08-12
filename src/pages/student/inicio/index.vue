@@ -1,67 +1,99 @@
 <template>
     <div class="px-8 py-8">
 
-        <h1 v-if="activeDemoday" class="app-font-size-3xl app-font-weight-bold text-gray-600 my-1">
-            {{ activeDemoday.name }}
-        </h1>
-        <p class="app-font-size-2xl app-font-weight-semibold text-gray-500 mb-5">
-            Projetos para avaliação
-        </p>
+        <template v-if="!activeDemoday">
+            <div class="d-flex flex-column justify-center align-center gap-10">      
+                <h1 class="app-font-size-2xl app-font-weight-bold text-gray-600 my-1 text-center">
+                    Não há um Demoday em andamento.
+                </h1>
+            </div>
+        </template>
+        <template v-else>
+            <h1 class="app-font-size-3xl app-font-weight-bold text-gray-600 my-1">
+                {{ activeDemoday.name }}
+            </h1>
 
-        <v-data-iterator
-            :items="projectsAccepted"
-            :items-per-page="$vuetify.display.xs ? 1 : 4"
-        >
-            <template v-slot:default="{ items }">
-                <v-row dense>
-                <v-col
-                    v-for="project in items"
-                    :key="project.raw.id"
-                    sm="3"
-                    cols="12"
-                >
-                    <project-card
-                        :project="project.raw"
-                        button-text="Ver detalhes e avaliar"
-                        @on-button-click="evaluateProject(project.raw.id)"
+            <v-row>
+                <v-col>
+                    <v-card
+                        class="d-flex justify-center align-center gap-20 py-3"
+                    >
+                        <v-btn 
+                            icon="mdi-archive-check"
+                            color="green"
+                            flat
+                        />
+                        <p class="text-center text-green app-font-weight-medium">
+                            {{ projectsAccepted.length }} projetos para votação
+                        </p>
+                    </v-card>
+                </v-col>
+                <v-col sm="6" cols="12">
+                    <demoday-timeline
+                        :demoday="activeDemoday"
                     />
                 </v-col>
-                </v-row>
-            </template>
+            </v-row>
 
-            <template v-slot:footer="{ page, pageCount, prevPage, nextPage }">
-            <div class="d-flex align-center justify-center pa-4">
-                <v-btn
-                :disabled="page === 1"
-                density="comfortable"
-                icon="mdi-arrow-left"
-                variant="tonal"
-                rounded
-                @click="prevPage"
-                />
+            <p class="app-font-size-2xl app-font-weight-semibold text-gray-500 mb-5">
+                Projetos para avaliação
+            </p>
 
-                <div class="mx-2 text-caption text-center">
-                Página {{ page }} de {{ pageCount }}
+            <v-data-iterator
+                :items="projectsAccepted"
+                :items-per-page="$vuetify.display.xs ? 1 : 4"
+            >
+                <template v-slot:default="{ items }">
+                    <v-row dense>
+                    <v-col
+                        v-for="project in items"
+                        :key="project.raw.id"
+                        sm="3"
+                        cols="12"
+                    >
+                        <project-card
+                            :project="project.raw"
+                            button-text="Ver detalhes e avaliar"
+                            @on-button-click="evaluateProject(project.raw.id)"
+                        />
+                    </v-col>
+                    </v-row>
+                </template>
+
+                <template v-slot:footer="{ page, pageCount, prevPage, nextPage }">
+                <div class="d-flex align-center justify-center pa-4">
+                    <v-btn
+                    :disabled="page === 1"
+                    density="comfortable"
+                    icon="mdi-arrow-left"
+                    variant="tonal"
+                    rounded
+                    @click="prevPage"
+                    />
+
+                    <div class="mx-2 text-caption text-center">
+                    Página {{ page }} de {{ pageCount }}
+                    </div>
+
+                    <v-btn
+                    :disabled="page >= pageCount"
+                    density="comfortable"
+                    icon="mdi-arrow-right"
+                    variant="tonal"
+                    rounded
+                    @click="nextPage"
+                    />
+
+                    <v-btn 
+                    variant="tonal"
+                    class="ml-2"
+                    @click="$router.push('/student/vote/list')"
+                    >Ver todos</v-btn>
                 </div>
-
-                <v-btn
-                :disabled="page >= pageCount"
-                density="comfortable"
-                icon="mdi-arrow-right"
-                variant="tonal"
-                rounded
-                @click="nextPage"
-                />
-
-                <v-btn 
-                variant="tonal"
-                class="ml-2"
-                @click="$router.push('/student/vote/list')"
-                >Ver todos</v-btn>
-            </div>
-            
-            </template>
-        </v-data-iterator>
+                
+                </template>
+            </v-data-iterator>
+        </template>
     </div>
     <Loader v-if="isLoading" />
 </template>

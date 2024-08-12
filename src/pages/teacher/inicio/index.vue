@@ -1,9 +1,51 @@
 <template>
     <div class="px-8 py-8">
-      <template v-if="activeDemoday">
+      <template v-if="!activeDemoday">
+        <div class="d-flex flex-column justify-center align-center gap-10">      
+          <h1 class="app-font-size-2xl app-font-weight-bold text-gray-600 my-1 text-center">
+            Não há um Demoday em andamento.
+          </h1>
+        </div>
+      </template>
+      <template v-else>
         <h1 class="app-font-size-3xl app-font-weight-bold text-gray-600 my-1">
           {{ activeDemoday.name }}
         </h1>
+
+        <v-row>
+          <v-col sm="6" cols="12">
+            <v-card
+              class="d-flex justify-center align-center gap-20 py-3"
+            >
+              <v-btn 
+                icon="mdi-archive-check"
+                color="green"
+                flat
+              />
+              <p class="text-center text-green app-font-weight-medium">
+                {{ projectsAccepted.length }} projetos aprovados
+              </p>
+            </v-card>
+
+            <v-card
+              class="d-flex justify-center align-center gap-20 py-3 mt-5"
+            >
+              <v-btn 
+                icon="mdi-archive-alert"
+                color="red-ufba"
+                flat
+              />
+              <p class="text-center text-red-ufba app-font-weight-medium">
+                {{ projectsPending.length }} projetos pendentes
+              </p>
+            </v-card>
+          </v-col>
+          <v-col sm="6" cols="12">
+            <demoday-timeline
+              :demoday="activeDemoday"
+            />
+          </v-col>
+        </v-row>
 
         <h2 class="app-font-size-2xl app-font-weight-semibold text-gray-500 mb-5">
           Projetos a serem aprovados
@@ -201,8 +243,9 @@
     if(activeDemoday.value){
         const idDemoday = activeDemoday.value.id
         await getDemodayAcceptedProjects(idDemoday);
+        await listPendingProjects();
     }
-    listPendingProjects()
+    
   });
   </script>
   <style lang="scss" scoped>
