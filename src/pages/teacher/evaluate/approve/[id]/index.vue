@@ -1,6 +1,5 @@
 <template>
-  
-  <div class="px-8 py-5">
+  <div class="px-8 py-5 mb-8">
     <go-back-button class="mb-3" />
     <div 
       v-if="project"
@@ -260,7 +259,6 @@
               Voltar para avalição da submissão do projeto
             </button> 
           </div>
-
       </div>
     </div>
 
@@ -307,58 +305,83 @@ function toggleRejectProject() {
 }
 
 async function submitRejection() {
-  try {
-    isLoading.value = true;
-    const response = await axiosInstance.post(`/rejectproject/${route.params.id}`, {
-      reason: rejectionReason.value
-    });
-    console.log('Rejection submitted:', response.data);
-    Swal.fire({
-      title: 'Concluído!',
-      text: 'Projeto rejeitado!',
-      icon: 'success',
-      confirmButtonText: '<span class="text-white">Ok</span>'
 
-    })
-    await navigateTo({path: `/inicio`})
-  } catch (error) {
-    console.error('Error submitting rejection:', error);
-    Swal.fire({
-      title: 'Erro!',
-      text: 'Ocorreu um erro, tente novamente...',
-      icon: 'error',
-      confirmButtonText: '<span class="text-white">Ok</span>'
-    })
-  } finally {
-    isLoading.value = false;
-    await navigateTo({ path: `/teacher/evaluate/`});
-  }
+  Swal.fire({
+    title: `Deseja mesmo rejeitar o projeto?`,
+    showDenyButton: true,
+    confirmButtonText: "<span class='text-white'>Rejeitar</span>",
+    confirmButtonColor: "red",
+    denyButtonText: "<span class='text-white'>Cancelar</span>",
+    denyButtonColor: "gray",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        isLoading.value = true;
+        const response = await axiosInstance.post(`/rejectproject/${route.params.id}`, {
+          reason: rejectionReason.value
+        });
+        console.log('Rejection submitted:', response.data);
+        Swal.fire({
+          title: 'Concluído!',
+          text: 'Projeto rejeitado!',
+          icon: 'success',
+          confirmButtonText: '<span class="text-white">Ok</span>'
+
+        })
+        await navigateTo({path: `/inicio`})
+      } catch (error) {
+        console.error('Error submitting rejection:', error);
+        Swal.fire({
+          title: 'Erro!',
+          text: 'Ocorreu um erro, tente novamente...',
+          icon: 'error',
+          confirmButtonText: '<span class="text-white">Ok</span>'
+        })
+      } finally {
+        isLoading.value = false;
+        await navigateTo({ path: `/teacher/evaluate/`});
+      }
+    }
+  });
+
+  
 }
 
 async function approveProject() {
-  try {
-    isLoading.value = true;
-    const response = await axiosInstance.post(`/approveproject/${route.params.id}`);
-    console.log('Approval submitted:', response.data);
-    Swal.fire({
-      title: 'Concluído!',
-      text: 'Projeto aprovado com sucesso!',
-      icon: 'success',
-      confirmButtonText: '<span class="text-white">Ok</span>'
+  Swal.fire({
+    title: `Deseja mesmo aprovar o projeto?`,
+    showDenyButton: true,
+    confirmButtonText: "<span class='text-white'>Aprovar</span>",
+    confirmButtonColor: "green",
+    denyButtonText: "<span class='text-white'>Cancelar</span>"
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        isLoading.value = true;
+        const response = await axiosInstance.post(`/approveproject/${route.params.id}`);
+        console.log('Approval submitted:', response.data);
+        Swal.fire({
+          title: 'Concluído!',
+          text: 'Projeto aprovado com sucesso!',
+          icon: 'success',
+          confirmButtonText: '<span class="text-white">Ok</span>'
 
-    })
-    await navigateTo({ path: `/teacher/evaluate/`});
-  } catch (error) {
-    console.error('Error submitting approval:', error);
-    Swal.fire({
-      title: 'Erro!',
-      text: 'Ocorreu um erro, tente novamente...',
-      icon: 'error',
-      confirmButtonText: '<span class="text-white">Ok</span>'
-    })
-  } finally {
-    isLoading.value = false;
-  }
+        })
+        await navigateTo({ path: `/teacher/evaluate/`});
+      } catch (error) {
+        console.error('Error submitting approval:', error);
+        Swal.fire({
+          title: 'Erro!',
+          text: 'Ocorreu um erro, tente novamente...',
+          icon: 'error',
+          confirmButtonText: '<span class="text-white">Ok</span>'
+        })
+      } finally {
+        isLoading.value = false;
+      }
+    }
+  }); 
+  
 }
 
 onMounted(async () => {

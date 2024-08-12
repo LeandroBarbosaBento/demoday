@@ -1,5 +1,5 @@
 <template>
-    <div class="px-8 py-4">
+    <div class="px-8 py-4 mb-8">
       <go-back-button class="mb-3" />
       <v-divider />
 
@@ -43,7 +43,7 @@
                   <project-card
                     :project="project.raw"
                     button-text="Ver detalhes e avaliar"
-                    @on-button-click="evaluateProject(project.raw.id)"
+                    @on-button-click="analyzeProject(project.raw)"
                   />
                 </v-col>
               </v-row>
@@ -112,8 +112,6 @@ async function listPendingProjects() {
 }
 
 async function analyzeProject(project: any) {
-  console.log('analyzeProject');
-  console.log(project);
   await navigateTo({ path: `/teacher/evaluate/approve/${project.id}`});
 }
 
