@@ -24,6 +24,7 @@
             {{ project.title }}
         </h2>
         <v-btn
+            v-if="buttonText"
             color="green-ufba"
             block
             flat
@@ -41,7 +42,7 @@
 import { Project } from "@/types";
 interface Props {
     project: Project
-    buttonText: string
+    buttonText?: string
 }
 const props = defineProps<Props>();
 

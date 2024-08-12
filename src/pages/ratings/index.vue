@@ -13,64 +13,14 @@
             align-content="stretch"
         >   
             <v-col
-                v-for="(project, index) in podium"
+                v-for="project in podium"
                 :key="project.id"
                 sm="4"
                 cols="12"
             >
-                <v-card
-                    elevation="1"
-                >
-                    <v-img
-                        class="align-end text-white"
-                        height="200"
-                        :src="`data:image/jpeg;base64, ${project.image}`"
-                        cover
-                    >
-                        <v-btn
-                            class="cursor-default"
-                            style="position: absolute; top: 10px; right: 10px;"
-                            rounded="lg"
-                            size="small"
-                            :color="projectType[project.type].color" 
-                            elevation="2"
-                        >
-                            <span class="text-white font-weight-bold"> 
-                                {{ projectType[project.type].text }}
-                            </span> 
-                        </v-btn>
-                    </v-img>
-                    <v-card-text>
-                        <div
-                            style="min-height: 200px; overflow:hidden;"
-                        >
-                            <h1 class="text-gray-800 mt-1 mb-5">
-                                {{ index + 1 }}º Lugar
-                            </h1>
-                            <h2 class="text-gray-700 app-font-size-md">
-                                {{ project.title }}
-                            </h2>
-                            <p class="mt-1 text-gray-600">
-                                <span class="app-font-weight-semibold">
-                                    Descrição:
-                                </span>
-                                {{ project.description }}
-                            </p>
-                            <p class="mt-1 text-gray-600">
-                                <span class="app-font-weight-semibold">
-                                    Disciplina:
-                                </span>
-                                    {{ project.discipline }}
-                            </p>
-                            <p class="mt-1 text-gray-600">
-                                <span class="app-font-weight-semibold">
-                                    Tecnologias:
-                                </span>
-                                {{ project.tecnologies }}
-                            </p>
-                        </div>
-                    </v-card-text>
-                </v-card>
+                    <project-card
+                        :project="project"
+                    />
             </v-col>
         </v-row>
 
@@ -85,7 +35,6 @@
                   color="blue-ufba" 
                   rounded="lg"
                   >
-                  <!-- @click="analyzeProject(item)" -->
                   Detalhes
               </v-btn>
           </template>
