@@ -4,7 +4,9 @@
         <h1 v-if="activeDemoday" class="app-font-size-3xl app-font-weight-bold text-gray-600 my-1">
             {{ activeDemoday.name }}
         </h1>
-        <p class="app-font-size-2xl app-font-weight-semibold text-gray-500 mb-5">Projetos aprovados</p>
+        <p class="app-font-size-2xl app-font-weight-semibold text-gray-500 mb-5">
+            Projetos para avaliação
+        </p>
 
         <v-data-iterator
             :items="projectsAccepted"
@@ -18,43 +20,11 @@
                     sm="3"
                     cols="12"
                 >
-                    <v-card elevation="1">
-                    <v-img
-                        class="align-end text-white"
-                        height="100"
-                        :src="`data:image/jpeg;base64, ${project.raw.image}`"
-                        cover
-                    >
-                        <v-btn
-                        class="cursor-default"
-                        style="position: absolute; top: 10px; right: 10px;"
-                        rounded="lg"
-                        size="small"
-                        :color="projectType[project.raw.type].color" 
-                        elevation="2"
-                        >
-                        <span class="text-white font-weight-bold"> 
-                            {{ projectType[project.raw.type].text }}
-                        </span> 
-                        </v-btn>
-                    </v-img>
-                    <v-card-text>
-                        <h2 class="text-gray-700 app-font-size-md text-center">
-                        {{ project.raw.title }}
-                        </h2>
-                        <v-btn
-                        color="green-ufba"
-                        block
-                        flat
-                        class="mt-3"
-                        @click="evaluateProject(project.raw.id)"
-                        >
-                        <span class="text-white app-font-weight-semibold" style="text-transform: none;">
-                            Ver detalhes e avaliar
-                        </span>
-                        </v-btn>
-                    </v-card-text>
-                    </v-card>
+                    <project-card
+                        :project="project.raw"
+                        button-text="Ver detalhes e avaliar"
+                        @on-button-click="evaluateProject(project.raw.id)"
+                    />
                 </v-col>
                 </v-row>
             </template>

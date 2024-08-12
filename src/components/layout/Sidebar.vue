@@ -125,18 +125,19 @@ const menus : Menu = {
             url: '/student/apply',
             slug: 'apply'
         },
-        {
-            text: 'Votar nos projetos',
-            icon: 'mdi-ballot-outline',
-            url: '/student/vote/list',
-            slug: '/vote/list'
-        },
+        
     ]
 }
 
 const items = ref<RouterItem[]>([]);
 
 const menuGeneral: RouterItem[] = [
+    {
+        text: 'Votar nos projetos',
+        icon: 'mdi-ballot-outline',
+        url: '/student/vote/list',
+        slug: '/vote/list'
+    },
     {
         text: 'Classificação',
         icon: 'mdi-star',

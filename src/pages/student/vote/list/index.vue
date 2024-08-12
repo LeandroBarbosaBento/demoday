@@ -1,38 +1,55 @@
 <template>
   <div class="px-8 py-4">
     <go-back-button class="mb-3" />
-    <v-data-table class="px-4 py-4 elevation-1 rounded-lg"
-        :headers="headers"
-        :items="projectsToEvaluateList"
+    <v-divider />
+
+    <template
+      v-for="(projects, index) in projectsToEvaluateByCategory"
+      :key="index"
     >
-        <template v-slot:item.details="{ item }">
-            <v-btn 
-                variant="outlined" 
-                block
-                color="blue-ufba" 
-                rounded="lg"
-                size="large"
-                @click="evaluateProject(item.id)"
-            >
-                Votar
-            </v-btn>
+
+      <v-btn
+        class="cursor-default my-3"
+        rounded="lg"
+        size="small"
+        :color="projectType[index].color" 
+        elevation="2"
+      >
+        <span class="text-white font-weight-bold"> 
+          {{ projectType[index].text }}
+        </span> 
+      </v-btn>
+
+      <p 
+        v-if="!projects.length"
+        class="text-gray-400"
+      > 
+        Nenhum projeto encontrado nesta categoria.
+      </p>
+
+      <v-data-iterator
+        v-if="projects.length"
+        :items="projects"
+        class="mb-5"
+      >
+        <template v-slot:default="{ items }">
+            <v-row dense>
+              <v-col
+                v-for="project in items"
+                :key="project.raw.id"
+                sm="3"
+                cols="12"
+              >
+                <project-card 
+                  :project="project.raw"
+                  button-text="Ver detalhes e avaliar"
+                  @on-button-click="evaluateProject(project.raw.id)"
+                />
+              </v-col>
+            </v-row>
         </template>
-        
-        <template v-slot:item.type="{ item }">
-            <v-btn
-                class="py-4 cursor-default"
-                block
-                :color="typeColor[item.type]" 
-                rounded="lg"
-                size="small"
-                flat
-            >
-                <span class="text-white font-weight-bold"> 
-                  {{ item.type }} 
-                </span> 
-            </v-btn>
-        </template>
-    </v-data-table>
+      </v-data-iterator>
+    </template>
     <Loader v-if="isLoading" />
   </div>
 </template>
@@ -50,13 +67,25 @@ const isLoading = ref(false);
 
 const projectsToEvaluateList = ref([]);
 
-const typeColor = ref({
-  IC: 'orange', 
-  TCC: 'blue', 
-  DISC: 'red',
-  MSC: 'green',
-  PHD: 'pink',
-});
+const projectType = ref({
+  'IC': {color: 'blue-ufba', text: 'IC'},
+  'TCC': {color: 'red-ufba', text: 'TCC'},
+  'DISC': {color: 'green-ufba', text: 'DISC'},
+  'MSC': {color: 'yellow-ufba', text: 'MSC'},
+  'PHD': {color: 'orange', text: 'PHD'},
+})
+
+const projectsToEvaluateByCategory = ref({
+  'IC': [],
+  'TCC': [],
+  'DISC': [],
+  'MSC': [],
+  'PHD': [],
+})
+
+function filterProjectsByCategory(projects, category) {
+  return projects.filter((project) => project.type == category);
+}
 
 const headers = ref<InternalDataTableHeader[]>([
   {title: 'Nome', key: 'title'},
@@ -73,6 +102,13 @@ async function getProjectList(){
     const { data } = await axiosInstance.get(`/getdemodayacceptedprojects/${response.data[0].id}`);
 
     projectsToEvaluateList.value = data;
+
+    Object.keys(projectsToEvaluateByCategory.value).forEach((category: string) => {
+      return projectsToEvaluateByCategory.value[category] = filterProjectsByCategory(
+        projectsToEvaluateList.value,
+          category
+        )
+    });
   } catch (error) {
     console.error(error);
   } finally {

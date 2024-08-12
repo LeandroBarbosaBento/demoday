@@ -43,7 +43,7 @@
           :src="`data:image/jpeg;base64, ${project.image}`"
           cover
           style="width: 400px;"
-        />c
+        />
       </v-col>
 
       <v-col cols="12">
@@ -69,7 +69,16 @@
           color="orange-lighten-1"
         />
       </template>
-      <template v-slot:bottom></template>
+      <template v-slot:bottom>
+        <div class="d-flex justify-end">
+          <v-btn 
+            flat
+            class="mt-4"
+          >
+            Avaliação final: {{ finalEvaluation }}
+          </v-btn>
+        </div>
+      </template>
     </v-data-table>
 
     <v-btn 
@@ -90,7 +99,6 @@ import { useRoute } from 'vue-router';
 import type { InternalDataTableHeader } from 'vuetify/lib/components/VDataTable/VDataTable'
 import Swal from 'sweetalert2'
 
-
 definePageMeta({
   layout: 'default-layout',
   pageTitle: 'Avaliar projeto',
@@ -104,6 +112,17 @@ const evalCriteria = ref([]);
 const votes = ref({});
 
 const project = ref();
+
+const finalEvaluation = computed(() => {
+  let total = 0;
+  Object.keys(votes.value).forEach((index) => {
+    total += votes.value[index];
+  })
+
+  if(!evalCriteria.value.length) return 0;
+
+  return (total / evalCriteria.value.length).toFixed(2);
+});
 
 const tableHeaders = ref<InternalDataTableHeader []>([
   {
@@ -191,6 +210,8 @@ async function sendEvaluation() {
     })
   });
 
+  isLoading.value = true;
+
 
   try {
     const { data } = await axiosInstance.post(`/evaluateproject`, params);
@@ -210,12 +231,22 @@ async function sendEvaluation() {
 
   } catch (error) {
     console.error(error);
-    Swal.fire({
-      title: 'Erro!',
-      text: 'Ocorreu um erro, tente novamente...',
-      icon: 'error',
-      confirmButtonText: '<span class="text-white">Ok</span>'
-    })
+    if(error.response.data.message){
+      Swal.fire({
+        title: 'Erro!',
+        text: error.response.data.message,
+        icon: 'error',
+        confirmButtonText: '<span class="text-white">Ok</span>'
+      })
+    }
+    else {
+      Swal.fire({
+        title: 'Erro!',
+        text: 'Ocorreu um erro, tente novamente...',
+        icon: 'error',
+        confirmButtonText: '<span class="text-white">Ok</span>'
+      })
+    }
   } finally {
     isLoading.value = false;
   }
