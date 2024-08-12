@@ -55,8 +55,6 @@ const projects = ref<Project []>([]);
 const userData = JSON.parse(localStorage.getItem('userData') || '');
 
 async function getDemodayProjects(id) {
-  console.log('getDemodayProjects');
-  console.log(id);
 
   try {
     isLoading.value = true;

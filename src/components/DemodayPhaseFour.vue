@@ -1,50 +1,107 @@
 <template>
     <div>
-        <v-btn @click="test">Teste</v-btn>
+        <v-btn @click="getFinalists">Teste</v-btn>
 
         <template
-            v-for="(projects, index) in acceptedProjectsByCategory"
+            v-for="(projects, index) in finalistsByCategory"
             :key="index"
         >
+
             <v-btn
-                class="cursor-default my-5"
+                class="cursor-default my-3"
                 rounded="lg"
                 size="small"
                 :color="projectType[index].color" 
                 elevation="2"
-                @click="console.log(projects);"
             >
                 <span class="text-white font-weight-bold"> 
                     {{ projectType[index].text }}
                 </span> 
             </v-btn>
 
-            <v-data-table
-                :sort-by="[{ key: 'rating', order: 'desc' }]"
-                :headers="semiFinalistsTableHeaders"
+            <p 
+                v-if="!projects.length"
+                class="text-gray-400"
+            > 
+                Nenhum projeto encontrado nesta categoria.
+            </p>
+
+            <v-data-iterator
+                v-if="projects.length"
                 :items="projects"
-                :items-per-page-options="[5,10,20]"
+                :items-per-page="$vuetify.display.xs ? 1 : 4"
             >
-                <template v-slot:item.actions="{ item }">
-                    <v-btn
-                        color="green-ufba"
-                        @click="turnIntoFinalist(item.id)"
-                    >
-                        Tornar finalista
-                    </v-btn>
+                <template v-slot:default="{ items }">
+                    <v-row dense>
+                        <v-col
+                        v-for="project in items"
+                        :key="project.raw.id"
+                        sm="3"
+                        cols="12"
+                        >
+                        <project-card
+                            :project="project.raw"
+                            button-text="Avaliar projeto"
+                            @on-button-click="evaluateProject(project.raw.id)"
+                        />
+                        </v-col>
+                    </v-row>
                 </template>
-            </v-data-table>
+            </v-data-iterator>
         </template>
+
+        <v-divider />
+
+        <template v-if="userData.type === 'ADMIN'">
+            <template
+                v-for="(projects, index) in acceptedProjectsByCategory"
+                :key="index"
+            >
+                <v-btn
+                    class="cursor-default my-5"
+                    rounded="lg"
+                    size="small"
+                    :color="projectType[index].color" 
+                    elevation="2"
+                    @click="console.log(projects);"
+                >
+                    <span class="text-white font-weight-bold"> 
+                        {{ projectType[index].text }}
+                    </span> 
+                </v-btn>
+
+                <v-data-table
+                    :sort-by="[{ key: 'rating', order: 'desc' }]"
+                    :headers="semiFinalistsTableHeaders"
+                    :items="projects"
+                    :items-per-page-options="[5,10,20]"
+                >
+                    <template v-slot:item.actions="{ item }">
+                        <v-btn
+                            color="green-ufba"
+                            @click="turnIntoFinalist(item)"
+                        >
+                            Tornar finalista
+                        </v-btn>
+                    </template>
+                </v-data-table>
+            </template>
+        </template>
+
+        <Loader v-if="isLoading" />
     </div>
 </template>
 <script setup lang="ts">
 import axiosInstance from '@/api/axiosInstance';
 import { Demoday, Project } from '@/types/index';
+import Swal from 'sweetalert2'
 
 interface Props {
     demoday: Demoday
 }
 const props = defineProps<Props>();
+
+const userData = JSON.parse(localStorage.getItem('userData') || '');
 
 const projectsAccepted = ref<Project []>([]);
 const acceptedProjectsByCategory = ref({
@@ -56,11 +113,11 @@ const acceptedProjectsByCategory = ref({
 });
 
 const projectType = ref({
-'IC': {color: 'blue-ufba', text: 'IC'},
-'TCC': {color: 'red-ufba', text: 'TCC'},
-'DISC': {color: 'green-ufba', text: 'DISC'},
-'MSC': {color: 'yellow-ufba', text: 'MSC'},
-'PHD': {color: 'orange', text: 'PHD'},
+    'IC': {color: 'blue-ufba', text: 'IC'},
+    'TCC': {color: 'red-ufba', text: 'TCC'},
+    'DISC': {color: 'green-ufba', text: 'DISC'},
+    'MSC': {color: 'yellow-ufba', text: 'MSC'},
+    'PHD': {color: 'orange', text: 'PHD'},
 })
 
 const isLoading = ref(false);
@@ -73,6 +130,15 @@ const semiFinalistsTableHeaders = [
   {title: 'Ações', key: 'actions'}
 ]
 
+const finalists = ref<Project []>([]);
+const finalistsByCategory = ref({
+  'IC': [],
+  'TCC': [],
+  'DISC': [],
+  'MSC': [],
+  'PHD': [],
+});
+
 async function test() {
     console.log('teste');
     console.log(ratings.value);
@@ -81,18 +147,15 @@ async function test() {
 
 async function getDemodayAcceptedProjects(demodayId: number) {
   try {
-      isLoading.value = true;
-      const { data } = await axiosInstance.get(`/getdemodayacceptedprojects/${demodayId}`);
-      projectsAccepted.value = data;
+    isLoading.value = true;
+    const { data } = await axiosInstance.get(`/getdemodayacceptedprojects/${demodayId}`);
+    projectsAccepted.value = data;
 
-      setProjectRating();
+    setProjectRating();
 
-      console.log('projectsAccepted');
-      console.log(projectsAccepted.value);
-
-      Object.keys(acceptedProjectsByCategory.value).forEach((category: string) => {
+    Object.keys(acceptedProjectsByCategory.value).forEach((category: string) => {
         return acceptedProjectsByCategory.value[category] = filterProjectsByCategory(projectsAccepted.value, category)
-      });
+    });
 
       
   } catch (error) {
@@ -119,16 +182,7 @@ async function getTotalRatings() {
     const { data } = await axiosInstance.get(
         `/totalRatings?phase=3&demodayId=${props.demoday.id}`
     );
-
-    Object.keys(data).forEach((rating) => {
-        ratings.value.push({
-            id: rating,
-            rating: data[rating]
-        })
-    });
     ratings.value = data;
-    console.log('totalRatings')
-    console.log(data);
   } catch (error) {
     console.error(error);
   } finally {
@@ -136,13 +190,60 @@ async function getTotalRatings() {
   }
 }
 
-function turnIntoFinalist(id) {
-    console.log('tornar finalista');
-    console.log(id);
+function turnIntoFinalist(project) {
+    Swal.fire({
+        title: `Deseja mesmo tornar este projeto um finalista?`,
+        showDenyButton: true,
+        confirmButtonText: "<span class='text-white'>Confirmar</span>",
+        confirmButtonColor: "green",
+        denyButtonText: "<span class='text-white'>Cancelar</span>"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            confirmFinalist(project)
+        }
+    }); 
 }
 
+async function confirmFinalist(project: Project){
+    try {
+        isLoading.value = true;
+
+        const params = [{
+            "demoday": { "id": project.demoday.id },
+            "project": { "id": project.id }
+        }]
+
+        await axiosInstance.post('/setfinalists', params);
+
+        await getFinalists();
+    } catch (error) {
+        console.error(error);
+    } finally {
+        isLoading.value = false;
+    }
+}
+
+async function getFinalists(){
+    try {
+        isLoading.value = true;
+        const { data } = await axiosInstance.get(`/getfinalists/${props.demoday.id}`);
+        data.forEach((item) => {
+            finalists.value.push(item.project)
+        });
+
+        Object.keys(finalistsByCategory.value).forEach((category: string) => {
+            return finalistsByCategory.value[category] = filterProjectsByCategory(finalists.value, category)
+        });
+
+    } catch (error) {
+        console.error(error);
+    } finally {
+        isLoading.value = false;
+    }
+}
 onMounted(async () => {
     await getTotalRatings();
     await getDemodayAcceptedProjects(props.demoday.id);
+    await getFinalists();
 });
 </script>
