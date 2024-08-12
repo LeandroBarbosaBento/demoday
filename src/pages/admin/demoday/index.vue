@@ -472,11 +472,11 @@ async function handleCreateDemoday() {
     phaseOneInit: formatSendDate(phaseOne.value.init),
     phaseOneEnd: formatSendDate(phaseOne.value.end),
     phaseTwoInit: formatSendDate(phaseTwo.value.init),
-    phaseTwoEnd: formatSendDate(phaseTwo.value.init),
+    phaseTwoEnd: formatSendDate(phaseTwo.value.end),
     phaseThreeInit: formatSendDate(phaseThree.value.init),
-    phaseThreeEnd: formatSendDate(phaseThree.value.init),
+    phaseThreeEnd: formatSendDate(phaseThree.value.end),
     phaseFourInit: formatSendDate(phaseFour.value.init),
-    phaseFourEnd: formatSendDate(phaseFour.value.init),
+    phaseFourEnd: formatSendDate(phaseFour.value.end),
     accCriteriaDemoday: applyCriteriaAdded.value,
     evalCriteriaDemoday: evalCriteriaAdded.value 
   }
@@ -498,7 +498,7 @@ async function handleCreateDemoday() {
       confirmButtonText: '<span class="text-white">Ok</span>'
 
     })
-    await navigateTo({path: `/inicio`})
+    await navigateTo({path: `/admin/inicio`})
 
   } catch (error) {
     console.error(error);

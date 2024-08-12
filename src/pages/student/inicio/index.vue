@@ -9,7 +9,7 @@
             </div>
         </template>
         <template v-else>
-            <h1 class="app-font-size-3xl app-font-weight-bold text-gray-600 my-1">
+            <h1 class="app-font-size-3xl app-font-weight-bold text-gray-600 my-1 py-3">
                 {{ activeDemoday.name }}
             </h1>
 
@@ -17,6 +17,7 @@
                 <v-col>
                     <v-card
                         class="d-flex justify-center align-center gap-20 py-3"
+                        @click="$router.push('/student/vote/list')"
                     >
                         <v-btn 
                             icon="mdi-archive-check"
@@ -143,6 +144,20 @@ async function getDemodayAcceptedProjects(demodayId: number) {
         isLoading.value = true;
         const { data } = await axiosInstance.get(`/getdemodayacceptedprojects/${demodayId}`);
         projectsAccepted.value = data;
+    } catch (error) {
+        console.error(error);
+    } finally {
+        isLoading.value = false;
+    }
+}
+
+async function test() {
+    let userData = JSON.parse(localStorage.getItem('userData') || '');
+    try {
+        isLoading.value = true;
+        const { data } = await axiosInstance.get(
+            `/projects/available-and-evaluated`
+        );
     } catch (error) {
         console.error(error);
     } finally {

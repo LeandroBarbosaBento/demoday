@@ -1,9 +1,17 @@
 <template>
-    <v-timeline align="start" side="end">
+    <v-timeline align="start" side="end" class="text-gray-700">
         <v-timeline-item
           dot-color="red-ufba"
           size="small"
+          :icon=" currentPhase === 1 ? 'mdi-star' : ''"
         >
+        <template v-slot:opposite>
+          <div
+            v-if="currentPhase === 1"
+            :class="`pt-1 headline font-weight-bold`"
+            v-text="'fase atual'"
+          ></div>
+        </template>
           <div class="d-flex">
             <strong class="me-4">Fase 1</strong>
             <div>
@@ -11,7 +19,7 @@
                 {{formatDate(demoday.phaseOneInit)}} - 
                 {{formatDate(demoday.phaseOneEnd)}}
               </strong>
-              <div class="text-caption">
+              <div class="text-caption text-gray-500">
                 Submissão de projetos
               </div>
             </div>
@@ -21,7 +29,16 @@
         <v-timeline-item
           dot-color="blue-ufba"
           size="small"
+          :icon=" currentPhase === 2 ? 'mdi-star' : ''"
+
         >
+          <template v-slot:opposite>
+            <div
+              v-if="currentPhase === 2"
+              :class="`pt-1 headline font-weight-bold`"
+              v-text="'fase atual'"
+            ></div>
+          </template>
           <div class="d-flex">
             <strong class="me-4">Fase 2</strong>
             <div>
@@ -29,7 +46,7 @@
                 {{formatDate(demoday.phaseTwoInit)}} - 
                 {{formatDate(demoday.phaseTwoEnd)}}
               </strong>
-              <div class="text-caption mb-2">
+              <div class="text-caption text-gray-500">
                 Avaliação de projetos pela comissão
               </div>
             </div>
@@ -39,7 +56,15 @@
         <v-timeline-item
           dot-color="red-ufba"
           size="small"
+          :icon=" currentPhase === 3 ? 'mdi-star' : ''"
         >
+          <template v-slot:opposite>
+            <div
+              v-if="currentPhase === 3"
+              :class="`pt-1 headline font-weight-bold`"
+              v-text="'fase atual'"
+            ></div>
+          </template>
           <div class="d-flex">
             <strong class="me-4">Fase 3</strong>
             <div>
@@ -47,7 +72,7 @@
                 {{formatDate(demoday.phaseThreeInit)}} - 
                 {{formatDate(demoday.phaseThreeEnd)}}
               </strong>
-              <div class="text-caption">
+              <div class="text-caption text-gray-500">
                 Votação para escolha dos finalistas
               </div>
             </div>
@@ -57,7 +82,15 @@
         <v-timeline-item
           dot-color="blue-ufba"
           size="small"
+          :icon=" currentPhase === 4 ? 'mdi-star' : ''"
         >
+          <template v-slot:opposite>
+            <div
+              v-if="currentPhase === 4"
+              :class="`pt-1 headline font-weight-bold`"
+              v-text="'fase atual'"
+            ></div>
+          </template>
           <div class="d-flex">
             <strong class="me-4">Fase 4</strong>
             <div>
@@ -65,7 +98,7 @@
                 {{formatDate(demoday.phaseFourInit)}} - 
                 {{formatDate(demoday.phaseFourEnd)}}
               </strong>
-              <div class="text-caption">
+              <div class="text-caption text-gray-500">
                 Final
               </div>
             </div>
@@ -75,10 +108,13 @@
 </template>
 <script setup lang="ts">
 import { Demoday } from "@/types";
+import { getCurrentPhase } from "@/utils/helpers"
 interface Props {
     demoday: Demoday
 }
 const props = defineProps<Props>();
+
+const currentPhase = getCurrentPhase(props.demoday)
 
 function formatDate(date) {
   let newDate = date.split('-');

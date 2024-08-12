@@ -8,7 +8,7 @@
         </div>
       </template>
       <template v-else>
-        <h1 class="app-font-size-3xl app-font-weight-bold text-gray-600 my-1">
+        <h1 class="app-font-size-3xl app-font-weight-bold text-gray-600 my-1 py-3">
           {{ activeDemoday.name }}
         </h1>
 

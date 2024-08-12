@@ -479,7 +479,7 @@ async function handleCreateProject(){
       confirmButtonText: '<span class="text-white">Ok</span>'
 
     })
-    await navigateTo({path: `/inicio`})
+    await navigateTo({path: `/student/inicio`})
 
   } catch (error) {
     console.error(error);

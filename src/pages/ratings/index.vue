@@ -1,5 +1,8 @@
 <template>
     <div class="px-8 py-8">
+        <template v-if="activeDemoday">
+        
+        </template>
 
         <h1 v-if="activeDemoday" class="app-font-size-3xl app-font-weight-bold text-gray-600 my-1">
             {{ activeDemoday.name }}
@@ -111,7 +114,7 @@
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/api/axiosInstance';
 import { Demoday, Project } from '@/types/index';
-import type { InternalDataTableHeader } from 'vuetify/lib/components/VDataTable/VDataTable'
+import type { InternalDataTableHeader } from 'vuetify/lib/components/VDataTable/VDataTable';
 
 definePageMeta({
 layout: 'default-layout',
