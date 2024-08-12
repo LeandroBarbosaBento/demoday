@@ -21,43 +21,11 @@
                   sm="3"
                   cols="12"
                 >
-                  <v-card elevation="1">
-                    <v-img
-                      class="align-end text-white"
-                      height="100"
-                      :src="`data:image/jpeg;base64, ${project.raw.image}`"
-                      cover
-                    >
-                      <v-btn
-                        class="cursor-default"
-                        style="position: absolute; top: 10px; right: 10px;"
-                        rounded="lg"
-                        size="small"
-                        :color="projectType[project.raw.type].color" 
-                        elevation="2"
-                      >
-                      <span class="text-white font-weight-bold"> 
-                          {{ projectType[project.raw.type].text }}
-                      </span> 
-                      </v-btn>
-                    </v-img>
-                      <v-card-text>
-                        <h2 class="text-gray-700 app-font-size-md text-center">
-                            {{ project.raw.title }}
-                        </h2>
-                        <v-btn
-                          color="yellow-ufba"
-                          block
-                          flat
-                          class="mt-3"
-                          @click="analyzeProject(project.raw.id)"
-                        >
-                          <span class="text-white app-font-weight-semibold" style="text-transform: none;">
-                              Aprovar submissão
-                          </span>
-                        </v-btn>
-                    </v-card-text>
-                  </v-card>
+                  <project-card 
+                    :project="project.raw"
+                    button-text="Avaliar submissão"
+                    @on-button-click="analyzeProject(project.raw.id)"
+                  />
                 </v-col>
               </v-row>
           </template>
@@ -110,43 +78,11 @@
                   sm="3"
                   cols="12"
                 >
-                  <v-card elevation="1">
-                    <v-img
-                      class="align-end text-white"
-                      height="100"
-                      :src="`data:image/jpeg;base64, ${project.raw.image}`"
-                      cover
-                    >
-                      <v-btn
-                        class="cursor-default"
-                        style="position: absolute; top: 10px; right: 10px;"
-                        rounded="lg"
-                        size="small"
-                        :color="projectType[project.raw.type].color" 
-                        elevation="2"
-                      >
-                        <span class="text-white font-weight-bold"> 
-                          {{ projectType[project.raw.type].text }}
-                        </span> 
-                      </v-btn>
-                    </v-img>
-                    <v-card-text>
-                      <h2 class="text-gray-700 app-font-size-md text-center">
-                        {{ project.raw.title }}
-                      </h2>
-                      <v-btn
-                        color="green-ufba"
-                        block
-                        flat
-                        class="mt-3"
-                        @click="evaluateProject(project.raw.id)"
-                      >
-                        <span class="text-white app-font-weight-semibold" style="text-transform: none;">
-                          Ver detalhes e avaliar
-                        </span>
-                      </v-btn>
-                    </v-card-text>
-                  </v-card>
+                  <project-card 
+                    :project="project.raw"
+                    button-text="Ver detalhes e avaliar"
+                    @on-button-click="evaluateProject(project.raw.id)"
+                  />
                 </v-col>
               </v-row>
           </template>
@@ -178,7 +114,7 @@
               <v-btn 
                 variant="tonal"
                 class="ml-2"
-                @click="$router.push('/')"
+                @click="$router.push('/student/vote/list')"
               >Ver todos</v-btn>
             </div>
             
