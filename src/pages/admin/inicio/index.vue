@@ -6,19 +6,36 @@
           Não há um Demoday em andamento.
         </h1>
         <p class="text-gray-500 text-center">Crie uma nova edição clicando no botão abaixo.</p>
-        <v-card
-          width="150"
-          height="150"
-          class="d-flex flex-column justify-center align-center gap-10"
-          @click="$router.push('/admin/demoday')"
-        >
-          <v-btn 
-            icon="mdi-invoice-plus"
-            color="red-ufba"
-            flat
-          />
-          <p class="text-center text-red-ufba">Criar novo demoday</p>
-        </v-card>
+        <div class="d-flex">
+          <v-card
+            width="150"
+            height="150"
+            class="d-flex flex-column justify-center align-center gap-10"
+            @click="$router.push('/admin/demoday')"
+          >
+            <v-btn 
+              icon="mdi-invoice-plus"
+              color="red-ufba"
+              flat
+            />
+            <p class="text-center text-red-ufba">Criar novo demoday</p>
+          </v-card>
+
+          <v-card
+            width="150"
+            height="150"
+            class="d-flex flex-column justify-center align-center gap-10"
+            @click="$router.push('/ratings')"
+          >
+            <v-btn 
+              icon="mdi-crown"
+              color="red-ufba"
+              flat
+            />
+            <p class="text-center text-red-ufba">Ver classificação do demoday anterior</p>
+          </v-card>
+        </div>
+        
       </div>
     </template>
     <template v-else>
