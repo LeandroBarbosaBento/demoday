@@ -1,60 +1,68 @@
 <template>
     <div class="px-8 py-8">
-        <template v-if="activeDemoday">
+        <template v-if="lastDemodayFinished">
+
+            <h2 class="app-font-size-2xl app-font-weight-semibold text-gray-500 mt-8 text-center">
+                Resultados da fase 4
+            </h2>
+            <template
+                v-for="(projects, index) in finalistsByCategory"
+                :key="index"
+            >
+                <v-btn
+                    class="cursor-default my-5"
+                    rounded="lg"
+                    size="small"
+                    :color="projectType[index].color" 
+                    elevation="2"
+                    @click="console.log(projects);"
+                >
+                    <span class="text-white font-weight-bold"> 
+                        {{ projectType[index].text }}
+                    </span> 
+                </v-btn>
+
+                <v-data-table
+                    :sort-by="[{ key: 'rating', order: 'desc' }]"
+                    :headers="tableHeaders"
+                    :items="projects"
+                    :items-per-page-options="[5,10,20]"
+                >
+                </v-data-table>
+            </template>
+
+            <v-divider />
+
+            <h2 class="app-font-size-2xl app-font-weight-semibold text-gray-500 mt-8 text-center">
+                Resultados da fase 3
+            </h2>
+            <template
+                v-for="(projects, index) in acceptedProjectsByCategory"
+                :key="index"
+            >
+                <v-btn
+                    class="cursor-default my-5"
+                    rounded="lg"
+                    size="small"
+                    :color="projectType[index].color" 
+                    elevation="2"
+                    @click="console.log(projects);"
+                >
+                    <span class="text-white font-weight-bold"> 
+                        {{ projectType[index].text }}
+                    </span> 
+                </v-btn>
+
+                <v-data-table
+                    :sort-by="[{ key: 'rating', order: 'desc' }]"
+                    :headers="tableHeaders"
+                    :items="projects"
+                    :items-per-page-options="[5,10,20]"
+                >
+                </v-data-table>
+            </template>
         
         </template>
-
-        <h1 v-if="activeDemoday" class="app-font-size-3xl app-font-weight-bold text-gray-600 my-1">
-            {{ activeDemoday.name }}
-        </h1>
-        <p class="app-font-size-2xl app-font-weight-semibold text-gray-500 mb-5">Pódio - Melhores classificados </p>
-
-        <v-row
-            align-content="stretch"
-        >   
-            <v-col
-                v-for="project in podium"
-                :key="project.id"
-                sm="4"
-                cols="12"
-            >
-                    <project-card
-                        :project="project"
-                    />
-            </v-col>
-        </v-row>
-
-        <v-data-table class="px-4 py-4 mt-10 elevation-1 rounded-lg"
-          :headers="headers"
-          :items="projectsAccepted"
-      >
-          <template v-slot:item.action="{ item }">
-              <v-btn 
-                  variant="outlined" 
-                  block
-                  color="blue-ufba" 
-                  rounded="lg"
-                  >
-                  Detalhes
-              </v-btn>
-          </template>
-          
-          <template v-slot:item.type="{ item }">
-              <v-btn
-                  class="py-4 cursor-default"
-                  block
-                  rounded="lg"
-                  size="small"
-                  flat
-                  :color="projectType[item.type].color" 
-              >
-                  <span class="text-white font-weight-bold"> 
-                    {{ projectType[item.type].text }}
-                  </span> 
-              </v-btn>
-          </template>
-      </v-data-table>
-
     </div>
     <Loader v-if="isLoading" />
 </template>
@@ -73,16 +81,11 @@ activeNavLink: 'ratings'
 
 const isLoading = ref(false);
 
-const activeDemoday = ref<Demoday>();
+const lastDemodayFinished = ref<Demoday>();
 
-const projectsAccepted = ref<Project []>([]);
-const podium = ref<Project []>([]);
-
-const headers = ref<InternalDataTableHeader>([
+const tableHeaders = ref<InternalDataTableHeader>([
   {title: 'Projeto', key: 'title'},
-  {title: 'Descrição', key:'description'},
-  {title: 'Categoria', key: 'type'},
-  {title: 'Ação', key: 'action'}
+  {title: 'Nota', key:'rating'},
 ]);
 
 const projectType = ref({
@@ -93,45 +96,133 @@ const projectType = ref({
   'PHD': {color: 'orange', text: 'PHD'},
 })
 
-function getPodium(){
-    console.log(projectsAccepted.value[0])
-    for (let index = 0; index < 3; index++) {
-        podium.value = projectsAccepted.value.slice(0, 3);
-    }
+const ratingsPhase3 = ref([]);
+const ratingsPhase4 = ref([]);
+
+const finalists = ref<Project []>([]);
+const finalistsByCategory = ref({
+  'IC': [],
+  'TCC': [],
+  'DISC': [],
+  'MSC': [],
+  'PHD': [],
+});
+
+const projectsAccepted = ref<Project []>([]);
+const acceptedProjectsByCategory = ref({
+  'IC': [],
+  'TCC': [],
+  'DISC': [],
+  'MSC': [],
+  'PHD': [],
+});
+
+function filterProjectsByCategory(projects, category) {
+  return projects.filter((project) => project.type == category);
 }
 
-async function getActiveDemoday() {
-    try {
-        isLoading.value = true;
-        const { data } = await axiosInstance.get('/getactivedemoday');
-        activeDemoday.value = data[0];
-    } catch (error) {
-        console.error(error);
-    } finally {
-        isLoading.value = false;
-    }
+async function getTotalRatingsPhase3() {
+
+  try {
+    isLoading.value = true;
+    const { data } = await axiosInstance.get(
+        `/totalRatings?phase=3&demodayId=${lastDemodayFinished.value.id}`
+    );
+    ratingsPhase3.value = data;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+  }
 }
+
+async function getTotalRatingsPhase4() {
+
+try {
+  isLoading.value = true;
+  const { data } = await axiosInstance.get(
+      `/totalRatings?phase=4&demodayId=${lastDemodayFinished.value.id}`
+  );
+  ratingsPhase4.value = data;
+} catch (error) {
+  console.error(error);
+} finally {
+  isLoading.value = false;
+}
+}
+
+function setProjectRating() {
+    projectsAccepted.value.forEach((project) => {
+        return project.rating = ratingsPhase3.value[project.id] || 0;
+    });
+}
+
+function setFinalistsRating() {
+    finalists.value.forEach((project) => {
+        return project.rating = ratingsPhase4.value[project.id] || 0;
+    });
+}
+
 
 async function getDemodayAcceptedProjects(demodayId: number) {
+  try {
+    isLoading.value = true;
+    const { data } = await axiosInstance.get(`/getdemodayacceptedprojects/${demodayId}`);
+    projectsAccepted.value = data;
+
+    setProjectRating();
+
+    Object.keys(acceptedProjectsByCategory.value).forEach((category: string) => {
+        return acceptedProjectsByCategory.value[category] = filterProjectsByCategory(projectsAccepted.value, category)
+    });
+
+      
+  } catch (error) {
+      console.error(error);
+  } finally {
+      isLoading.value = false;
+  }
+}
+
+async function getFinalists(){
     try {
         isLoading.value = true;
-        const { data } = await axiosInstance.get(`/getdemodayacceptedprojects/${demodayId}`);
-        projectsAccepted.value = data;
+        const { data } = await axiosInstance.get(`/getfinalists/${lastDemodayFinished.value.id}`);
+        finalists.value = [];
+        data.forEach((item) => {
+            finalists.value.push(item.project)
+        });
+
+        setFinalistsRating();
+
+        Object.keys(finalistsByCategory.value).forEach((category: string) => {
+            return finalistsByCategory.value[category] = filterProjectsByCategory(finalists.value, category)
+        });
+
     } catch (error) {
         console.error(error);
     } finally {
         isLoading.value = false;
     }
+}
+
+// no endpoint for that
+
+async function getLastDemoday() {
+    lastDemodayFinished.value = {
+        id: 1
+    };
+    return;
 }
 
 onMounted(async () => {
-    await getActiveDemoday();
-    if(activeDemoday.value){
-        const idDemoday = activeDemoday.value.id
-        await getDemodayAcceptedProjects(idDemoday);
-    }
-    getPodium();
+    await getLastDemoday();
+    await getTotalRatingsPhase3();
+    await getTotalRatingsPhase4();
+    await getDemodayAcceptedProjects(lastDemodayFinished.value.id);
+    await getFinalists();
 });
+
 </script>
 <style lang="scss" scoped>
 </style>
