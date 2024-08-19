@@ -6,7 +6,7 @@
           Não há um Demoday em andamento.
         </h1>
         <p class="text-gray-500 text-center">Crie uma nova edição clicando no botão abaixo.</p>
-        <div class="d-flex">
+        <div class="d-flex gap-5">
           <v-card
             width="150"
             height="150"
@@ -32,7 +32,7 @@
               color="red-ufba"
               flat
             />
-            <p class="text-center text-red-ufba">Ver classificação do demoday anterior</p>
+            <p class="text-center text-red-ufba">Ver classificação do última edição</p>
           </v-card>
         </div>
         
